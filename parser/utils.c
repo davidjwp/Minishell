@@ -14,5 +14,5 @@
 
 void    err_msg(char *msg)
 {
-	printf ("\nError: %s\n", msg);
+	printf ("\nMinishell: %s\n", msg);
 }
