@@ -18,6 +18,8 @@ int	get_type(char *token)
 
 }
 
+
+
 int	plant_tree(t_ptn *tokens)
 {
 
@@ -41,17 +43,19 @@ int	parser(char	*input)
 	tokens_s = tokenize(input, &tokens_n, 0);
 	if (!tokens_s)
 		return (free(input), 0);
-	tokens = (t_ptn *)malloc(sizeof(t_ptn) * tokens_n);
-	while (i < tokens_n)
-	{
-		tokens[i].string = tokens_s[i];
-		tokens[i].position = tokens_n;
-		tokens[i].type = get_type(tokens[i].string);
-		tokens[i].child = NULL;
-		tokens[i].parent = NULL;
-		i++;
-	}
-	plant_tree(tokens);
+	
+	
+	// tokens = (t_ptn *)malloc(sizeof(t_ptn) * tokens_n);
+	// while (i < tokens_n)
+	// {
+	// 	tokens[i].string = tokens_s[i];
+	// 	tokens[i].position = tokens_n;
+	// 	tokens[i].type = get_type(tokens[i].string);
+	// 	tokens[i].child = NULL;
+	// 	tokens[i].parent = NULL;
+	// 	i++;
+	// }
+	// plant_tree(tokens);
 	return (1);
 }
 
