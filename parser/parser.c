@@ -25,6 +25,11 @@ int	plant_tree(t_ptn *tokens)
 
 }
 
+int	create_tree(char **tokens_s, int tokens_n, t_ptn *tree)
+{
+	tree->
+}
+
 /*
 *	start out by splitting the input and create a root for the tree 
 *
@@ -43,21 +48,37 @@ int	parser(char	*input)
 	tokens_s = tokenize(input, &tokens_n, 0);
 	if (!tokens_s)
 		return (free(input), 0);
-	
-	
-	// tokens = (t_ptn *)malloc(sizeof(t_ptn) * tokens_n);
-	// while (i < tokens_n)
-	// {
-	// 	tokens[i].string = tokens_s[i];
-	// 	tokens[i].position = tokens_n;
-	// 	tokens[i].type = get_type(tokens[i].string);
-	// 	tokens[i].child = NULL;
-	// 	tokens[i].parent = NULL;
-	// 	i++;
-	// }
-	// plant_tree(tokens);
+	tokens = (t_ptn *)malloc(sizeof(t_ptn) * tokens_n);
+	while (i < tokens_n)
+	{
+		tokens[i].string = tokens_s[i];
+		tokens[i].position = tokens_n;
+		tokens[i].type = get_type(tokens[i].string);
+		tokens[i].child = NULL;
+		tokens[i].parent = NULL;
+		i++;
+	}
+	free_tokens(tokens_s);
+	plant_tree(tokens);
 	return (1);
 }
+
+/*
+*	list of the special characters that are explicitily asked in the subject
+*	anything not asked is not required.
+*
+*	(') single quotes which do no interpretation
+*	(") double quotes which only interpret $ for variables
+*	($) dollar sign for variables including env
+*	(>) output redirection
+*	(<) input redirection
+*	(<<) heredoc with delimiter and read until a line containing the delimiter
+*		is seen, does not have to update history
+*	(>>) output redirection but appends the text instead of writing over
+*	(|) pipes
+*	($?) this expands to the exit status of the last executed foreground
+*	pipeline meaning what's left in the pipe if it has anything in it
+*/
 
 // typedef struct parsetreenode{
 // 	int						type;
@@ -84,6 +105,8 @@ int	parser(char	*input)
 /*
 In Bash, several characters are considered special and have specific meanings or functions. 
 Here's a list of some common special characters in Bash:
+
+$ " ' # ! * ? [] {} ( | & > $() bonus && || 
 
 1. **`$`**: Denotes the start of a variable name. For example, `$VAR` represents the value 
 of the variable `VAR`.
@@ -121,9 +144,6 @@ another. For example, `command1 | command2` pipes the output of `command1` to `c
 12. **`&`**: Used for backgrounding a command. For example, `command &` runs `command` 
 in the background, allowing you to continue working in the shell.
 
-13. **`;`**: Separates multiple commands on a single line. For example, `command1 ; 
-command2` runs `command1` and then `command2`.
-
 14. **`>` and `<`**: Used for redirection. `>` redirects output to a file, and `<` 
 redirects input from a file. For example, `command > output.txt` sends the output of `command` to `output.txt`.
 
@@ -136,9 +156,6 @@ only if the command on its left succeeds (returns a zero exit status). `||` exec
 on its right only if the command on its left fails (returns a non-zero exit status).
 
 17. **`*` and `**`**: Used in globbing and extended globbing for pattern matching.
-
-18. **`\`**: The escape character. It allows you to escape special characters to treat them as literals. 
-For example, `\$VAR` treats `$VAR` as a literal string without variable substitution.
 
 These are some of the common special characters in Bash. Understanding their meanings and uses is essential 
 for working effectively in the Bash shell.
