@@ -54,7 +54,8 @@ int	built_in(char *input)
 
 	i = 0;
 	y = 0;//must be on the same line 
-	builtin = {"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
+	builtin = (char **){"echo", "cd", "pwd", "export", "unset", "env", \
+	"exit", NULL};
 	while (builtin[i] != NULL)
 	{
 		while (builtin[i][y] == input[i])
@@ -73,7 +74,16 @@ int	check_quote(char *input, size_t *i)
 	return (1);
 }
 
-//unfinished 
+int	check_spec(char *input, size_t *i)
+{
+	if (type(&input[*i]) == EXSTAT || type(&input[*i]) == HEREDOC ||\
+	type(&input[*i]) == APREDIR)
+		*i = 2;
+	else
+		*i = 1;
+	return (1);
+}
+
 int	it_token(char *input, size_t *i, int flag)
 {
 	if (flag == IT_SEP)
@@ -85,7 +95,10 @@ int	it_token(char *input, size_t *i, int flag)
 	{
 		if (type(&input[*i]) == QUOTES)
 			return (check_quote(input, i));
-		
+		if (type(&input[*i]) != WORD)
+			return (check_spec(input, i));
+		while (type(&input[*i]) == WORD)
+			*i++;
 	}
 	return (1);
 }
@@ -115,6 +128,7 @@ char	*get_content(char *input, size_t *index, size_t *len)
 
 int	get_token_type(char *token)
 {
+	if 9
 }
 
 //not sure about the logic here 
@@ -126,6 +140,7 @@ int	create_lexer(char *input, t_tlst *lstnode, int *tokcnt)
 
 	i = 0;
 	*tokcnt += 1;
+	token = (t_token*){0, 0, 0, NULL};
 	newnode = (t_tlst){NULL, NULL};
 	token = malloc(sizeof(t_token));
 	if (!it_token(&input[i], &i, IT_SEP))
