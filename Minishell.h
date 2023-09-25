@@ -15,32 +15,55 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
 # define PROMPT	"$> "
-# define KEYWORD	0
-# define ARGUMENT	1
-# define OPERATOR	2
-# define QUOTED		3
-# define SPECIAL	4
-//no comment, substitutions, variables or separators
-
+# define G_ERROR 0
+# define IT_SEP 0
+# define IT_TOK	1
 
 volatile int	g_signal;
 
-typedef struct parsetreenode{
-	int						type;
-	int						position;
-	int						chnum;
-	int						charnum;//this might not be useful
-	char					*string;
-	struct parsetreenode	*parent;
-	struct parsetreenode	**child;
-}			t_ptn;
+enum e_type{
+	COMMAND,
+	ARGUMENT,
+	OPERATOR,
+	QUOTES,
+	VARIABLE,
+	SEPARATOR,
+	PIPE,
+	HEREDOC,
+	BUILTIN,
+	EXSTAT,
+	WORD,
+	APREDIR
+};	
 
+
+typedef struct s_token{
+	t_type	type;
+	int		pos;
+	size_t	len;
+	char	*content;
+}			*t_token;
+
+typedef struct *s_lst{
+	t_token	token;
+	s_lst	next;	
+}				t_tlst;
+
+typedef struct parseTreeNode{
+	t_token	token;
+	int		tokcnt
+	parseTreeNode	parent;
+	parseTreeNode	*children;
+}				*t_ptr;
+
+void		free_tokens(char **tokens_s);
 void		err_msg(char *msg);
-char		**ft_split(char *s, char c);
+char		**tokenize(char *s, int *tokens_n, int tokens_i);
 int			parser(char *input);
 
 #endif

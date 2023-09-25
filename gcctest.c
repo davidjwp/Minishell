@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   gcctest.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djacobs <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 19:08:05 by djacobs           #+#    #+#             */
-/*   Updated: 2023/09/19 19:08:06 by djacobs          ###   ########.fr       */
+/*   Created: 2023/09/22 17:29:08 by djacobs           #+#    #+#             */
+/*   Updated: 2023/09/22 17:29:09 by djacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../Minishell.h"
+#include <stdio.h>
 
-
-//more error types to be added 
-void	err_msg(char *msg)
+int	main(int argc, char **argv)
 {
-	printf ("\nMinishell: %s\n", msg);
+	int	i;
+	int	b;
+
+	i = 1;
+	b = 0;
+	(void)argc;
+	(void)argv;
+	if (i == 0)
+		while (i < 4)
+			i++;
+	else
+		while (b++ < \
+4)
+			printf ("what?\n");
+	return (0);
 }

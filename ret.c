@@ -1,20 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ret.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djacobs <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 19:08:05 by djacobs           #+#    #+#             */
-/*   Updated: 2023/09/19 19:08:06 by djacobs          ###   ########.fr       */
+/*   Created: 2023/09/25 18:05:19 by djacobs           #+#    #+#             */
+/*   Updated: 2023/09/25 18:05:20 by djacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../Minishell.h"
+#include <stddef.h>
+
+typedef struct s_type{
+	int	a;
+	int	b;
+	int	c;
+}				t_type;
 
 
-//more error types to be added 
-void	err_msg(char *msg)
+void	*ret()
 {
-	printf ("\nMinishell: %s\n", msg);
+	return ((void)NULL);
+}
+
+int	funct1()
+{
+	return (ret());
+}
+
+char	*funct2()
+{
+	return (ret());
+}
+
+t_type	funct3()
+{
+	return (ret());
+}
+
+int	main(void)
+{
+	t_type	s;
+
+	funct1();
+	funct2();
+	funct3();
 }
