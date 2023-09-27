@@ -26,40 +26,55 @@
 
 volatile int	g_signal;
 
+//it is a multiplied of BUILTIN so as to not confuse it with other types
+enum e_builtin{
+	ECHO = 22,
+	CD = 33,
+	PWD = 44,
+	EXPORT = 55,
+	UNSET = 66,
+	ENV = 77,
+	EXIT = 88
+};
+
 enum e_type{
-	COMMAND,
+	SEPARATOR,
+	QUOTES,
+	EXSTAT,
+	HEREDOC,
+	APREDIR,
 	ARGUMENT,
 	OPERATOR,
-	QUOTES,
 	VARIABLE,
-	SEPARATOR,
 	PIPE,
-	HEREDOC,
-	BUILTIN,
-	EXSTAT,
-	WORD,
-	APREDIR
+	COMMAND,
+	BUILTIN,//11 should be the last enum to not reach other
+	WORD = 0
 };	
 
-
 typedef struct s_token{
-	t_type	type;
-	int		pos;
+	int	type;
+	// int		pos;
 	size_t	len;
 	char	*content;
-}			*t_token;
+}			t_token;
 
-typedef struct *s_lst{
-	t_token	token;
-	s_lst	next;	
+typedef struct s_lst{
+	t_token	*token;
+	struct s_lst	*next;	
 }				t_tlst;
 
+typedef struct AbstractSyntaxTreeNode{
+	t_token	*token;
+	struct AbstractSyntaxTreeNode	*parent;
+	struct AbstractSyntaxTreeNode	*children; 
+}				t_astnode;
+
 typedef struct parseTreeNode{
-	t_token	token;
-	int		tokcnt
-	parseTreeNode	parent;
-	parseTreeNode	*children;
-}				*t_ptr;
+	int		tokcnt;
+	struct parseTreeNode	*parent;
+	struct parseTreeNode	*children;
+}				t_ptn;
 
 void		free_tokens(char **tokens_s);
 void		err_msg(char *msg);

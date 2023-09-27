@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <readline/readline.h>
@@ -33,7 +34,10 @@ int main() {
         }
 
         // Process the input (in this example, we'll just print it)
-        printf("You entered: %s\n", input);
+        // printf("You entered: ");
+        for (int i = 0; input[i] != 0; i++)
+            write (1, &input[i], 1);
+        // printf (" newline\n");
 
         // Free the dynamically allocated input buffer
         free(input);

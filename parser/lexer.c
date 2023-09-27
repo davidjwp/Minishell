@@ -22,7 +22,6 @@
 *	($?)			EXSTAT
 *	( ),(\t),(\n)	SEPARATOR
 */
-
 int	type(char *s)
 {
 	if (*s == ' ' || *s == '\t' || *s == '\n')
@@ -42,36 +41,14 @@ int	type(char *s)
 	if (*s == '>' || *s == '<')
 		return (OPERATOR);
 	return (WORD);
-	
 }
 
-//good for later
-int	built_in(char *input)
+int	cmp(char *content, char *input)
 {
-	char	**builtin;
-	int		i;
-	int		y;
-
-	i = 0;
-	y = 0;//must be on the same line 
-	builtin = (char **){"echo", "cd", "pwd", "export", "unset", "env", \
-	"exit", NULL};
-	while (builtin[i] != NULL)
-	{
-		while (builtin[i][y] == input[i])
-
-		i++;
-	}
-}
-
-int	check_quote(char *input, size_t *i)
-{
-	*i++;
-	while (type(&input[*i]) != QUOTES && &input[*i])
-		*i++;
-	if (!&input[*i])
-		return (err_msg("unclosed quote"), 0);
-	return (1);
+	for (int i = 0; content[i] == input[i]; i++)
+		if (!content[i])
+			return (1);
+	return (0);
 }
 
 int	check_spec(char *input, size_t *i)
@@ -84,12 +61,63 @@ int	check_spec(char *input, size_t *i)
 	return (1);
 }
 
+int	check_quote(char *input, size_t *i)
+{
+	*i++;
+	while (type(&input[*i]) != QUOTES && &input[*i])
+		*i++;
+	if (!&input[*i])
+		return (err_msg("unclosed quote"), 0);
+	return (1);
+}
+
+int	built_in(char *input)
+{
+	char	**builtin;
+	int		*type;
+	int		i;
+
+	i = 0;
+	builtin = (char **){"echo", "cd", "pwd", "export", "unset", "env", \
+	"exit", NULL};
+	type = (int *){22, 33, 44, 55, 66, 77};
+	while (builtin[i] != NULL)
+	{
+		if (cmp(builtin[i], input))
+			return (type[i]);
+		i++;
+	}
+	return (WORD);
+}
+
+//+++++++++++++++++++++++++++++LEXERUTILS_A_C
+
+int	get_token_type(char	*token)
+{
+	int	builtin;
+
+	if (type(token))
+		return (type(token));
+	else 
+	{
+		builtin = built_in(token);
+		if (builtin)
+			return (builtin);
+	}
+	return (COMMAND);
+}
+
+/*
+*	this functions iterates over the token, i has a flag to check what to 
+*	iterate over, the index is a pointer so that the higher scope index
+*	can follow up
+*/
 int	it_token(char *input, size_t *i, int flag)
 {
 	if (flag == IT_SEP)
 		while (type(&input[*i]) == SEPARATOR && &input[*i])
 			*i++;
-	if (!&input[*i])
+	if (!input[*i])
 		return (0);
 	else if (flag == IT_TOK)
 	{
@@ -103,8 +131,9 @@ int	it_token(char *input, size_t *i, int flag)
 	return (1);
 }
 
-//+++++++++++++++++++++++++++++UTILS
-
+/*
+*
+*/
 char	*get_content(char *input, size_t *index, size_t *len)
 {
 	char	*content;
@@ -112,7 +141,7 @@ char	*get_content(char *input, size_t *index, size_t *len)
 
 	i = 0;
 	if (!it_token(input, len, IT_TOK))
-		return (0);
+		return (NULL);
 	content = malloc(sizeof(char) * (*len + 1));
 	if (!content)
 		return (err_msg("get_content malloc fail"), NULL);
@@ -125,43 +154,112 @@ char	*get_content(char *input, size_t *index, size_t *len)
 	*index = len;
 	return (content);
 }
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++createAST
 
-int	get_token_type(char *token)
+t_astnode	*create_node(t_token token)
 {
-	if 9
+	t_astnode *newnode; 
+
+	newnode = malloc(sizeof(t_astnode *));
+	if (!newnode)
+		return (NULL);
+	newnode->token = token;
+	return (newnode);
 }
 
-//not sure about the logic here 
-int	create_lexer(char *input, t_tlst *lstnode, int *tokcnt)
+t_token	*get_token(char *input, int *index)
 {
+	t_token	*token;
 	int	i;
-	t_tlst	newnode;
-	t_token	token;
 
 	i = 0;
-	*tokcnt += 1;
-	token = (t_token*){0, 0, 0, NULL};
-	newnode = (t_tlst){NULL, NULL};
-	token = malloc(sizeof(t_token));
-	if (!it_token(&input[i], &i, IT_SEP))
-		return (0);
-	token->pos = *tokcnt;
-	token->content = get_content(&input[i], &i, token->len);
+	if (!it_token(input[i], index, IT_SEP));
+		return (NULL);
+	token->content = get_content(input, index, &token->len);
+	if (token->content == NULL)
+		return (NULL);
 	token->type = get_token_type(token->content);
-	if (input[i] != 0)
-		create_lexer(&input[i], newnode, tokcnt);
-	lstnode->token = token;
-	lstnode->next = newnode;
+	return (token);
 }
 
-t_tlst	lexer(char *input)
+t_astnode*	create_ast_node(t_token *token)
+{
+	t_astnode	*newnode;
+
+	newnode = malloc(sizeof(t_astnode *));
+	if (!newnode)
+		return (NULL);
+	newnode->token = token;
+	return (token);
+}
+
+t_astnode*	parse_term(char *input, int *index)
+{
+	t_token	*token;
+
+	token = get_token(input, index);
+	if (token->type == WORD)
+		return (create_ast_node(token));
+	else if (token->type == QUOTES)
+	{
+		
+	}
+}
+
+t_astnode	*parse_expression(char *input, int *index)
+{
+	t_astnode	*child;
+
+	child = parse_term(input, index);
+	if (child == NULL)
+		return (NULL);//some freeing needed maybe
+
+}
+
+
+main(void)
+{
+	char	input[] = "cat << EOF > file | wc -c | tr =d "" > file2";
+	int		index = 0;
+
+	t_astnode	*ast = parse_expression(input, &index);
+	return 0;
+}
+
+
+//not sure about the logic here 
+// int	create_lexer(char *input, t_tlst *lstnode, int *tokcnt)
+// {
+// 	int	i;
+// 	t_tlst	*newnode;
+// 	t_token	*token;
+
+// 	i = 0;
+// 	*tokcnt += 1;
+// 	token = (t_token *){0, 0, 0, NULL};
+// 	if (!it_token(&input[i], &i, IT_SEP))
+// 		return (0);
+// 	token = malloc(sizeof(t_token));
+// 	newnode = (t_tlst *){NULL, NULL};
+// 	token->pos = *tokcnt;
+// 	token->content = get_content(&input[i], &i, token->len);
+// 	if (token->content == NULL)
+// 		return (free(token), 0);
+// 	token->type = get_token_type(token->content);
+// 	if (input[i] != 0)
+// 		create_lexer(&input[i], newnode, tokcnt);
+// 	lstnode->token = token;
+// 	lstnode->next = newnode;
+// }
+
+t_tlst	*lexer(char *input)
 {
 	int	tokcnt;
-	t_ptr	tree;
 	t_tlst	*startnode;
 	t_tlst	*endnode;
 
 	tokcnt = 0;
+	startnode = (t_tlst *){NULL, NULL};
 	create_lexer(input, startnode, &tokcnt);
 
 	//this should loop back the list to make it circular
@@ -175,14 +273,6 @@ t_tlst	lexer(char *input)
 }
 
 //++++++++++++++++++++++++++++++++++++TESTS
-
-int	cmp(char *content, char *input)
-{
-	for (int i = 0; content[i] == input[i]; i++)
-		if (!content[i])
-			return (1);
-	return (0);
-}
 
 char	print_type(int type)
 {
@@ -229,9 +319,9 @@ int	main(void)
 	while (input[i])
 		input[i++] = last[y++];
 	*lst = lexer(input);
-	for (int i = 0; !cmp((*lst)[i].token.content, last); i++){
-		printf ("%s (%s)", print_type((*lst)[i].token.type));
-		free((*lst)[i].token.content);
+	for (int i = 0; !cmp((*lst)[i].token->content, last); i++){
+		printf ("%s (%s)", print_type((*lst)[i].token->type));
+		free((*lst)[i].token->content);
 		free((*lst)[i].token);
 		*lst = (*lst)[i].next;
 	}
