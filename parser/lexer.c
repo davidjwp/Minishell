@@ -156,15 +156,24 @@ char	*get_content(char *input, size_t *index, size_t *len)
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++createAST
 
-t_astnode	*create_node(t_token token)
+int	input_pipe(char *input)//not sure about that one might be fucked up
 {
-	t_astnode *newnode; 
+	int	i;
 
-	newnode = malloc(sizeof(t_astnode *));
-	if (!newnode)
-		return (NULL);
-	newnode->token = token;
-	return (newnode);
+	i = 0;
+	while (input[i] != '\\')
+		i++;
+	return ((int)input[i]);
+}
+
+int	input_red(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i] != '>')
+		i++;
+	return ((int)input[i]);
 }
 
 t_token	*get_token(char *input, int *index)
@@ -193,26 +202,53 @@ t_astnode*	create_ast_node(t_token *token)
 	return (token);
 }
 
-t_astnode*	parse_term(char *input, int *index)
+
+//recursive descent parser for words, commands, some special symbols
+t_astnode*	parse_last(char *input, int *index)
 {
 	t_token	*token;
 
 	token = get_token(input, index);
-	if (token->type == WORD)
+	if (token == NULL)
+		return (NULL);
+	if (token->type != PIPE || token->type != APREDIR || \
+	token->type != OPERATOR)
 		return (create_ast_node(token));
-	else if (token->type == QUOTES)
-	{
-		
-	}
 }
 
-t_astnode	*parse_expression(char *input, int *index)
+//recursive descent parser for redirections
+t_astnode*	parse_secondary(char *input, int *index)
 {
-	t_astnode	*child;
+	t_astnode	*left;//you need multiple children careful with this
+	t_token		*token;
 
-	child = parse_term(input, index);
-	if (child == NULL)
-		return (NULL);//some freeing needed maybe
+	left = parse_last(input, index);
+	if (left == NULL)
+		return (NULL);
+	token = get_token(input, index);
+	if (token == NULL)
+		return (NULL, free(left->token->content), free(left), NULL);
+	
+}
+
+//recursive descent parser for pipes
+t_astnode	*parse_main(char *input, int *index)
+{
+	t_astnode	*left;
+
+	if (input_pipe(&input[*index]))
+		left = parse_secondary(input, index);
+	else if (input_red(&input[*index]))
+	{
+		left = parse_secondary(input, index);
+
+	}
+	else
+	{
+		left = parse_last(input, index);
+		if (left == NULL)
+			return (NULL);//free maybe
+	}
 
 }
 
