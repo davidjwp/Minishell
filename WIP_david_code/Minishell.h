@@ -26,7 +26,6 @@
 
 volatile int	g_signal;
 
-//it is a multiplied of BUILTIN so as to not confuse it with other types
 enum e_builtin{
 	ECHO = 22,
 	CD = 33,
@@ -48,37 +47,53 @@ enum e_type{
 	VARIABLE,
 	PIPE,
 	COMMAND,
-	BUILTIN,//11 should be the last enum to not reach other
+	BUILTIN,
 	WORD = 0
 };	
 
 typedef struct s_token{
-	int	type;
-	// int		pos;
+	int		type;
 	size_t	len;
 	char	*content;
 }			t_token;
 
 typedef struct s_lst{
-	t_token	*token;
+	t_token			*token;
 	struct s_lst	*next;	
 }				t_tlst;
 
 typedef struct AbstractSyntaxTreeNode{
-	t_token	*token;
+	t_token							*token;
+	int								type;
 	struct AbstractSyntaxTreeNode	*parent;
-	struct AbstractSyntaxTreeNode	*children; 
+	struct AbstractSyntaxTreeNode	*left;
+	struct AbstractSyntaxTreeNode	*right;
 }				t_astnode;
 
-typedef struct parseTreeNode{
-	int		tokcnt;
-	struct parseTreeNode	*parent;
-	struct parseTreeNode	*children;
-}				t_ptn;
+//LEXER++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-void		free_tokens(char **tokens_s);
-void		err_msg(char *msg);
-char		**tokenize(char *s, int *tokens_n, int tokens_i);
-int			parser(char *input);
+
+//lexerutils_A
+int		type(char *s);
+int		input_pipe(char *input);
+int		input_red(char *input);
+bool	cmp(char *content, char *input);
+int		check_spec(char *input, size_t *i);
+
+//lexerutils_B
+bool	check_quote(char *input, size_t *i);
+int		built_in(char *input);
+int		get_token_type(char	*token);
+bool	it_token(char *input, size_t *i, int flag);
+char	*get_content(char *input, size_t *index, size_t *len);
+
+//lexerutils_C
+
+
+
+void	free_tokens(char **tokens_s);
+void	err_msg(char *msg);
+char	**tokenize(char *s, int *tokens_n, int tokens_i);
+int		parser(char *input);
 
 #endif

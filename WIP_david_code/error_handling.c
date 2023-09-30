@@ -1,49 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ret.c                                              :+:      :+:    :+:   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djacobs <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 18:05:19 by djacobs           #+#    #+#             */
-/*   Updated: 2023/09/25 18:05:20 by djacobs          ###   ########.fr       */
+/*   Created: 2023/09/30 16:48:51 by djacobs           #+#    #+#             */
+/*   Updated: 2023/09/30 16:48:53 by djacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+# include <stdarg.h>
+# include <stddef.h>
 
-typedef struct s_type{
-	int	a;
-	int	b;
-	int	c;
-}				t_type;
-
-
-void	*ret()
+//i can't actually use this because it makes use of va
+void	*h_error(int count, ...)
 {
-	return ((void)NULL);
-}
+	va_list	_valist;
+	void	*_vptr;	
 
-int	funct1()
-{
-	return (ret());
-}
-
-char	*funct2()
-{
-	return (ret());
-}
-
-t_type	funct3()
-{
-	return (ret());
-}
-
-int	main(void)
-{
-	t_type	s;
-
-	funct1();
-	funct2();
-	funct3();
+	va_start(_valist, count);
+	if (!count)
+		return (NULL);
+	_vptr = va_arg(_valist, void *);
+	if (_vptr == NULL)
+	{
+		while (count)
+		{
+			free((void *)free_ptr);
+			free_ptr = va_arg(_valist, void *);
+			count -= 1;
+		}
+	}
+	return (NULL);
 }
