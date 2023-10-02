@@ -66,7 +66,7 @@ void	free_tokens(t_token *tokens, int last)
 	while (i < last)
 	{
 		free(tokens[i].content);
-		free(tokens[i]);
+		free(&tokens[i]);
 		i++;
 	}
 	free(tokens);
@@ -78,10 +78,10 @@ void	free_cmd_node(t_astnode *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd->token[i] != NULL)
+	while (&cmd->token[i] != NULL)
 	{
 		free(cmd->token[i].content);
-		free(cmd->token[i]);
+		free(&cmd->token[i]);
 		i++;
 	}
 	free(cmd->token);

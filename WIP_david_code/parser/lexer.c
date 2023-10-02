@@ -1,4 +1,4 @@
-`/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
@@ -35,14 +35,14 @@ t_astnode*	create_ast_command(char *input, int *index, int	nbr, t_astnode *p)
 	int			i;
 
 	i = 0;
-	newnode = (t_astnode)malloc(sizeof(t_astnode *));
+	newnode = (t_astnode *)malloc(sizeof(t_astnode *));
 	if (newnode == NULL)
 		return (NULL);
 	newnode->type = COMMAND;
 	newnode->token = (t_token *)malloc(sizeof(t_token) * (nbr + 1));
 	if (newnode->token == NULL)
 		return (free(newnode), NULL);
-	newnode->token[nbr] = NULL;
+	newnode->token[nbr] = (t_token){0, 0, NULL};
 	while (nbr != 0)
 	{
 		newnode->token[i] = (t_token){0, 0, NULL};
@@ -50,7 +50,7 @@ t_astnode*	create_ast_command(char *input, int *index, int	nbr, t_astnode *p)
 		if (newnode->token[i] == NULL)
 			return (free_tokens(current->token, i), free(newnode), NULL);
 		nbr -= 1;
-		i++;		
+		i++;
 	}
 	newnode->parent = p;
 	newnode->left = NULL;

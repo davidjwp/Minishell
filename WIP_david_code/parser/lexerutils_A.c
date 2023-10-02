@@ -58,7 +58,7 @@ int	input_red(char *input)
 	int	i;
 
 	i = 0;
-	while (type(&input[i]) != OPERATION && input[i])
+	while (type(&input[i]) != OPERATOR && input[i])
 		i++;
 	return ((int)input[i]);
 }

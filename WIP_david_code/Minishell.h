@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -78,7 +79,7 @@ int		type(char *s);
 int		input_pipe(char *input);
 int		input_red(char *input);
 bool	cmp(char *content, char *input);
-int		check_spec(char *input, size_t *i);
+bool	check_spec(char *input, size_t *i);
 
 //lexerutils_B
 bool	check_quote(char *input, size_t *i);
@@ -91,7 +92,7 @@ char	*get_content(char *input, size_t *index, size_t *len);
 
 
 
-void	free_tokens(char **tokens_s);
+void	free_tokens(t_token *tokens, int last);
 void	err_msg(char *msg);
 char	**tokenize(char *s, int *tokens_n, int tokens_i);
 int		parser(char *input);

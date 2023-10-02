@@ -12,21 +12,15 @@
 
 #include <stdio.h>
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	int	i;
-	int	b;
+	char	*dblptr[7];
+	int		i;
 
-	i = 1;
-	b = 0;
-	(void)argc;
-	(void)argv;
-	if (i == 0)
-		while (i < 4)
-			i++;
-	else
-		while (b++ < \
-4)
-			printf ("what?\n");
+	i = -1;
+	while (++i < 7)
+		dblptr[i] = (char* [7]){"string1", "string2", "string3", "string4", "string5", "string6", "string7"}[i];
+	for (int y = 0; y < 7; y++)
+		printf ("%s\n", dblptr[y]);
 	return (0);
 }

@@ -33,14 +33,17 @@ bool	check_quote(char *input, size_t *i)
 //compares the token with all builtin and returns it's builtin type if found
 int	built_in(char *input)
 {
-	char	**builtin;
-	int		*type;
+	char	*builtin[7];
+	int		type[7];
 	int		i;
 
-	i = 0;
-	builtin = (char **){"echo", "cd", "pwd", "export", "unset", "env", \
-	"exit", NULL};
-	type = (int *){22, 33, 44, 55, 66, 77, 88};
+	i = -1;
+	while (++i < 7)
+	{
+		builtin[i] = (char* [8]){"echo", "cd", "pwd", "export", "unset", \
+		"env", "exit", NULL}[i];
+		type[i] = (int [7]){22, 33, 44, 55, 66, 77, 88}[i];
+	}
 	while (builtin[i] != NULL)
 	{
 		if (cmp(builtin[i], input))
