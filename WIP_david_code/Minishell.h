@@ -49,19 +49,22 @@ enum e_type{
 	PIPE,
 	COMMAND,
 	BUILTIN,
+	RED_L,
+	RED_R,//13
 	WORD = 0
 };	
+
+typedef struct LexerUtilsStructure{
+	int	r;
+	int	p;
+	int	error;
+}				t_lus;
 
 typedef struct s_token{
 	int		type;
 	size_t	len;
 	char	*content;
 }			t_token;
-
-typedef struct s_lst{
-	t_token			*token;
-	struct s_lst	*next;	
-}				t_tlst;
 
 typedef struct AbstractSyntaxTreeNode{
 	t_token							*token;
@@ -89,8 +92,11 @@ bool	it_token(char *input, size_t *i, int flag);
 char	*get_content(char *input, size_t *index, size_t *len);
 
 //lexerutils_C
-
-
+t_token	*get_token(char *input, int *index);
+int		nbr_token(char *input);
+void	free_tokens(t_token *tokens, int last);
+void	free_cmd_node(t_astnode *cmd);
+void	free_red_node(t_astnode *red);
 
 void	free_tokens(t_token *tokens, int last);
 void	err_msg(char *msg);

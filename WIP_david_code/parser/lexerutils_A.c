@@ -33,15 +33,14 @@ int	type(char *s)
 		return (HEREDOC);
 	if (*s == '|')
 		return (PIPE);
-	if (*s == '>' || *s == '<')
-		return (OPERATOR);
+	if (*s == '>' && *s + 1 != '>')
+		return (RED_R);
+	if (*s == '<' && *s + 1 != '<')
+		return (RED_L);
 	return (WORD);
 }
 
-/*
-*	if pipe found return input index at pipe as integer so pipe value
-*	if pipe not found return index end of input which is 0  
-*/
+//finds pipe if there is one and returns it's position if not zero
 int	input_pipe(char *input)
 {
 	int	i;
@@ -49,7 +48,9 @@ int	input_pipe(char *input)
 	i = 0;
 	while (type(&input[i]) != PIPE && input[i])
 		i++;
-	return ((int)input[i]);
+	if (input[i])
+		return (i);
+	return (0);
 }
 
 //same as input pipe
@@ -58,9 +59,12 @@ int	input_red(char *input)
 	int	i;
 
 	i = 0;
-	while (type(&input[i]) != OPERATOR && input[i])
+	while (type(&input[i]) != RED_L && type(&input[i]) != RED_R && \
+	type(&input[i]) != APREDIR && input[i])
 		i++;
-	return ((int)input[i]);
+	if (input[i])
+		return (i)
+	return (0);
 }
 
 //cmp two strings returns bool if same string or not 

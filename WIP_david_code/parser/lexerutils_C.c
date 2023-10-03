@@ -41,10 +41,12 @@ int	nbr_token(char *input)
 
 	i = 0;
 	tokcnt = 0;
-	while (type(input[i]) != OPERATOR && type(input[i]) != PIPE)
+	while (type(input[i]) != RED_L && type(input[i]) != RED_R && \
+	type(input[i]) != APREDIR && type(input[i]) != PIPE && input[i])
 	{
 		it_token(input, &i, IT_SEP);
-		if (type(input[i] != OPERATOR && type(input[i]) != PIPE))
+		if (type(input[i]) != RED_L && type(input[i]) != RED_R && \
+			type(input[i]) != APREDIR && type(input[i]) != PIPE && input[i])
 			tokcnt += 1;
 		else
 			break ;
@@ -78,6 +80,8 @@ void	free_cmd_node(t_astnode *cmd)
 	int	i;
 
 	i = 0;
+	if (cmd == NULL)
+		return ;
 	while (&cmd->token[i] != NULL)
 	{
 		free(cmd->token[i].content);
@@ -86,4 +90,15 @@ void	free_cmd_node(t_astnode *cmd)
 	}
 	free(cmd->token);
 	free(cmd);
+}
+
+//free the redirection node
+void	free_red_node(t_astnode *red)
+{
+	int	i;
+
+	i = 0;
+	free_cmd_node(red->left);
+	free_cmd_node(red->right);
+	free(red);
 }

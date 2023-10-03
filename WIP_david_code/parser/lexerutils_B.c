@@ -73,7 +73,7 @@ int	get_token_type(char	*token)
 *   iterates the input with higher scope index which corresponds to length of 
 *   token, also iterates over SEPARATORS and checks unclosed quotes
 */
-bool	it_token(char *input, size_t *i, int flag)//as is
+bool	it_token(char *input, size_t *i, int flag)
 {
 	if (flag == IT_SEP)
 		while (type(&input[*i]) == SEPARATOR && input[*i])
@@ -82,18 +82,18 @@ bool	it_token(char *input, size_t *i, int flag)//as is
 		return (false);
 	else if (flag == IT_TOK)
 	{
-		if (type(&input[*i]) == QUOTES)
+		if (type(&input[*i]) == QUOTES && input[*i])
 			return (check_quote(input, i));
-		if (type(&input[*i]) != WORD)
+		if (type(&input[*i]) != WORD && input[*i])
 			return (check_spec(input, i));
-		while (type(&input[*i]) == WORD)
+		while (type(&input[*i]) == WORD && input[*i])
 			*i++;
 	}
 	return (true);
 }
 
 //returns an allocated string from input for token and gets length of token
-char	*get_content(char *input, size_t *index, size_t *len)//as is 
+char	*get_content(char *input, size_t *index, size_t *len)
 {
 	char	*content;
 	int		i;
