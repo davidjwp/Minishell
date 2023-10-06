@@ -82,9 +82,9 @@ void	free_cmd_node(t_astnode *cmd)
 	i = 0;
 	if (cmd == NULL)
 		return ;
-	while (&cmd->token[i] != NULL)
+	while (cmd->token[i] != NULL)
 	{
-		free(cmd->token[i].content);
+		free(cmd->token[i]->content);
 		free(&cmd->token[i]);
 		i++;
 	}

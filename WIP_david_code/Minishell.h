@@ -67,7 +67,7 @@ typedef struct s_token{
 }			t_token;
 
 typedef struct AbstractSyntaxTreeNode{
-	t_token							*token;
+	t_token							**token;
 	int								type;
 	struct AbstractSyntaxTreeNode	*parent;
 	struct AbstractSyntaxTreeNode	*left;

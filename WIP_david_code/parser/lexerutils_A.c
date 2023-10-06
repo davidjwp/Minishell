@@ -63,7 +63,7 @@ int	input_red(char *input)
 	type(&input[i]) != APREDIR && input[i])
 		i++;
 	if (input[i])
-		return (i)
+		return (i);
 	return (0);
 }
 

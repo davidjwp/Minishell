@@ -35,13 +35,14 @@ t_astnode*	create_ast_node(char c, t_astnode *p, int type)
 	node = (t_astnode *)malloc(sizeof(t_astnode));
 	if (node == NULL)
 		return (NULL);
-	node->(*token) = c;
+	node->token[0][0].content[0] = c;//this is fucked but whatever
 	node->type = type;
 	node->parent = p;
-	node->left = NULL
+	node->left = NULL;
 	node->right = NULL;
 	return (node);
 }
+
 /*
 *	creates the COMMAND node which holds every token 
 *	of the corresponding command in the input, each token is separated by
@@ -63,11 +64,11 @@ t_astnode*	ast_cmd_node(char *input, int *index, int nbr, int *error)
 	node->token = (t_token *)malloc(sizeof(t_token) * (nbr + 1));
 	if (node->token == NULL)
 		return (free(node), *error = 1, NULL);
-	node->token[nbr] = (t_token){0, 0, NULL};
+	node->token[nbr] = NULL;
 	while (nbr != 0)
 	{
-		node->token[i] = (t_token){0, 0, NULL};
-		node->token[i] = get_token(input, index, node->token[i].len);
+		// node->token[i] = NULL;might not need that
+		node->token[i] = get_token(input, index);
 		if (node->token[i] == NULL)
 			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
 		nbr -= 1;
@@ -126,7 +127,11 @@ t_astnode*	ast_sym_node(char *input, int *i, t_astnode *parent)
 // 	return (node);
 // }
 
-
+/*
+*	if there is a pipe then check if there is also a redirection, if there is a redirection then 
+*	create a command node, else if there is no redirection then create a command node 
+*	
+*/
 //kind off recursive because of pipes, but if no pipes there is no need
 t_astnode	*create_ast(char *input, int *index, t_lus utl)
 {
@@ -144,7 +149,7 @@ t_astnode	*create_ast(char *input, int *index, t_lus utl)
 		if ((utl.p && utl.p < utl.r) || (!utl.r && utl.p))//could be a problem if not else but can't figure how it could be
 		{
 			if ()
-			node->left = create_ast_command(input, index, nbr_token(), &utl.error)
+			node->left = create_ast_command(input, index, nbr_token(), &utl.error);
 			if (utl.error)
 				return (NULL);
 			node->right = create_ast(input, index, input_red(&input[*index]), \
@@ -197,7 +202,7 @@ int	main(void)
 {
 	char	*input = "cat << EOF > file | wc -c |tr -d "" > file2";
 	char	*last;
-	t_tlst	**lst;
+	// t_tlst	**lst;
 
 	int	i = 0;
 	int	y = 0;
