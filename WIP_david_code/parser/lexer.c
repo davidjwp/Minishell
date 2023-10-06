@@ -43,6 +43,21 @@ t_astnode*	create_ast_node(char c, t_astnode *p, int type)
 	return (node);
 }
 
+int	init_node(t_astnode *node, int nbr, int *error)
+{
+	node = (t_astnode *)malloc(sizeof(t_astnode *));
+	if (node == NULL)
+		return (*error = 1, err_msg(AST_CN_ERR), 0);
+	node->type = COMMAND;
+	node->token = (t_token *)malloc(sizeof(t_token) * (nbr + 1));
+	if (node->token == NULL)
+		return (free(node), *error = 1, err_msg(AST_CN_ERR), 0);
+	node->token[nbr] = NULL;
+	node->left = NULL;
+	node->right = NULL;
+	return (1);
+}
+
 /*
 *	creates the COMMAND node which holds every token 
 *	of the corresponding command in the input, each token is separated by
@@ -57,14 +72,8 @@ t_astnode*	ast_cmd_node(char *input, int *index, int nbr, int *error)
 	i = 0;
 	if (!nbr)
 		return (NULL);
-	node = (t_astnode *)malloc(sizeof(t_astnode *));
-	if (node == NULL)
-		return (*error = 1, NULL);
-	node->type = COMMAND;
-	node->token = (t_token *)malloc(sizeof(t_token) * (nbr + 1));
-	if (node->token == NULL)
-		return (free(node), *error = 1, NULL);
-	node->token[nbr] = NULL;
+	if (!init_node(node, nbr, error))
+		return (NULL);
 	while (nbr != 0)
 	{
 		// node->token[i] = NULL;might not need that
@@ -74,7 +83,7 @@ t_astnode*	ast_cmd_node(char *input, int *index, int nbr, int *error)
 		nbr -= 1;
 		i++;
 	}
-	return (node->left = NULL, node->right = NULL, node);
+	return (node);
 }
 
 t_astnode*	ast_sym_node(char *input, int *i, t_astnode *parent)
@@ -91,9 +100,11 @@ t_astnode*	ast_sym_node(char *input, int *i, t_astnode *parent)
 	node = create_ast_node(input[*i], parent, type(input[*i]));
 	if (node == NULL)
 		return (free_cmd_node(left), NULL);
-	right = create_ast_command(input, i, nbr_token(&input[*i]), node);
-	if (error == NULL)
+	right = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+	if (error)
 		return (free_cmd_node(left), free_cmd_node(right), NULL);
+	right->parent = node;
+	left->parent = node;
 	node->left = left;
 	node->right = right;
 	return (node);
@@ -127,6 +138,11 @@ t_astnode*	ast_sym_node(char *input, int *i, t_astnode *parent)
 // 	return (node);
 // }
 
+void	arrange_ast(t_astnode *node, int r, int p)
+{
+
+}
+
 /*
 *	if there is a pipe then check if there is also a redirection, if there is a redirection then 
 *	create a command node, else if there is no redirection then create a command node 
@@ -148,23 +164,22 @@ t_astnode	*create_ast(char *input, int *index, t_lus utl)
 			node->left = ast_sym_node(input, index, node);
 		if ((utl.p && utl.p < utl.r) || (!utl.r && utl.p))//could be a problem if not else but can't figure how it could be
 		{
-			if ()
-			node->left = create_ast_command(input, index, nbr_token(), &utl.error);
+			node->left = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
 			if (utl.error)
 				return (NULL);
-			node->right = create_ast(input, index, input_red(&input[*index]), \
-			input_pipe(&input[*index]));
+			node->right = create_ast(input, index, (t_lus){input_red(&input[*index]), input_pipe(&input[*index]), 0});
 			if (node->right == NULL)
-				return (, NULL);
-			return (, node->type == PIPE, node);
+				return (free_cmd_node(node->left), NULL);
+			return (node->type == PIPE, node);
 		}
 		else
-			node = create_ast_command(input, i, nbr_token(), &utl.error);
+			node = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
+		arrange_ast(node, utl.r, utl.p);
 	}
 	return (node);
 }
 
-main(int argc, char *argv[], char *env[])
+int	main(int argc, char *argv[], char *env[])
 {
 	char	input[] = "cat << EOF > file | wc -c | tr =d "" > file2";
 	int		index = 0;
@@ -198,39 +213,39 @@ char	print_type(int type)
 }
 
 //test main
-int	main(void)
-{
-	char	*input = "cat << EOF > file | wc -c |tr -d "" > file2";
-	char	*last;
-	// t_tlst	**lst;
+// int	main(void)
+// {
+// 	char	*input = "cat << EOF > file | wc -c |tr -d "" > file2";
+// 	char	*last;
+// 	// t_tlst	**lst;
 
-	int	i = 0;
-	int	y = 0;
-	int	len;
-	while (input[i] != 0)
-	{
-		len = 0;
-		while (type(input[i] == SEPARATOR))
-			i++;
-		while (type(input[i] != SEPARATOR)){
-			i++;
-			len++;
-		}
-	}
-	last = malloc(sizeof(char) * (len + 1));
-	last[len + 1] = 0;
-	i -= len;
-	while (input[i])
-		input[i++] = last[y++];
-	*lst = lexer(input);
-	for (int i = 0; !cmp((*lst)[i].token->content, last); i++){
-		printf ("%s (%s)", print_type((*lst)[i].token->type));
-		free((*lst)[i].token->content);
-		free((*lst)[i].token);
-		*lst = (*lst)[i].next;
-	}
-	free(last);
-}
+// 	int	i = 0;
+// 	int	y = 0;
+// 	int	len;
+// 	while (input[i] != 0)
+// 	{
+// 		len = 0;
+// 		while (type(input[i] == SEPARATOR))
+// 			i++;
+// 		while (type(input[i] != SEPARATOR)){
+// 			i++;
+// 			len++;
+// 		}
+// 	}
+// 	last = malloc(sizeof(char) * (len + 1));
+// 	last[len + 1] = 0;
+// 	i -= len;
+// 	while (input[i])
+// 		input[i++] = last[y++];
+// 	*lst = lexer(input);
+// 	for (int i = 0; !cmp((*lst)[i].token->content, last); i++){
+// 		printf ("%s (%s)", print_type((*lst)[i].token->type));
+// 		free((*lst)[i].token->content);
+// 		free((*lst)[i].token);
+// 		*lst = (*lst)[i].next;
+// 	}
+// 	free(last);
+// }
 
 /*In GNU Bash, parse errors typically occur when the shell encounters syntax errors or invalid command structures. Here's a list of common parse errors you may encounter:
 

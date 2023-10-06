@@ -24,6 +24,7 @@
 # define G_ERROR 0
 # define IT_SEP 0
 # define IT_TOK	1
+# define AST_CN_ERR "ast_cmd_node malloc fail"
 
 volatile int	g_signal;
 
