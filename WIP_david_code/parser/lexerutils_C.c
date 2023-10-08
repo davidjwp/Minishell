@@ -17,14 +17,10 @@
 *	get_token(), nbr_token(), free_tokens(), free_cmd_node()
 */
 //returns the token struct with allocated content and type + length
-t_token	*get_token(char *input, int *index)
+t_token	*get_token(char *input, size_t *index, t_token *token)
 {
-	t_token	*token;
-	int	i;
-
-	i = 0;
 	token->len = 0;
-	if (!it_token(input, index, IT_SEP));
+	if (!it_token(input, index, IT_SEP))
 		return (NULL);
 	token->content = get_content(input, index, &token->len);
 	if (token->content == NULL)
@@ -37,16 +33,17 @@ t_token	*get_token(char *input, int *index)
 int	nbr_token(char *input)
 {
 	int	tokcnt;
-	int	i;
+	size_t	i;
+	int		t;
 
 	i = 0;
 	tokcnt = 0;
-	while (type(input[i]) != RED_L && type(input[i]) != RED_R && \
-	type(input[i]) != APREDIR && type(input[i]) != PIPE && input[i])
+	t = type(input, i);
+	while (t != RED_L && t != RED_R && t != APREDIR && t != PIPE && input[i])
 	{
 		it_token(input, &i, IT_SEP);
-		if (type(input[i]) != RED_L && type(input[i]) != RED_R && \
-			type(input[i]) != APREDIR && type(input[i]) != PIPE && input[i])
+		t = type(input, i);
+		if (t != RED_L && t != RED_R &&	t != APREDIR && t != PIPE && input[i])
 			tokcnt += 1;
 		else
 			break ;
@@ -60,15 +57,15 @@ int	nbr_token(char *input)
 *	structures to the token struct array so that it only frees what has been
 *	allocated 
 */ 
-void	free_tokens(t_token *tokens, int last)
+void	free_tokens(t_token **tokens, int last)
 {
 	int	i;
 
 	i = 0;
 	while (i < last)
 	{
-		free(tokens[i].content);
-		free(&tokens[i]);
+		free(tokens[i]->content);
+		free(tokens[i]); 
 		i++;
 	}
 	free(tokens);
@@ -95,9 +92,6 @@ void	free_cmd_node(t_astnode *cmd)
 //free the redirection node
 void	free_red_node(t_astnode *red)
 {
-	int	i;
-
-	i = 0;
 	free_cmd_node(red->left);
 	free_cmd_node(red->right);
 	free(red);

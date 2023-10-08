@@ -18,7 +18,8 @@ CFLAGS			= -g3 -Wall -Wextra -Werror
 
 LINKER			= -L/usr/include -lreadline
 
-SRCS			= parser/lexer.c
+SRCS			= parser/lexer.c parser/lexerutils_A.c parser/lexerutils_B.c \
+				parser/lexerutils_C.c parser/utils.c
 
 OBJS			= $(SRCS:.c=.o)
 
@@ -32,11 +33,9 @@ $(NAME): $(OBJS)
 
 clean:
 	rm -f $(OBJS)
-	rm -f $(BONUS_OBJS)
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(BONUS_NAME)
 
 re: fclean all
 

@@ -23,6 +23,13 @@
 *	( ),(\t),(\n)	SEPARATOR
 */
 
+void	free_sym_node(t_astnode *node)
+{
+	free(node->token);
+	free(node->token[0]);
+	free(node->token[0]->content);
+	free(node);
+}
 
 /*
 *	creates the symbolic AST node with it's corresponding type between a pipe
@@ -35,6 +42,9 @@ t_astnode*	create_ast_node(char c, t_astnode *p, int type)
 	node = (t_astnode *)malloc(sizeof(t_astnode));
 	if (node == NULL)
 		return (NULL);
+	node->token = malloc(sizeof(t_token *) * 1);//THIS IS NOT FREED
+	node->token[0] = malloc(sizeof(t_astnode *));
+	node->token[0]->content = malloc(sizeof(t_token));
 	node->token[0][0].content[0] = c;//this is fucked but whatever
 	node->type = type;
 	node->parent = p;
@@ -45,11 +55,8 @@ t_astnode*	create_ast_node(char c, t_astnode *p, int type)
 
 int	init_node(t_astnode *node, int nbr, int *error)
 {
-	node = (t_astnode *)malloc(sizeof(t_astnode *));
-	if (node == NULL)
-		return (*error = 1, err_msg(AST_CN_ERR), 0);
 	node->type = COMMAND;
-	node->token = (t_token *)malloc(sizeof(t_token) * (nbr + 1));
+	node->token = (t_token **)malloc(sizeof(t_token) * (nbr + 1));
 	if (node->token == NULL)
 		return (free(node), *error = 1, err_msg(AST_CN_ERR), 0);
 	node->token[nbr] = NULL;
@@ -64,7 +71,7 @@ int	init_node(t_astnode *node, int nbr, int *error)
 *	type instead of separators, so are builtins if detected so each token
 *	has it's precise type
 */
-t_astnode*	ast_cmd_node(char *input, int *index, int nbr, int *error)
+t_astnode*	ast_cmd_node(char *input, size_t *index, int nbr, int *error)
 {
 	t_astnode	*node;
 	int			i;
@@ -72,12 +79,17 @@ t_astnode*	ast_cmd_node(char *input, int *index, int nbr, int *error)
 	i = 0;
 	if (!nbr)
 		return (NULL);
+	node = malloc(sizeof(t_astnode));
+	if (node == NULL)
+		return (*error = 1, err_msg(AST_CN_ERR), NULL);
 	if (!init_node(node, nbr, error))
 		return (NULL);
 	while (nbr != 0)
 	{
-		// node->token[i] = NULL;might not need that
-		node->token[i] = get_token(input, index);
+		node->token[i] = (t_token *)malloc(sizeof(t_token));
+		if (node->token[i] == NULL)
+			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
+		node->token[i] = get_token(input, index, node->token[i]);
 		if (node->token[i] == NULL)
 			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
 		nbr -= 1;
@@ -86,7 +98,7 @@ t_astnode*	ast_cmd_node(char *input, int *index, int nbr, int *error)
 	return (node);
 }
 
-t_astnode*	ast_sym_node(char *input, int *i, t_astnode *parent)
+t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
 {
 	t_astnode	*node;
 	t_astnode	*right;
@@ -94,10 +106,10 @@ t_astnode*	ast_sym_node(char *input, int *i, t_astnode *parent)
 	int			error;
 
 	error = 0;
-	left = create_ast_command(input, i, nbr_token(&input[*i]), &error);
+	left = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
 	if (error)
 		return (NULL);
-	node = create_ast_node(input[*i], parent, type(input[*i]));
+	node = create_ast_node(input[*i], parent, type(input, *i));
 	if (node == NULL)
 		return (free_cmd_node(left), NULL);
 	right = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
@@ -128,20 +140,18 @@ t_astnode*	ast_sym_node(char *input, int *i, t_astnode *parent)
 // 			if (utls.r && utls.r < utls.p)
 // 				node->left = ast_sym_node(input, index, node);
 // 			else
-// 				node->left = ast_cmd_node(input, index, \
-// 				nbr_token(&input[*index]), &utls.error);
-// 			if ((utls.r && utls.r < utls.p) && node->left == NULL \
-// 			|| utls.error)
+// 				node->left = ast_cmd_node(input, index, nbr_token(&input[*index]), &utls.error);
+// 			if ((utls.r && utls.r < utls.p) && node->left == NULL || utls.error)
 // 				return (clean_ast(node), NULL);	
 // 		}
 // 	}
 // 	return (node);
 // }
 
-void	arrange_ast(t_astnode *node, int r, int p)
-{
+// void	arrange_ast(t_astnode *node, int r, int p)
+// {
 
-}
+// }
 
 /*
 *	if there is a pipe then check if there is also a redirection, if there is a redirection then 
@@ -149,7 +159,7 @@ void	arrange_ast(t_astnode *node, int r, int p)
 *	
 */
 //kind off recursive because of pipes, but if no pipes there is no need
-t_astnode	*create_ast(char *input, int *index, t_lus utl)
+t_astnode	*create_ast(char *input, size_t *index, t_lus utl)
 {
 	t_astnode	*node;
 
@@ -170,47 +180,101 @@ t_astnode	*create_ast(char *input, int *index, t_lus utl)
 			node->right = create_ast(input, index, (t_lus){input_red(&input[*index]), input_pipe(&input[*index]), 0});
 			if (node->right == NULL)
 				return (free_cmd_node(node->left), NULL);
-			return (node->type == PIPE, node);
+			return (node->type = PIPE, node);
 		}
 		else
 			node = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
-		arrange_ast(node, utl.r, utl.p);
+		// arrange_ast(node, utl.r, utl.p);
 	}
 	return (node);
+}
+
+t_astnode	*free_main1(t_astnode *node)
+{
+	for (int i = 0; node->token[i] != NULL; i++)
+		free(node->token[i]->content);
+	free(node->token);
+	node = node->parent;
+	free(node->left);
+	node->left = NULL;
+	return (node);
+}
+
+char	*print_type(int type)
+{
+	switch (type)
+	{
+		case QUOTES:
+			return ("QUOTES");
+		case EXSTAT:
+			return ("EXSTAT");
+		case APREDIR:
+			return ("APREDIR");
+		case HEREDOC:
+			return ("HEREDOC");
+		case PIPE:
+			return ("PIPE");
+		case OPERATOR:
+			return ("OPERATOR");
+		case COMMAND:
+			return ("COMMAND");
+	}
+	return ("NULL");
+}
+
+void	print_node(t_astnode *node)
+{
+	
+	printf ("{node type: %s\n", print_type(node->type));
+	printf ("node tokens: ");
+	if (node->type == COMMAND){
+		for (int i = 0; node->token[i]->content != NULL; i++){
+			printf ("token %i-{ %s } ", i, node->token[i]->content);
+			free(node->token[i]->content);
+		}
+		printf ("}\n");
+	}
+	if (node->left != NULL)
+		print_node (node = node->left);
+	else if (node->right != NULL)
+		print_node (node = node->right);
 }
 
 int	main(int argc, char *argv[], char *env[])
 {
 	char	input[] = "cat << EOF > file | wc -c | tr =d "" > file2";
-	int		index = 0;
+	size_t		index = 0;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
 	t_astnode	*astroot = create_ast(input, &index, (t_lus){0, 0, 0});
+	t_astnode	*current_node = astroot;
+	print_node (current_node);
+
+	// while (current_node != NULL)
+	// {
+	// 	//free cmd node
+	// 	while (current_node->left != NULL && current_node->right != NULL)
+	// 		current_node = current_node->left;
+	// 	if (current_node->type == COMMAND)
+	// 		current_node = free_main1(current_node);
+	// 	//free red node
+	// 	if (current_node->type == RED_L || current_node->type == RED_R || current_node->type == READERR)
+	// 	{
+	// 		if (current_node->right != NULL)
+	// 			free_main1(current_node->left);			
+	// 		if (current_node->parent != NULL)
+	// 			current_node = current_node->parent;
+
+	// 	}
+		
+	// }
 	return 0;
 }
 
 //++++++++++++++++++++++++++++++++++++TESTS
 
-char	print_type(int type)
-{
-	switch (type)
-	{
-		case QUOTES:
-			return ("is quotes");
-		case EXSTAT:
-			return ("is exit status");
-		case APREDIR:
-			return ("is append redirection");
-		case HEREDOC:
-			return ("is heredoc");
-		case PIPE:
-			return ("is pipe");
-		case OPERATOR:
-			return ("is operator");
-	}
-}
 
 //test main
 // int	main(void)

@@ -26,7 +26,9 @@
 # define IT_TOK	1
 # define AST_CN_ERR "ast_cmd_node malloc fail"
 
-volatile int	g_signal;
+#ifndef MINISHELL_H
+	volatile int	g_signal;
+#endif
 
 enum e_builtin{
 	ECHO = 22,
@@ -39,6 +41,7 @@ enum e_builtin{
 };
 
 enum e_type{
+	WORD,
 	SEPARATOR,
 	QUOTES,
 	EXSTAT,
@@ -51,8 +54,7 @@ enum e_type{
 	COMMAND,
 	BUILTIN,
 	RED_L,
-	RED_R,//13
-	WORD = 0
+	RED_R,
 };	
 
 typedef struct LexerUtilsStructure{
@@ -79,7 +81,7 @@ typedef struct AbstractSyntaxTreeNode{
 
 
 //lexerutils_A
-int		type(char *s);
+int		type(char *s, size_t i);
 int		input_pipe(char *input);
 int		input_red(char *input);
 bool	cmp(char *content, char *input);
@@ -93,13 +95,13 @@ bool	it_token(char *input, size_t *i, int flag);
 char	*get_content(char *input, size_t *index, size_t *len);
 
 //lexerutils_C
-t_token	*get_token(char *input, int *index);
+t_token	*get_token(char *input, size_t *index, t_token *token);
 int		nbr_token(char *input);
-void	free_tokens(t_token *tokens, int last);
+void	free_tokens(t_token **tokens, int last);
 void	free_cmd_node(t_astnode *cmd);
 void	free_red_node(t_astnode *red);
 
-void	free_tokens(t_token *tokens, int last);
+// void	free_tokens(t_token *tokens, int last);
 void	err_msg(char *msg);
 char	**tokenize(char *s, int *tokens_n, int tokens_i);
 int		parser(char *input);

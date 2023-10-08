@@ -22,9 +22,9 @@
 */
 bool	check_quote(char *input, size_t *i)
 {
-	*i++;
-	while (type(&input[*i]) != QUOTES && input[*i])
-		*i++;
+	*i += 1;
+	while (type(input, *i) != QUOTES && input[*i])
+		*i += 1;
 	if (!input[*i])
 		return (err_msg("unclosed quote"), false);
 	return (true);
@@ -58,8 +58,8 @@ int	get_token_type(char	*token)
 {
 	int	builtin;
 
-	if (type(token))
-		return (type(token));
+	if (type(token, 0))
+		return (type(token, 0));
 	else
 	{
 		builtin = built_in(token);
@@ -76,18 +76,18 @@ int	get_token_type(char	*token)
 bool	it_token(char *input, size_t *i, int flag)
 {
 	if (flag == IT_SEP)
-		while (type(&input[*i]) == SEPARATOR && input[*i])
-			*i++;
+		while (type(input, *i) == SEPARATOR && input[*i])
+			*i += 1;
 	if (!input[*i])
 		return (false);
 	else if (flag == IT_TOK)
 	{
-		if (type(&input[*i]) == QUOTES && input[*i])
+		if (type(input, *i) == QUOTES && input[*i])
 			return (check_quote(input, i));
-		if (type(&input[*i]) != WORD && input[*i])
+		if (type(input, *i) != WORD && input[*i])
 			return (check_spec(input, i));
-		while (type(&input[*i]) == WORD && input[*i])
-			*i++;
+		while (type(input, *i) == WORD && input[*i])
+			*i += 1;
 	}
 	return (true);
 }
@@ -105,11 +105,12 @@ char	*get_content(char *input, size_t *index, size_t *len)
 	if (content == NULL)
 		return (err_msg("get_content malloc fail"), NULL);
 	content[*len + 1] = 0;
-	while (i < *len)
+	while (i < (int)*len)
 	{
-		content[i] = input[i];
+		content[i] = input[*index];
+		*index += 1;
 		i++;
 	}
-	*index = len;
+	// *index += *len;
 	return (content);
 }
