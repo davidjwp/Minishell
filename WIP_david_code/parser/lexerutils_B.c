@@ -20,11 +20,15 @@
 *   will check for unclosed quotes and iterate index *i which corresponds to 
 *   length in it_token's higher scope, this also gets the length of the token
 */
-bool	check_quote(char *input, size_t *i)
+bool	check_quote(char *input, size_t *len, size_t *i)
 {
 	*i += 1;
+	*len += 1;
 	while (type(input, *i) != QUOTES && input[*i])
+	{
 		*i += 1;
+		*len += 1;
+	}
 	if (!input[*i])
 		return (err_msg("unclosed quote"), false);
 	return (true);
@@ -70,10 +74,10 @@ int	get_token_type(char	*token)
 }
 
 /*
-*   iterates the input with higher scope index which corresponds to length of 
-*   token, also iterates over SEPARATORS and checks unclosed quotes
+*   iterates the token while giving length of token, also 
+*	iterates over SEPARATORS and checks unclosed quotes 
 */
-bool	it_token(char *input, size_t *i, int flag)
+bool	it_token(char *input, size_t *len, size_t *i, int flag)
 {
 	if (flag == IT_SEP)
 		while (type(input, *i) == SEPARATOR && input[*i])
@@ -83,11 +87,14 @@ bool	it_token(char *input, size_t *i, int flag)
 	else if (flag == IT_TOK)
 	{
 		if (type(input, *i) == QUOTES && input[*i])
-			return (check_quote(input, i));
+			return (check_quote(input, len, i));
 		if (type(input, *i) != WORD && input[*i])
-			return (check_spec(input, i));
+			return (check_spec(input, len, i));
 		while (type(input, *i) == WORD && input[*i])
+		{
+			*len += 1;
 			*i += 1;
+		}
 	}
 	return (true);
 }
@@ -99,12 +106,13 @@ char	*get_content(char *input, size_t *index, size_t *len)
 	int		i;
 
 	i = 0;
-	if (!it_token(input, len, IT_TOK))
+	if (!it_token(input, len, index, IT_TOK))
 		return (NULL);
 	content = malloc(sizeof(char) * (*len + 1));
 	if (content == NULL)
 		return (err_msg("get_content malloc fail"), NULL);
 	content[*len + 1] = 0;
+	*index -= *len;
 	while (i < (int)*len)
 	{
 		content[i] = input[*index];

@@ -20,12 +20,13 @@
 t_token	*get_token(char *input, size_t *index, t_token *token)
 {
 	token->len = 0;
-	if (!it_token(input, index, IT_SEP))
+	if (!it_token(input, (size_t *)0, index, IT_SEP))
 		return (NULL);
 	token->content = get_content(input, index, &token->len);
 	if (token->content == NULL)
 		return (NULL);
 	token->type = get_token_type(token->content);
+	it_token(input, (size_t *)0, index, IT_SEP);
 	return (token);
 }
 
@@ -35,19 +36,21 @@ int	nbr_token(char *input)
 	int	tokcnt;
 	size_t	i;
 	int		t;
+	size_t	len;
 
 	i = 0;
 	tokcnt = 0;
 	t = type(input, i);
 	while (t != RED_L && t != RED_R && t != APREDIR && t != PIPE && input[i])
 	{
-		it_token(input, &i, IT_SEP);
+		len = 0;
+		it_token(input, &len, &i, IT_SEP);
 		t = type(input, i);
 		if (t != RED_L && t != RED_R &&	t != APREDIR && t != PIPE && input[i])
 			tokcnt += 1;
 		else
 			break ;
-		it_token(input, &i, IT_TOK);
+		it_token(input, &len, &i, IT_TOK);
 	}
 	return (tokcnt);
 }

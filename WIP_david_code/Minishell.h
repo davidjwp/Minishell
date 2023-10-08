@@ -21,9 +21,13 @@
 # include <readline/history.h>
 
 # define PROMPT	"$> "
+
+//FLAGS
 # define G_ERROR 0
 # define IT_SEP 0
 # define IT_TOK	1
+# define RED 1
+# define PIPE 0
 # define AST_CN_ERR "ast_cmd_node malloc fail"
 
 #ifndef MINISHELL_H
@@ -85,13 +89,13 @@ int		type(char *s, size_t i);
 int		input_pipe(char *input);
 int		input_red(char *input);
 bool	cmp(char *content, char *input);
-bool	check_spec(char *input, size_t *i);
+bool	check_spec(char *input, size_t *len, size_t *i);
 
 //lexerutils_B
-bool	check_quote(char *input, size_t *i);
+bool	check_quote(char *input, size_t *len, size_t *i);
 int		built_in(char *input);
 int		get_token_type(char	*token);
-bool	it_token(char *input, size_t *i, int flag);
+bool	it_token(char *input, size_t *len, size_t *i, int flag);
 char	*get_content(char *input, size_t *index, size_t *len);
 
 //lexerutils_C

@@ -92,14 +92,15 @@ bool	cmp(char *content, char *input)
 *	iterates size_t *i depending on the special character type
 *	here *i is the length of the token in higher scope it_token 
 */
-bool	check_spec(char *input, size_t *i)
+bool	check_spec(char *input, size_t *len, size_t *i)
 {
 	int	t;
 
 	t = type(input, *i);
 	if (t == EXSTAT || t == HEREDOC || t == APREDIR)
-		*i += 2;
+		*len += 2;
 	else
-		*i += 1;
+		*len += 1;
+	*i += *len;
 	return (true);
 }

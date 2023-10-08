@@ -35,18 +35,19 @@ void	free_sym_node(t_astnode *node)
 *	creates the symbolic AST node with it's corresponding type between a pipe
 *	or redirections, children are given outside the function 
 */
-t_astnode*	create_ast_node(char c, t_astnode *p, int type)
+t_astnode*	create_ast_node(char *input, size_t *i, t_astnode *p, int t)
 {
 	t_astnode	*node;
+	size_t		len;
 
+	len = 0;
 	node = (t_astnode *)malloc(sizeof(t_astnode));
 	if (node == NULL)
 		return (NULL);
 	node->token = malloc(sizeof(t_token *) * 1);//THIS IS NOT FREED
 	node->token[0] = malloc(sizeof(t_astnode *));
-	node->token[0]->content = malloc(sizeof(t_token));
-	node->token[0][0].content[0] = c;//this is fucked but whatever
-	node->type = type;
+	node->token[0]->content = get_content(input, i, &len);
+	node->type = t;
 	node->parent = p;
 	node->left = NULL;
 	node->right = NULL;
@@ -109,7 +110,7 @@ t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
 	left = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
 	if (error)
 		return (NULL);
-	node = create_ast_node(input[*i], parent, type(input, *i));
+	node = create_ast_node(input, i, parent, type(input, *i));
 	if (node == NULL)
 		return (free_cmd_node(left), NULL);
 	right = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
@@ -123,35 +124,20 @@ t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
 }
 
 
+t_astnode	*create_ast(char *input, size_t *index, t_lus utl)
+{
+	t_astnode	*node;
 
-
-// t_astnode	*create_ast(char *input, int *index, t_lus utls)
-// {
-// 	t_astnode	*node;
-
-// 	node = (t_astnode *)malloc(sizeof(t_astnode *));
-// 	if (node == NULL);
-// 	while (input[*index])
-// 	{
-// 		utls.p = input_pipe(&input[*index]);
-// 		utls.r = input_red(&input[*index]);
-// 		if (utls.p)
-// 		{
-// 			if (utls.r && utls.r < utls.p)
-// 				node->left = ast_sym_node(input, index, node);
-// 			else
-// 				node->left = ast_cmd_node(input, index, nbr_token(&input[*index]), &utls.error);
-// 			if ((utls.r && utls.r < utls.p) && node->left == NULL || utls.error)
-// 				return (clean_ast(node), NULL);	
-// 		}
-// 	}
-// 	return (node);
-// }
-
-// void	arrange_ast(t_astnode *node, int r, int p)
-// {
-
-// }
+	node = malloc(sizeof(t_astnode));
+	if (node == NULL)
+		return (NULL);
+	while (input[*index] != 0)
+	{
+		utl.r = input_red(&input[*index]);
+		utl.p = input_pipe(&input[*index]);
+		if ()
+	}
+}
 
 /*
 *	if there is a pipe then check if there is also a redirection, if there is a redirection then 

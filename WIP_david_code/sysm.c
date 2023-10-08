@@ -12,16 +12,17 @@ typedef struct s_str{
 	struct s_str	*ssl;
 }		t_str;
 
+void	funct(size_t *p)
+{
+	for (int i = 0; i < 2; i++)
+		*p += 1;
+	return ;
+}
+
 int	main(void)
 {
 	t_str *node;
 
-	node = malloc(sizeof(t_str));
-	node->l = malloc(sizeof(t_po) * 3);
-	node->l[0] = malloc(sizeof(t_po));
-	node->l[0]->c = 0;
-	free(node);
-	free(node->l);
-	free(node->[0]);
-	return 0;
+	funct(0);
+	return (0);
 }
