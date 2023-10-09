@@ -1,4 +1,5 @@
 # include <stdio.h>
+# include <string.h>
 # include <stdlib.h>
 
 typedef struct s_po{
@@ -12,17 +13,14 @@ typedef struct s_str{
 	struct s_str	*ssl;
 }		t_str;
 
-void	funct(size_t *p)
-{
-	for (int i = 0; i < 2; i++)
-		*p += 1;
-	return ;
-}
 
 int	main(void)
 {
-	t_str *node;
+	const char	str[] = "this is a string of words";
+	char		his[256] = {0};
+	int	len = strlen(str);
 
-	funct(0);
+	for (int i = 0; i < len; i++)
+		his[str[i]]++;
 	return (0);
 }

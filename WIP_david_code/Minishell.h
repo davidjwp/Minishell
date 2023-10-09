@@ -126,6 +126,7 @@ void	free_tokens(t_token **tokens, int last);
 void	free_cmd_node(t_astnode *cmd);
 void	free_red_node(t_astnode *red);
 
+//WIP
 // void	free_tokens(t_token *tokens, int last);
 void	err_msg(char *msg);
 char	**tokenize(char *s, int *tokens_n, int tokens_i);

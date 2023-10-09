@@ -124,34 +124,88 @@ t_astnode*	ast_cmd_node(char *input, size_t *index, int nbr, int *error)
 // 	return (node);
 // }
 
-t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
+// t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
+// {
+// 	t_astnode	*node;
+// 	t_astnode	*right;
+// 	int			error;
+
+// 	error = 0;
+// 	node = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+// 	if (error)
+// 		return (NULL);
+// }
+
+/*
+make sure that index is on a redirection 
+t_astnode	ast_red_node(char *input, size_t *i, int *error)
 {
 	t_astnode	*node;
-	t_astnode	*right;
-	int			error;
 
-	error = 0;
-	node = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
-	if (error)
-		return (NULL);
+	node = malloc(sizeof(t_astnode));
+	if (*error = 1, NULL)
+	node->token[0] = malloc(sizeof(t_tokens));
+	if (node->token[0] == NULL)
+		return (*error = 1, free(node), NULL);
+	node->token[0]->content = get_content(input, i);
+	if (node->token[0]->content == NULL)
+		return (*error = 1, free(node), free(node->token[0]), NULL);
+	return (node);
 }
+*/
 
-t_astnode	*create_ast(char *input, size_t *index, t_lus utl)
+/*
+t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent, int *error)
 {
 	t_astnode	*node;
 
-	node->left = ast_sym_node(input, index, node);
+	if (redirection){
+		node->left = ast_cmd_node(input, i, nbr_token(&input[*i]), error);
+		if (*error)
+			return (NULL);
+		else if (node->left == NULL)
+		{
+			node = ast_red_node(input, i, error);
+			if (*error)
+				return (NULL);
+		}
+	}
+	else
+		return (NULL);
+	return (node);
+}
+*/
+t_astnode	*create_ast(char *input, size_t *index, t_lus utl, t_astnode *parent)
+{
+	t_astnode	*cmd;
+	t_astnode	*node;
+
+/*
+	t_astnode	*node;
+
+	if (pipe){
+		node->left = ast_red_node(input, index, nbr_token(&input[*index]), &utl.error);
+		if (utl.error)
+			return (NULL);
+		if (node->left == NULL)
+			node->left = ast;
+		node->type = TYPE;
+		node->right ;
+	}
+*/	
+	cmd = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
 	if(type(input, index) == PIPE)
 	{
-		node->right = create_ast(input, index, (t_lus){0, 0, 0});
-		node->type = PIPE;
+		node = create_ast(input, index, (t_lus){0, 0, 0}, \
+		ast_sym_node(input, index, cmd));
+		cmd->type = PIPE;
 	}
 	else	
-		node = node->left;
+		cmd = cmd->left;
 	if (utl.error)
 		return (NULL);
 		// node = create_ast(input, index, (t_lus){0, 0, 0});
-	return (node);
+	return (cmd);
 }
 
 /*
