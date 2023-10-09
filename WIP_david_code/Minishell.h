@@ -26,9 +26,13 @@
 # define G_ERROR 0
 # define IT_SEP 0
 # define IT_TOK	1
-# define RED 1
-# define PIPE 0
 # define AST_CN_ERR "ast_cmd_node malloc fail"
+
+enum e_flags{
+	_PIP,
+	_RED,
+	_CMD
+};
 
 #ifndef MINISHELL_H
 	volatile int	g_signal;
@@ -44,21 +48,38 @@ enum e_builtin{
 	EXIT = 88
 };
 
+/*
+	token types
+	word
+	separator
+	quotes
+	exit status
+	heredoc
+	append redirection
+	argument
+	operator
+	variable
+	pipeline
+	command
+	builtin
+	redirection left
+	redirection right
+*/
 enum e_type{
 	WORD,
-	SEPARATOR,
-	QUOTES,
-	EXSTAT,
-	HEREDOC,
-	APREDIR,
-	ARGUMENT,
-	OPERATOR,
-	VARIABLE,
+	SEPR,
+	QUOT,
+	EXST,
+	HERD,
+	APRD,
+	ARGT,
+	OPER,
+	VARE,
 	PIPE,
-	COMMAND,
-	BUILTIN,
-	RED_L,
-	RED_R,
+	COMD,
+	BUIT,
+	REDL,
+	REDR,
 };	
 
 typedef struct LexerUtilsStructure{

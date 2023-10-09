@@ -20,23 +20,23 @@
 int	type(char *s, size_t i)
 {
 	if (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
-		return (SEPARATOR);
+		return (SEPR);
 	if (s[i] == '\"' || s[i] == '\'')
-		return (QUOTES);
+		return (QUOT);
 	if (s[i] == '$' && s[i + 1] == '?')
-		return (EXSTAT);
+		return (EXST);
 	else if (s[i] == '$')
-		return (VARIABLE);
+		return (VARE);
 	if (s[i] == '>' && s[i + 1] == '>')
-		return (APREDIR);
+		return (APRD);
 	if (s[i] == '<' && s[i + 1] == '<')
-		return (HEREDOC);
+		return (HERD);
 	if (s[i] == '|')
 		return (PIPE);
 	if ((s[i] == '>' && s[i + 1] != '>') && (s[i] == '>' && s[i - 1] != '>'))
-		return (RED_R);
+		return (REDR);
 	if ((s[i] == '<' && s[i + 1] != '<') && (s[i] == '<' && s[i - 1] != '<'))
-		return (RED_L);
+		return (REDL);
 	return (WORD);
 }
 
@@ -61,10 +61,10 @@ int	input_red(char *input)
 
 	i = 0;
 	t = type(input, i);
-	while (t != RED_L && t != RED_R && t != APREDIR && input[i])
+	while (t != REDL && t != REDR && t != APRD && input[i])
 	{
 		t = type(input, i);
-		if (t == RED_L && t == RED_R && t == APREDIR && input[i])
+		if (t == REDL && t == REDR && t == APRD && input[i])
 			break ;
 		i++;
 	}
@@ -81,7 +81,7 @@ bool	cmp(char *content, char *input)
 	i = 0;
 	while (content[i] == input[i])
 	{
-		if ((!content[i] || type(content, i) == SEPARATOR) && !input[i])
+		if ((!content[i] || type(content, i) == SEPR) && !input[i])
 			return (true);
 		i++;
 	}
@@ -97,7 +97,7 @@ bool	check_spec(char *input, size_t *len, size_t *i)
 	int	t;
 
 	t = type(input, *i);
-	if (t == EXSTAT || t == HEREDOC || t == APREDIR)
+	if (t == EXST || t == HERD || t == APRD)
 		*len += 2;
 	else
 		*len += 1;

@@ -12,6 +12,7 @@
 
 #include "../Minishell.h"
 
+
 /*
 *	('),(")			QUOTES
 *	($)				SPECIAL
@@ -56,7 +57,7 @@ t_astnode*	create_ast_node(char *input, size_t *i, t_astnode *p, int t)
 
 int	init_node(t_astnode *node, int nbr, int *error)
 {
-	node->type = COMMAND;
+	node->type = COMD;
 	node->token = (t_token **)malloc(sizeof(t_token) * (nbr + 1));
 	if (node->token == NULL)
 		return (free(node), *error = 1, err_msg(AST_CN_ERR), 0);
@@ -99,44 +100,58 @@ t_astnode*	ast_cmd_node(char *input, size_t *index, int nbr, int *error)
 	return (node);
 }
 
+// t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
+// {
+// 	t_astnode	*node;
+// 	t_astnode	*right;
+// 	t_astnode	*left;
+// 	int			error;
+
+// 	error = 0;
+// 	left = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+// 	if (error)
+// 		return (NULL);
+// 	node = create_ast_node(input, i, parent, type(input, *i));
+// 	if (node == NULL)
+// 		return (free_cmd_node(left), NULL);
+// 	right = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+// 	if (error)
+// 		return (free_cmd_node(left), free_cmd_node(right), NULL);
+// 	right->parent = node;
+// 	left->parent = node;
+// 	node->left = left;
+// 	node->right = right;
+// 	return (node);
+// }
+
 t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
 {
 	t_astnode	*node;
 	t_astnode	*right;
-	t_astnode	*left;
 	int			error;
 
 	error = 0;
-	left = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+	node = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
 	if (error)
 		return (NULL);
-	node = create_ast_node(input, i, parent, type(input, *i));
-	if (node == NULL)
-		return (free_cmd_node(left), NULL);
-	right = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
-	if (error)
-		return (free_cmd_node(left), free_cmd_node(right), NULL);
-	right->parent = node;
-	left->parent = node;
-	node->left = left;
-	node->right = right;
-	return (node);
 }
-
 
 t_astnode	*create_ast(char *input, size_t *index, t_lus utl)
 {
 	t_astnode	*node;
 
-	node = malloc(sizeof(t_astnode));
-	if (node == NULL)
-		return (NULL);
-	while (input[*index] != 0)
+	node->left = ast_sym_node(input, index, node);
+	if(type(input, index) == PIPE)
 	{
-		utl.r = input_red(&input[*index]);
-		utl.p = input_pipe(&input[*index]);
-		if ()
+		node->right = create_ast(input, index, (t_lus){0, 0, 0});
+		node->type = PIPE;
 	}
+	else	
+		node = node->left;
+	if (utl.error)
+		return (NULL);
+		// node = create_ast(input, index, (t_lus){0, 0, 0});
+	return (node);
 }
 
 /*
@@ -145,35 +160,35 @@ t_astnode	*create_ast(char *input, size_t *index, t_lus utl)
 *	
 */
 //kind off recursive because of pipes, but if no pipes there is no need
-t_astnode	*create_ast(char *input, size_t *index, t_lus utl)
-{
-	t_astnode	*node;
+// t_astnode	*create_ast(char *input, size_t *index, t_lus utl)
+// {
+// 	t_astnode	*node;
 
-	node = (t_astnode *)malloc(sizeof(t_astnode *));
-	if (node == NULL)
-		return (NULL);
-	while (input[*index] != 0)
-	{
-		utl.r = input_red(&input[*index]);
-		utl.p = input_pipe(&input[*index]);
-		if ((utl.r && utl.r < utl.p) || (!utl.p && utl.r))//not sure about that
-			node->left = ast_sym_node(input, index, node);
-		if ((utl.p && utl.p < utl.r) || (!utl.r && utl.p))//could be a problem if not else but can't figure how it could be
-		{
-			node->left = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
-			if (utl.error)
-				return (NULL);
-			node->right = create_ast(input, index, (t_lus){input_red(&input[*index]), input_pipe(&input[*index]), 0});
-			if (node->right == NULL)
-				return (free_cmd_node(node->left), NULL);
-			return (node->type = PIPE, node);
-		}
-		else
-			node = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
-		// arrange_ast(node, utl.r, utl.p);
-	}
-	return (node);
-}
+// 	node = (t_astnode *)malloc(sizeof(t_astnode *));
+// 	if (node == NULL)
+// 		return (NULL);
+// 	while (input[*index] != 0)
+// 	{
+// 		utl.r = input_red(&input[*index]);
+// 		utl.p = input_pipe(&input[*index]);
+// 		if ((utl.r && utl.r < utl.p) || (!utl.p && utl.r))//not sure about that
+// 			node->left = ast_sym_node(input, index, node);
+// 		if ((utl.p && utl.p < utl.r) || (!utl.r && utl.p))//could be a problem if not else but can't figure how it could be
+// 		{
+// 			node->left = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
+// 			if (utl.error)
+// 				return (NULL);
+// 			node->right = create_ast(input, index, (t_lus){input_red(&input[*index]), input_pipe(&input[*index]), 0});
+// 			if (node->right == NULL)
+// 				return (free_cmd_node(node->left), NULL);
+// 			return (node->type = PIPE, node);
+// 		}
+// 		else
+// 			node = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
+// 		// arrange_ast(node, utl.r, utl.p);
+// 	}
+// 	return (node);
+// }
 
 t_astnode	*free_main1(t_astnode *node)
 {
@@ -190,19 +205,19 @@ char	*print_type(int type)
 {
 	switch (type)
 	{
-		case QUOTES:
+		case QUOT:
 			return ("QUOTES");
-		case EXSTAT:
+		case EXST:
 			return ("EXSTAT");
-		case APREDIR:
+		case APRD:
 			return ("APREDIR");
-		case HEREDOC:
+		case HERD:
 			return ("HEREDOC");
 		case PIPE:
 			return ("PIPE");
-		case OPERATOR:
+		case OPER:
 			return ("OPERATOR");
-		case COMMAND:
+		case COMD:
 			return ("COMMAND");
 	}
 	return ("NULL");
@@ -213,7 +228,7 @@ void	print_node(t_astnode *node)
 	
 	printf ("{node type: %s\n", print_type(node->type));
 	printf ("node tokens: ");
-	if (node->type == COMMAND){
+	if (node->type == COMD){
 		for (int i = 0; node->token[i]->content != NULL; i++){
 			printf ("token %i-{ %s } ", i, node->token[i]->content);
 			free(node->token[i]->content);

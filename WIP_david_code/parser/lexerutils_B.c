@@ -24,7 +24,7 @@ bool	check_quote(char *input, size_t *len, size_t *i)
 {
 	*i += 1;
 	*len += 1;
-	while (type(input, *i) != QUOTES && input[*i])
+	while (type(input, *i) != QUOT && input[*i])
 	{
 		*i += 1;
 		*len += 1;
@@ -80,13 +80,13 @@ int	get_token_type(char	*token)
 bool	it_token(char *input, size_t *len, size_t *i, int flag)
 {
 	if (flag == IT_SEP)
-		while (type(input, *i) == SEPARATOR && input[*i])
+		while (type(input, *i) == SEPR && input[*i])
 			*i += 1;
 	if (!input[*i])
 		return (false);
 	else if (flag == IT_TOK)
 	{
-		if (type(input, *i) == QUOTES && input[*i])
+		if (type(input, *i) == QUOT && input[*i])
 			return (check_quote(input, len, i));
 		if (type(input, *i) != WORD && input[*i])
 			return (check_spec(input, len, i));
@@ -119,6 +119,5 @@ char	*get_content(char *input, size_t *index, size_t *len)
 		*index += 1;
 		i++;
 	}
-	// *index += *len;
 	return (content);
 }
