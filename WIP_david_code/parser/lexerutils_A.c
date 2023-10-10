@@ -92,7 +92,7 @@ bool	cmp(char *content, const char *input)
 *	iterates size_t *i depending on the special character type
 *	here *i is the length of the token in higher scope it_token 
 */
-bool	check_spec(char *input, size_t *len, size_t *i)
+bool	check_spec(const char *input, size_t *len, size_t *i)
 {
 	int	t;
 

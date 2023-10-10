@@ -58,7 +58,7 @@ int	built_in(const char *input)
 }
 
 //finds the type for the token, if not special character or builtin then word
-int	get_token_type(const char	*token)
+int	get_token_type(char *token)
 {
 	int	builtin;
 

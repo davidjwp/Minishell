@@ -17,7 +17,7 @@
 *	get_token(), nbr_token(), free_tokens(), free_cmd_node()
 */
 //returns the token struct with allocated content and type + length
-t_token	*get_token(char *input, size_t *index, t_token *token)
+t_token	*get_token(const char *input, size_t *index, t_token *token)
 {
 	token->len = 0;
 	if (!it_token(input, (size_t *)0, index, IT_SEP))
@@ -31,7 +31,7 @@ t_token	*get_token(char *input, size_t *index, t_token *token)
 }
 
 //counts the number of tokens until a pipe or redirection is found
-int	nbr_token(char *input)
+int	nbr_token(const char *input)
 {
 	int	tokcnt;
 	size_t	i;

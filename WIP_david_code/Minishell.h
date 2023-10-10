@@ -106,16 +106,16 @@ typedef struct AbstractSyntaxTreeNode{
 
 
 //lexerutils_A
-int		type(char *s, size_t i);
+int		type(const char *s, size_t i);
 int		input_pipe(const char *input);
 int		input_red(const char *input);
-bool	cmp(char *content, char *input);
+bool	cmp(char *content, const char *input);
 bool	check_spec(const char *input, size_t *len, size_t *i);
 
 //lexerutils_B
 bool	check_quote(const char *input, size_t *len, size_t *i);
 int		built_in(const char *input);
-int		get_token_type(const char	*token);
+int		get_token_type(char	*token);
 bool	it_token(const char *input, size_t *len, size_t *i, int flag);
 char	*get_content(const char *input, size_t *index, size_t *len);
 
@@ -127,7 +127,7 @@ void	free_cmd_node(t_astnode *cmd);
 void	free_red_node(t_astnode *red);
 
 //WIP
-t_astnode	*ast_cmd_node(char *input, size_t *index, int nbr, int *error);
+t_astnode	*ast_cmd_node(const char *input, size_t *index, int nbr, int *error);
 
 // void	free_tokens(t_token *tokens, int last);
 void	err_msg(char *msg);
