@@ -13,14 +13,18 @@ typedef struct s_str{
 	struct s_str	*ssl;
 }		t_str;
 
+void	funct(const char *str)
+{
+	size_t	i = 0;
+
+	while (str[i] != 0)
+		i++;
+}
 
 int	main(void)
 {
-	const char	str[] = "this is a string of words";
-	char		his[256] = {0};
-	int	len = strlen(str);
+	const char	str[] = "heeeyyeyeye";
 
-	for (int i = 0; i < len; i++)
-		his[str[i]]++;
+	funct(&str[5]);
 	return (0);
 }

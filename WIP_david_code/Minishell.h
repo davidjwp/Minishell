@@ -107,26 +107,28 @@ typedef struct AbstractSyntaxTreeNode{
 
 //lexerutils_A
 int		type(char *s, size_t i);
-int		input_pipe(char *input);
-int		input_red(char *input);
+int		input_pipe(const char *input);
+int		input_red(const char *input);
 bool	cmp(char *content, char *input);
-bool	check_spec(char *input, size_t *len, size_t *i);
+bool	check_spec(const char *input, size_t *len, size_t *i);
 
 //lexerutils_B
-bool	check_quote(char *input, size_t *len, size_t *i);
-int		built_in(char *input);
-int		get_token_type(char	*token);
-bool	it_token(char *input, size_t *len, size_t *i, int flag);
-char	*get_content(char *input, size_t *index, size_t *len);
+bool	check_quote(const char *input, size_t *len, size_t *i);
+int		built_in(const char *input);
+int		get_token_type(const char	*token);
+bool	it_token(const char *input, size_t *len, size_t *i, int flag);
+char	*get_content(const char *input, size_t *index, size_t *len);
 
 //lexerutils_C
-t_token	*get_token(char *input, size_t *index, t_token *token);
-int		nbr_token(char *input);
+t_token	*get_token(const char *input, size_t *index, t_token *token);
+int		nbr_token(const char *input);
 void	free_tokens(t_token **tokens, int last);
 void	free_cmd_node(t_astnode *cmd);
 void	free_red_node(t_astnode *red);
 
 //WIP
+t_astnode	*ast_cmd_node(char *input, size_t *index, int nbr, int *error);
+
 // void	free_tokens(t_token *tokens, int last);
 void	err_msg(char *msg);
 char	**tokenize(char *s, int *tokens_n, int tokens_i);

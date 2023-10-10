@@ -36,7 +36,7 @@ void	free_sym_node(t_astnode *node)
 *	creates the symbolic AST node with it's corresponding type between a pipe
 *	or redirections, children are given outside the function 
 */
-t_astnode*	create_ast_node(char *input, size_t *i, t_astnode *p, int t)
+t_astnode*	create_ast_node(const char *input, size_t *i, t_astnode *p, int t)
 {
 	t_astnode	*node;
 	size_t		len;
@@ -73,7 +73,7 @@ int	init_node(t_astnode *node, int nbr, int *error)
 *	type instead of separators, so are builtins if detected so each token
 *	has it's precise type
 */
-t_astnode*	ast_cmd_node(char *input, size_t *index, int nbr, int *error)
+t_astnode*	ast_cmd_node(const char *input, size_t *index, int nbr, int *error)
 {
 	t_astnode	*node;
 	int			i;
@@ -100,41 +100,29 @@ t_astnode*	ast_cmd_node(char *input, size_t *index, int nbr, int *error)
 	return (node);
 }
 
-// t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
-// {
-// 	t_astnode	*node;
-// 	t_astnode	*right;
-// 	t_astnode	*left;
-// 	int			error;
+t_astnode*	ast_sym_node(const char *input, size_t *i, t_astnode *parent)
+{
+	t_astnode	*node;
+	t_astnode	*right;
+	t_astnode	*left;
+	int			error;
 
-// 	error = 0;
-// 	left = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
-// 	if (error)
-// 		return (NULL);
-// 	node = create_ast_node(input, i, parent, type(input, *i));
-// 	if (node == NULL)
-// 		return (free_cmd_node(left), NULL);
-// 	right = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
-// 	if (error)
-// 		return (free_cmd_node(left), free_cmd_node(right), NULL);
-// 	right->parent = node;
-// 	left->parent = node;
-// 	node->left = left;
-// 	node->right = right;
-// 	return (node);
-// }
-
-// t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent)
-// {
-// 	t_astnode	*node;
-// 	t_astnode	*right;
-// 	int			error;
-
-// 	error = 0;
-// 	node = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
-// 	if (error)
-// 		return (NULL);
-// }
+	error = 0;
+	left = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+	if (error)
+		return (NULL);
+	node = create_ast_node(input, i, parent, type(input, *i));
+	if (node == NULL)
+		return (free_cmd_node(left), NULL);
+	right = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+	if (error)
+		return (free_cmd_node(left), free_cmd_node(right), NULL);
+	right->parent = node;
+	left->parent = node;
+	node->left = left;
+	node->right = right;
+	return (node);
+}
 
 /*
 make sure that index is on a redirection 
@@ -154,45 +142,11 @@ t_astnode	ast_red_node(char *input, size_t *i, int *error)
 }
 */
 
-/*
-t_astnode*	ast_sym_node(char *input, size_t *i, t_astnode *parent, int *error)
-{
-	t_astnode	*node;
-
-	if (redirection){
-		node->left = ast_cmd_node(input, i, nbr_token(&input[*i]), error);
-		if (*error)
-			return (NULL);
-		else if (node->left == NULL)
-		{
-			node = ast_red_node(input, i, error);
-			if (*error)
-				return (NULL);
-		}
-	}
-	else
-		return (NULL);
-	return (node);
-}
-*/
-t_astnode	*create_ast(char *input, size_t *index, t_lus utl, t_astnode *parent)
+t_astnode	*create_ast(const char *input, size_t *index, t_lus utl, t_astnode *parent)
 {
 	t_astnode	*cmd;
 	t_astnode	*node;
 
-/*
-	t_astnode	*node;
-
-	if (pipe){
-		node->left = ast_red_node(input, index, nbr_token(&input[*index]), &utl.error);
-		if (utl.error)
-			return (NULL);
-		if (node->left == NULL)
-			node->left = ast;
-		node->type = TYPE;
-		node->right ;
-	}
-*/	
 	cmd = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
 	if(type(input, index) == PIPE)
 	{
@@ -306,25 +260,6 @@ int	main(int argc, char *argv[], char *env[])
 	t_astnode	*astroot = create_ast(input, &index, (t_lus){0, 0, 0});
 	t_astnode	*current_node = astroot;
 	print_node (current_node);
-
-	// while (current_node != NULL)
-	// {
-	// 	//free cmd node
-	// 	while (current_node->left != NULL && current_node->right != NULL)
-	// 		current_node = current_node->left;
-	// 	if (current_node->type == COMMAND)
-	// 		current_node = free_main1(current_node);
-	// 	//free red node
-	// 	if (current_node->type == RED_L || current_node->type == RED_R || current_node->type == READERR)
-	// 	{
-	// 		if (current_node->right != NULL)
-	// 			free_main1(current_node->left);			
-	// 		if (current_node->parent != NULL)
-	// 			current_node = current_node->parent;
-
-	// 	}
-		
-	// }
 	return 0;
 }
 

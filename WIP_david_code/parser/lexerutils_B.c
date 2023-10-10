@@ -20,7 +20,7 @@
 *   will check for unclosed quotes and iterate index *i which corresponds to 
 *   length in it_token's higher scope, this also gets the length of the token
 */
-bool	check_quote(char *input, size_t *len, size_t *i)
+bool	check_quote(const char *input, size_t *len, size_t *i)
 {
 	*i += 1;
 	*len += 1;
@@ -35,7 +35,7 @@ bool	check_quote(char *input, size_t *len, size_t *i)
 }
 
 //compares the token with all builtin and returns it's builtin type if found
-int	built_in(char *input)
+int	built_in(const char *input)
 {
 	char	*builtin[7];
 	int		type[7];
@@ -58,7 +58,7 @@ int	built_in(char *input)
 }
 
 //finds the type for the token, if not special character or builtin then word
-int	get_token_type(char	*token)
+int	get_token_type(const char	*token)
 {
 	int	builtin;
 
@@ -77,7 +77,7 @@ int	get_token_type(char	*token)
 *   iterates the token while giving length of token, also 
 *	iterates over SEPARATORS and checks unclosed quotes 
 */
-bool	it_token(char *input, size_t *len, size_t *i, int flag)
+bool	it_token(const char *input, size_t *len, size_t *i, int flag)
 {
 	if (flag == IT_SEP)
 		while (type(input, *i) == SEPR && input[*i])
@@ -100,7 +100,7 @@ bool	it_token(char *input, size_t *len, size_t *i, int flag)
 }
 
 //returns an allocated string from input for token and gets length of token
-char	*get_content(char *input, size_t *index, size_t *len)
+char	*get_content(const char *input, size_t *index, size_t *len)
 {
 	char	*content;
 	int		i;

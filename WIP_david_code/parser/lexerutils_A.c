@@ -17,7 +17,7 @@
 *	type(), input_pipe(), input_red(), cmp(), check_spec()
 */
 //returns type for first pointed chars in *s
-int	type(char *s, size_t i)
+int	type(const char *s, size_t i)
 {
 	if (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
 		return (SEPR);
@@ -41,7 +41,7 @@ int	type(char *s, size_t i)
 }
 
 //finds pipe if there is one and returns it's position if not zero
-int	input_pipe(char *input)
+int	input_pipe(const char *input)
 {
 	size_t	i;
 
@@ -54,7 +54,7 @@ int	input_pipe(char *input)
 }
 
 //same as input pipe
-int	input_red(char *input)
+int	input_red(const char *input)
 {
 	size_t	i;
 	int	t;
@@ -74,7 +74,7 @@ int	input_red(char *input)
 }
 
 //cmp two strings returns bool if same string or not 
-bool	cmp(char *content, char *input)
+bool	cmp(char *content, const char *input)
 {
 	size_t	i;
 
