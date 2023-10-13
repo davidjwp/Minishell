@@ -13,6 +13,9 @@
 
 # include "../Minishell.h"
 
+
+//WILL PROBABLY DELETE ALL THIS LATER DON'T WORRY ABOUT IT
+//check out create_ast2.c for latest implementation
 bool	_pipe(const char *input)
 {
 	int	index;
@@ -330,8 +333,10 @@ t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *p)
 		currentnode->parent = p;
 	}
 	if (*error)
-		return (free_node(), NULL);
-	return (free(input), currentnode);
+		return (free_node(), free(input), NULL);
+	 if (p == NULL)
+	 	free(input);
+	return (currentnode);
 }
 
 int	main(void)
