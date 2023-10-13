@@ -279,11 +279,13 @@ int	main(void)
 
 /*
 
-t_astnode	*ast_pipe(const char *input, size_t *i, int *error, t_astnode *p)
+t_astnode	*ast_pipe(int *error, t_astnode *p)
 {
 	t_astnode	*pipe;
 
 	pipe = malloc(sizeof(t_astnode));
+	if (pipe == NULL)
+		return (*error = 1, NULL);
 	pipe->token[0]->content = NULL;
 	pipe->type = PIPE;
 	pipe->parent = p;
@@ -306,31 +308,43 @@ const char	*cut_left_pipe(const char *input)
 	len = 0;
 	while (type(input, len) != PIPE)
 		len++;
-	str = malloc(sizeof(char) * len);
+	str = malloc(sizeof(char) * (len + 1));//FREE THIS
 	str[len] = 0;
 	t = -1;
 	while (t++ < len)
 		str[t] = input[t];
 	return (str);
 }
+//whatever free all that shit figure it out 
+void	currentnode(t_astnode *node)
+{
+	if (node == NULL)
+		return (free(node->left));
+}
 
-t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *node)
+t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *p)
 {
 	t_asnode	*currentnode;
 
 	currentnode = malloc(sizeof(t_astnode));
 	if ((node == NULL && *i) || *error)
-		return (NULL);
+		return (free(input), NULL);
 	if (_pipe(&input(*i)))
 	{
-		currentnode->left = create_ast(cut_left_pipe(&input[*i]), i, error, \
-		ast_pipe(input, i, error, node));
-		currentnode->parent = node;maybe
+		currentnode->left = create_ast(cut_left_pipe(&input[*i]), i, error, currentnode);
+		currentnode = ast_pipe(error, p);
+		if (*error)
+			return (free_node(currentnode), NULL);
 	}
 	if (_red(&input[*i]))
-		currentnode->left = create_ast(input, i, error, ast_red(input, i, error, ));
+	{
+		currentnode->left = create_ast(cut_left_red(&input[*i]), i, error, currentnode);
+		currentnode->parent = p;
 
-
+	}
+	if (*i)
+		free(input);
+	return (currentnode);
 }
 
 int	main(void)
@@ -344,4 +358,3 @@ int	main(void)
 }
 
 */
-
