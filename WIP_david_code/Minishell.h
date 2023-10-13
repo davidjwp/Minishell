@@ -64,22 +64,23 @@ enum e_builtin{
 	builtin
 	redirection left
 	redirection right
+	do not touch this, it's built like this on purpose
 */
 enum e_type{
 	WORD,
 	SEPR,
 	QUOT,
 	EXST,
-	HERD,
 	APRD,
+	HERD,
 	ARGT,
 	OPER,
+	REDL,
 	VARE,
 	PIPE,
-	COMD,
 	BUIT,
-	REDL,
 	REDR,
+	COMD,
 };	
 
 typedef struct LexerUtilsStructure{

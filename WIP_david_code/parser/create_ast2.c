@@ -67,14 +67,31 @@ const char	*cut_left_pipe(const char *input)
 {
 	char	*str;
 	size_t	len;
-	int		i;
+	size_t	i;
 
+	i = -1;
 	len = 0;
 	while (type(input, len) != PIPE)
 		len++;
 	str = malloc(sizeof(char) * (len + 1));//FREE THIS
 	str[len] = 0;
+	while (i++ < len)
+		str[i] = input[i];
+	return (str);
+}
+
+const char	*cut_left_red(const char *input)
+{
+	char	*str;
+	size_t	len;
+	size_t	i;
+
 	i = -1;
+	len = 0;
+	while ((type(input, len) % 4))
+		len++;
+	str = malloc(sizeof(char) * (len + 1));
+	str[len] = 0;
 	while (i++ < len)
 		str[i] = input[i];
 	return (str);
