@@ -17,7 +17,7 @@
 *	type(), input_pipe(), input_red(), cmp(), check_spec()
 */
 //returns type for first pointed chars in *s
-int	type(const char *s, size_t i)
+inline int	type(const char *s, size_t i)//could be inlined not sure if i should might not even work properly
 {
 	if (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
 		return (SEPR);

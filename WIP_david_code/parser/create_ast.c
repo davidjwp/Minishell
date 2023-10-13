@@ -279,18 +279,11 @@ int	main(void)
 
 /*
 
-t_astnode	*ast_pipe(int *error, t_astnode *p)
+t_astnode	*ast_pipe(t_astnode *pipe, t_astnode *p)
 {
-	t_astnode	*pipe;
-
-	pipe = malloc(sizeof(t_astnode));
-	if (pipe == NULL)
-		return (*error = 1, NULL);
 	pipe->token[0]->content = NULL;
 	pipe->type = PIPE;
 	pipe->parent = p;
-	pipe->left = NULL;
-	pipe->right = NULL;
 	return (pipe);
 }
 
@@ -315,36 +308,30 @@ const char	*cut_left_pipe(const char *input)
 		str[t] = input[t];
 	return (str);
 }
-//whatever free all that shit figure it out 
-void	currentnode(t_astnode *node)
-{
-	if (node == NULL)
-		return (free(node->left));
-}
 
+//this implies that you have to allocate input, index will increment so i can't tell when the recursivity will go back(i would have used it)
 t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *p)
 {
 	t_asnode	*currentnode;
 
 	currentnode = malloc(sizeof(t_astnode));
-	if ((node == NULL && *i) || *error)
+	if (currentnode == NULL)
+		return (*error = 1, NULL);
+	if ((p == NULL && *i) || *error)
 		return (free(input), NULL);
 	if (_pipe(&input(*i)))
 	{
 		currentnode->left = create_ast(cut_left_pipe(&input[*i]), i, error, currentnode);
-		currentnode = ast_pipe(error, p);
-		if (*error)
-			return (free_node(currentnode), NULL);
+		currentnode = ast_pipe(currentnode, , p);//don't forget to SECURE this shit <----^
 	}
 	if (_red(&input[*i]))
 	{
 		currentnode->left = create_ast(cut_left_red(&input[*i]), i, error, currentnode);
 		currentnode->parent = p;
-
 	}
-	if (*i)
-		free(input);
-	return (currentnode);
+	if (*error)
+		return (free_node(), NULL);
+	return (free(input), currentnode);
 }
 
 int	main(void)
@@ -355,6 +342,8 @@ int	main(void)
 	int			error = 0;
 
 	tree = create_ast(input, &index, &error, NULL);
+	//two choices here either free  input everytime and lose input later on
+	//or make sure to free cut down input everytime which will add lines 
 }
 
 */
