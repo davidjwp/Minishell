@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+//THIS IS A TEST FILE FOR DESCENDING RECURSION CREATION OF AST
+
+//don't bother reading this
 
 // Define token types
 typedef enum {

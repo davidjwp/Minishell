@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ctest.c                                            :+:      :+:    :+:   */
+/*   ret.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djacobs <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 15:39:46 by djacobs           #+#    #+#             */
-/*   Updated: 2023/09/30 15:39:47 by djacobs          ###   ########.fr       */
+/*   Created: 2023/09/25 18:05:19 by djacobs           #+#    #+#             */
+/*   Updated: 2023/09/25 18:05:20 by djacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>
 #include <stdio.h>
+#include <stdbool.h>
 
-typedef struct	s_struct{
-	int	struct_member;
-	char	char_member;
-}				t_struct;
-
-t_struct	ret_struct(void)
+bool	func(int *index)
 {
-	t_struct	st;
+	while (*index < 10)
+		*index++;
+	return (true);
+}
 
-	st.struct_member = 2;
-	st.char_member = "sup'";
-	return (st);
+void	func2(int *index, bool value)
+{
+	if (value == true)
+		printf ("%i\n", *index);
 }
 
 int	main(void)
 {
-	if (ret_struct().struct_member == 2)
-		printf ("lol it works\n");
+	int	i;
+
+	i = 0;
+	func2(&i, func(&i));
 	return (0);
 }

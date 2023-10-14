@@ -49,21 +49,21 @@ enum e_builtin{
 };
 
 /*
-	token types
+	token types:
 	word
 	separator
 	quotes
 	exit status
-	heredoc
 	append redirection
+	heredoc
 	argument
 	operator
+	redirection left
 	variable
 	pipeline
-	command
 	builtin
-	redirection left
 	redirection right
+	command
 	do not touch this, it's built like this on purpose
 */
 enum e_type{

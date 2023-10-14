@@ -51,19 +51,4 @@ int main(int argc, char **argv)
 /*
 *	the ctrl-D sends a EOF to input, which is read by the shell and when shell gets to EOF
 *	it exits, it is also considered a END OF TRANSMISSION signal for end of stream 
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
 */

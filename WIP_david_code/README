@@ -6,3 +6,6 @@ these files are :
 -	lexerutilsA.c
 -	lexerutilsB.c
 -	lexerutilsC.c
+
+the reason why i have so many other files is because i do tests or check things
+and usually keep old code even if i'm pretty sure it's depreciated 

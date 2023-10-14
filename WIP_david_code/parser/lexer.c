@@ -12,6 +12,22 @@
 
 #include "../Minishell.h"
 
+/*
+*	list of the special characters that are explicitily asked in the subject
+*	anything not asked is not required.
+*
+*	(') single quotes which do no interpretation
+*	(") double quotes which only interpret $ for variables
+*	($) dollar sign for variables including env
+*	(>) output redirection
+*	(<) input redirection
+*	(<<) heredoc with delimiter and read until a line containing the delimiter
+*		is seen, does not have to update history
+*	(>>) output redirection but appends the text instead of writing over
+*	(|) pipes
+*	($?) this expands to the exit status of the last executed foreground
+*	pipeline meaning what's left in the pipe if it has anything in it
+*/
 
 /*
 *	('),(")			QUOTES
@@ -257,7 +273,7 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argc;
 	(void)argv;
 	(void)env;
-	t_astnode	*astroot = create_ast(input, &index, (t_lus){0, 0, 0});
+	t_astnode	*astroot;// = create_ast(input, &index, (t_lus){0, 0, 0});
 	t_astnode	*current_node = astroot;
 	print_node (current_node);
 	return 0;

@@ -1,52 +1,3 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-#define PROMPT	"$>"
-
-int	check_input(char *input)
-{
-	char *exit = "exit"; 
-
-	for (int i = 0; input[i] != 0; i++)
-		if (input[i] != exit[i])
-			return (0);
-	free(input);
-	return (1);
-}
-
-int main() {
-    char *input;
-
-    // Clear the history
-    rl_clear_history();
-
-    while (1) {
-        input = readline(PROMPT); // Display a prompt and read input
-
-        if (!input || check_input(input)) {
-            // NULL input indicates an EOF (e.g., Ctrl-D), so exit the loop
-            printf("Exiting...\n");
-			break;
-        }
-
-        // Process the input (in this example, we'll just print it)
-        // printf("You entered: ");
-        for (int i = 0; input[i] != 0; i++)
-            write (1, &input[i], 1);
-        // printf (" newline\n");
-
-        // Free the dynamically allocated input buffer
-        free(input);
-    }
-    return 0;
-}
-/*
-Certainly! I'll provide more detailed explanations for each of the functions you've listed, excluding those you mentioned:
-
 1. **readline**: The `readline` function is part of the GNU Readline library and is used for reading 
 lines of text with advanced line-editing capabilities. 
 It displays a user-defined prompt, reads input from the user, and provides features like history 
@@ -133,7 +84,3 @@ library and are
 used for terminal-related operations in terminal applications. They are used to interact with terminal 
 capabilities for 
 cursor movement, colors, and other terminal-specific features.
-
-These functions cover a wide range of functionality, from input/output, process control, file
- manipulation, and error handling to terminal interaction in C programming.
-*/
