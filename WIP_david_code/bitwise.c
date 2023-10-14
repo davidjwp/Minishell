@@ -20,6 +20,7 @@ just be careful of the type of macro in the ternary operation
 #define IN1(val) (val == 0 ? EXP1 : IN2(val))
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
 
@@ -43,45 +44,145 @@ enum operation_type{
 	LSH
 };
 
-char *bit_conversion(int integer)
+int	op_cmp(char *arg)
 {
-	char	bit[BIT_SIZ];
+	char	*bitwise_op[7]; 
 
-	bit[BIT_SIZ] = 0;
-	for (int i = 0; i <= BIT_SIZ; i++)
+	bitwise_op[6] = NULL;
+	for (int i = 0; i < 7; i++)
+		bitwise_op[i] = (char* [7]){"AND", "OR", "XOR", "NOT", "RSH", "LSH", NULL}[i];
+
+	for (int i = 0; bitwise_op[i]; i++){
+		int	y = 0;
+		while (arg[y] == bitwise_op[i][y] && arg[y])
+			y++;
+		if (!arg[y] && !bitwise_op[i][y])
+			return (i);
+	}
+	return (10);
+}
+
+char *bit_conversion(int integer, char *bit)
+{
+	for (int i = 0; i < BIT_SIZ; i++)
 		bit[(BIT_SIZ - 1) - i] = (integer & (1 << i) ? '1' : '0');
 	return (bit);
 }
 
 int	op_AND(int x, int y)
 {
+	char	*bit = (char *)malloc(sizeof(char) * (BIT_SIZ + 1));
 
-	printf ("\t1\t%i\t%s\n", x, bit_conversion(x));
-	printf ("\t\t\t&\n");
-	printf ("\t1\t%i\t%s\n", y, bit_conversion(y));
+	bit[BIT_SIZ] = 0;
+	printf ("\tdec\tbin\t\top\n");
+	printf ("\t%i\t%s\n", x, bit_conversion(x, bit));
+	printf ("\t\t\t\tAND\n");
+	printf ("\t%i\t%s\n", y, bit_conversion(y, bit));
 	printf ("\t-------------\n");
-	printf ("");
+	printf ("\t%i\t%s\n", x & y, bit_conversion(x & y, bit));
+	free(bit);
+	return (1);
 }
 
-int	bit_operation(int n, int x, int y)
+int	op_OR(int x, int y)
 {
-	switch (n){
+	char	*bit = (char *)malloc(sizeof(char) * (BIT_SIZ + 1));
+
+	bit[BIT_SIZ] = 0;
+	printf ("\tdec\tbin\t\top\n");
+	printf ("\t%i\t%s\n", x, bit_conversion(x, bit));
+	printf ("\t\t\t\tOR\n");
+	printf ("\t%i\t%s\n", y, bit_conversion(y, bit));
+	printf ("\t-------------\n");
+	printf ("\t%i\t%s\n", x | y, bit_conversion(x | y, bit));
+	free(bit);
+	return (1);
+}
+
+int	op_NOT(int x, int y)
+{
+	char	*bit = (char *)malloc(sizeof(char) * (BIT_SIZ + 1));
+
+	bit[BIT_SIZ] = 0;
+	printf ("\tdec\tbin\t\top\n");
+	printf ("\t\t\t\tNOT\n");
+	printf ("\t%i\t%s\n", x, bit_conversion(x, bit));
+	printf ("\t%i\t%s\n", ~x, bit_conversion(~x, bit));
+	printf ("\t-------------\n");
+	printf ("\t%i\t%s\n", y, bit_conversion(y, bit));
+	printf ("\t%i\t%s\n", ~y, bit_conversion(~y, bit));
+	free(bit);
+	printf ("\t-------------\n");
+	return (1);
+}
+
+int	op_XOR(int x, int y)
+{
+	char	*bit = (char *)malloc(sizeof(char) * (BIT_SIZ + 1));
+
+	bit[BIT_SIZ] = 0;
+	printf ("\tdec\tbin\t\top\n");
+	printf ("\t%i\t%s\n", x, bit_conversion(x, bit));
+	printf ("\t\t\t\tXOR\n");
+	printf ("\t%i\t%s\n", y, bit_conversion(y, bit));
+	printf ("\t-------------\n");
+	printf ("\t%i\t%s\n", x ^ y, bit_conversion(x ^ y, bit));
+	free(bit);
+	return (1);
+}
+
+int	op_RSH(int x, int y)
+{
+	char	*bit = (char *)malloc(sizeof(char) * (BIT_SIZ + 1));
+
+	bit[BIT_SIZ] = 0;
+	printf ("\tdec\tbin\t\top\n");
+	printf ("\t%i\t%s\n", x, bit_conversion(x, bit));
+	printf ("\t\t\t\tRIGHT_SHIFT\n");
+	printf ("\t%i\t%s\n", y, bit_conversion(y, bit));
+	printf ("\t-------------\n");
+	printf ("\t%i\t%s\n", x >> y, bit_conversion(x >> y, bit));
+	free(bit);
+	return (1);
+}
+
+int	op_LSH(int x, int y)
+{
+	char	*bit = (char *)malloc(sizeof(char) * (BIT_SIZ + 1));
+
+	bit[BIT_SIZ] = 0;
+	printf ("\tdec\tbin\t\top\n");
+	printf ("\t%i\t%s\n", x, bit_conversion(x, bit));
+	printf ("\t\t\t\tLEFT_SHIFT\n");
+	printf ("\t%i\t%s\n", y, bit_conversion(y, bit));
+	printf ("\t-------------\n");
+	printf ("\t%i\t%s\n", x << y, bit_conversion(x << y, bit));
+	free(bit);
+	return (1);
+}
+
+
+int	bit_operation(char *arg, int x, int y)
+{
+	switch (op_cmp(arg)){
 		case AND:
 			return (op_AND(x, y));
 		case OR:
-			return (x | y);
+			return (op_OR(x, y));
 		case XOR:
-			return (x ^ y);
+			return (op_XOR(x, y));
 		case NOT:
-			return ((x > 0 ? ~x : (y > 0 ? ~y : 0)));
+			return (op_NOT(x, y));
 		case RSH:
-			return (x >> y);
+			return (op_RSH(x, y));
 		case LSH:
-			return (x << y);			
+			return (op_LSH(x, y));
+		case 10:
+			return (printf ("Error: bad bit operator\nAND, OR, XOR, NOT, RSH, LSH\n"));
 	}
 }
 
-int	atoi(char *str)
+int	ft_atoi(char *str)
 {
 	int	res = 0;
 	int	i;
@@ -100,15 +201,15 @@ int	atoi(char *str)
 int	main(int argc, char **argv)
 {
 	if (argc < 4){
-		printf ("Error: not enough arguments\n<program> <integer> <n> <bit operation>\n");
+		printf ("Error: not enough arguments\n<program> <integer> <n> <bit operator>\n\
+		(bit operators) AND, OR, XOR, NOT, RSH, LSH\n");
 		return (0);
 	}
 
-	int	x = atoi(argv[1]);
-	int	y = atoi(argv[2]);
-	int	bit_op = atoi(argv[3]);
+	int	x = ft_atoi(argv[1]);
+	int	y = ft_atoi(argv[2]);
 
-	if (x > 126|| y > 126 || bit_op > 5)
+	if (x > 256|| y > 256)
 		return (printf("Error: bad values\n"));
 
 	if (error){
@@ -116,7 +217,6 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 
-	printf ("\targument\tdecimal\tbinary\toperand\n");
-	bit_operation(bit_op, x, y);
+	bit_operation(argv[3], x, y);
 	return (0);
 }

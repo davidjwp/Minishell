@@ -24,8 +24,6 @@ bool	_pipe(const char *input)
 		t = type(input, index);
 		if (t == PIPE)
 			return (true);
-		else if (t == REDL || t == REDR || t == APRD)
-			return (false);
 		index++;
 	}
 	return (false);
@@ -112,11 +110,13 @@ t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *p)
 		currentnode->left = create_ast(cut_left_pipe(&input[*i]), i, error, currentnode);
 		currentnode = ast_pipe(currentnode, p);//don't forget to SECURE this shit <----^
 	}
-	if (_red(&input[*i]))
+	else if (_red(&input[*i]))
 	{
 		currentnode->left = create_ast(cut_left_red(&input[*i]), i, error, currentnode);
 		currentnode->parent = p;
 	}
+	else
+		return (ast_cmd_node(input, i, nbr_token(&input[*i]), error));
 	if (*error)
 		return (free_node(), free((char *)input), NULL);
 	 if (p == NULL)
