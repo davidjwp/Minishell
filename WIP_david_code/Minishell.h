@@ -127,8 +127,10 @@ void	free_tokens(t_token **tokens, int last);
 void	free_cmd_node(t_astnode *cmd);
 void	free_red_node(t_astnode *red);
 
+int		init_node(t_astnode *node, int nbr, int *error);
 //WIP
 t_astnode	*ast_cmd_node(const char *input, size_t *index, int nbr, int *error);
+
 
 // void	free_tokens(t_token *tokens, int last);
 void	err_msg(char *msg);

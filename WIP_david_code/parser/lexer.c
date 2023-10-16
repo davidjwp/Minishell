@@ -70,7 +70,7 @@ t_astnode*	create_ast_node(const char *input, size_t *i, t_astnode *p, int t)
 	node->right = NULL;
 	return (node);
 }
-
+/*
 int	init_node(t_astnode *node, int nbr, int *error)
 {
 	node->type = COMD;
@@ -82,39 +82,39 @@ int	init_node(t_astnode *node, int nbr, int *error)
 	node->right = NULL;
 	return (1);
 }
-
-/*
-*	creates the COMMAND node which holds every token 
-*	of the corresponding command in the input, each token is separated by
-*	type instead of separators, so are builtins if detected so each token
-*	has it's precise type
 */
-t_astnode*	ast_cmd_node(const char *input, size_t *index, int nbr, int *error)
-{
-	t_astnode	*node;
-	int			i;
+// /*
+// *	creates the COMMAND node which holds every token 
+// *	of the corresponding command in the input, each token is separated by
+// *	type instead of separators, so are builtins if detected so each token
+// *	has it's precise type
+// */
+// t_astnode*	ast_cmd_node(const char *input, size_t *index, int nbr, int *error)
+// {
+// 	t_astnode	*node;
+// 	int			i;
 
-	i = 0;
-	if (!nbr)
-		return (NULL);
-	node = malloc(sizeof(t_astnode));
-	if (node == NULL)
-		return (*error = 1, err_msg(AST_CN_ERR), NULL);
-	if (!init_node(node, nbr, error))
-		return (NULL);
-	while (nbr != 0)
-	{
-		node->token[i] = (t_token *)malloc(sizeof(t_token));
-		if (node->token[i] == NULL)
-			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
-		node->token[i] = get_token(input, index, node->token[i]);
-		if (node->token[i] == NULL)
-			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
-		nbr -= 1;
-		i++;
-	}
-	return (node);
-}
+// 	i = 0;
+// 	if (!nbr)
+// 		return (NULL);
+// 	node = malloc(sizeof(t_astnode));
+// 	if (node == NULL)
+// 		return (*error = 1, err_msg(AST_CN_ERR), NULL);
+// 	if (!init_node(node, nbr, error))
+// 		return (NULL);
+// 	while (nbr != 0)
+// 	{
+// 		node->token[i] = (t_token *)malloc(sizeof(t_token));
+// 		if (node->token[i] == NULL)
+// 			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
+// 		node->token[i] = get_token(input, index, node->token[i]);
+// 		if (node->token[i] == NULL)
+// 			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
+// 		nbr -= 1;
+// 		i++;
+// 	}
+// 	return (node);
+// }
 
 t_astnode*	ast_sym_node(const char *input, size_t *i, t_astnode *parent)
 {
@@ -158,6 +158,7 @@ t_astnode	ast_red_node(char *input, size_t *i, int *error)
 }
 */
 
+/*
 t_astnode	*create_ast(const char *input, size_t *index, t_lus utl, t_astnode *parent)
 {
 	t_astnode	*cmd;
@@ -177,7 +178,7 @@ t_astnode	*create_ast(const char *input, size_t *index, t_lus utl, t_astnode *pa
 		// node = create_ast(input, index, (t_lus){0, 0, 0});
 	return (cmd);
 }
-
+*/
 /*
 *	if there is a pipe then check if there is also a redirection, if there is a redirection then 
 *	create a command node, else if there is no redirection then create a command node 
@@ -264,7 +265,7 @@ void	print_node(t_astnode *node)
 	else if (node->right != NULL)
 		print_node (node = node->right);
 }
-
+/*
 int	main(int argc, char *argv[], char *env[])
 {
 	char	input[] = "cat << EOF > file | wc -c | tr =d "" > file2";
@@ -278,7 +279,7 @@ int	main(int argc, char *argv[], char *env[])
 	print_node (current_node);
 	return 0;
 }
-
+*/
 //++++++++++++++++++++++++++++++++++++TESTS
 
 

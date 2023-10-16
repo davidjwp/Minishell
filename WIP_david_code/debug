@@ -1,3 +1,4 @@
+break main
 break create_ast
-break ast_sym_node
-break ast_cmd_node
+break cut_left_pipe
+break cut_left_red
