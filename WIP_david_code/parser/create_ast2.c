@@ -121,7 +121,7 @@ const char	*cut_left_pipe(const char *input)
 	return (str);
 }
 
-const char	*cut_right_pipe(const char *input)
+const char	*cut_right_pipe(const char *input)//wip
 {
 	char	*str;
 	int		len;
@@ -129,6 +129,7 @@ const char	*cut_right_pipe(const char *input)
 
 	i = 0;
 	len = 0;
+	while (type(input, len) != PIPE || type(input, len) % 4 != 0)
 }
 
 const char	*cut_left_red(const char *input)
@@ -174,7 +175,10 @@ bool	ast_red(const char *input, size_t *i, t_astnode *red, t_astnode *p)
 
 	error = 0;
 	red->left = create_ast(cut_left_red(&input[*i]), i, &error, red);
-	
+	if (error)
+		return (false);
+	red->type = ;
+	return (true);
 }
 
 //this implies that you have to allocate input, index will increment so i can't tell when the recursivity will go back(i would have used it)
