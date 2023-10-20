@@ -121,7 +121,7 @@ const char	*cut_left_pipe(const char *input)
 	return (str);
 }
 
-const char	*cut_right_pipe(const char *input)//wip
+const char	*cut_right_pipe(const char *input)//give input from index 
 {
 	char	*str;
 	int		len;
@@ -129,7 +129,17 @@ const char	*cut_right_pipe(const char *input)//wip
 
 	i = 0;
 	len = 0;
-	while (type(input, len) != PIPE || type(input, len) % 4 != 0)
+	while (input[len] && (type(input, len) != PIPE && (type(input, len) == 0 \
+	|| type(input, len) % 4 != 0)))
+		len++;
+	str = malloc(sizeof(char) * (len + 1));
+	str[len] - 0;
+	while (i < len)
+	{
+		str[i] = input[i];
+		i++;
+	}
+	return (str);
 }
 
 const char	*cut_left_red(const char *input)
@@ -177,7 +187,11 @@ bool	ast_red(const char *input, size_t *i, t_astnode *red, t_astnode *p)
 	red->left = create_ast(cut_left_red(&input[*i]), i, &error, red);
 	if (error)
 		return (false);
-	red->type = ;
+	red->type = check_spec(input, 0, i);
+	if (red)
+	red->right = create_ast(cut_right_pipe(&input[*i]), i, &error, red);
+	if (error)
+		return (false);//free here too
 	return (true);
 }
 
