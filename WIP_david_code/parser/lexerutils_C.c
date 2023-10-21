@@ -46,7 +46,7 @@ int	nbr_token(const char *input)
 		len = 0;
 		it_token(input, &len, &i, IT_SEP);
 		t = type(input, i);
-		if (t != REDL && t != REDR &&	t != APRD && t != PIPE && input[i])
+		if (t != REDL && t != REDR && t != APRD && t != PIPE && input[i])
 			tokcnt += 1;
 		else
 			break ;
@@ -60,7 +60,7 @@ int	nbr_token(const char *input)
 *	structures to the token struct array so that it only frees what has been
 *	allocated 
 */ 
-void	free_tokens(t_token **tokens, int last)
+void	free_tok(t_token **tokens, int last)
 {
 	int	i;
 
@@ -68,14 +68,14 @@ void	free_tokens(t_token **tokens, int last)
 	while (i < last)
 	{
 		free(tokens[i]->content);
-		free(tokens[i]); 
+		free(tokens[i]);
 		i++;
 	}
 	free(tokens);
 }
 
 //frees the whole command node
-void	free_cmd_node(t_astnode *cmd)
+void	free_cmd_node(t_astn *cmd)
 {
 	int	i;
 
@@ -93,7 +93,7 @@ void	free_cmd_node(t_astnode *cmd)
 }
 
 //free the redirection node
-void	free_red_node(t_astnode *red)
+void	free_red_node(t_astn *red)
 {
 	free_cmd_node(red->left);
 	free_cmd_node(red->right);

@@ -16,14 +16,15 @@
 *	lexerutils_D contains the following functions :
 *	
 */
-int	init_node(t_astnode *node, int nbr, int *error)
+int	init_node(t_astn *node, int nbr, t_astn *p, int *error)
 {
 	node->type = COMD;
 	node->token = (t_token **)malloc(sizeof(t_token) * (nbr + 1));
 	if (node->token == NULL)
-		return (free(node), *error = 1, err_msg(AST_CN_ERR), 0);
+		return (free(node), *error = 1, err_msg("init alloc fail"), 0);
 	node->token[nbr] = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	node->parent = p;
 	return (1);
 }

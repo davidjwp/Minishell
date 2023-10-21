@@ -40,7 +40,7 @@
 *	( ),(\t),(\n)	SEPARATOR
 */
 
-void	free_sym_node(t_astnode *node)
+void	free_sym_node(t_astn *node)
 {
 	free(node->token);
 	free(node->token[0]);
@@ -52,17 +52,17 @@ void	free_sym_node(t_astnode *node)
 *	creates the symbolic AST node with it's corresponding type between a pipe
 *	or redirections, children are given outside the function 
 */
-t_astnode*	create_ast_node(const char *input, size_t *i, t_astnode *p, int t)
+t_astn*	create_ast_node(const char *input, size_t *i, t_astn *p, int t)
 {
-	t_astnode	*node;
-	size_t		len;
+	t_astn	*node;
+	size_t	len;
 
 	len = 0;
-	node = (t_astnode *)malloc(sizeof(t_astnode));
+	node = (t_astn *)malloc(sizeof(t_astn));
 	if (node == NULL)
 		return (NULL);
 	node->token = malloc(sizeof(t_token *) * 1);//THIS IS NOT FREED
-	node->token[0] = malloc(sizeof(t_astnode *));
+	node->token[0] = malloc(sizeof(t_astn *));
 	node->token[0]->content = get_content(input, i, &len);
 	node->type = t;
 	node->parent = p;
@@ -71,7 +71,7 @@ t_astnode*	create_ast_node(const char *input, size_t *i, t_astnode *p, int t)
 	return (node);
 }
 /*
-int	init_node(t_astnode *node, int nbr, int *error)
+int	init_node(t_astn *node, int nbr, int *error)
 {
 	node->type = COMD;
 	node->token = (t_token **)malloc(sizeof(t_token) * (nbr + 1));
@@ -89,15 +89,15 @@ int	init_node(t_astnode *node, int nbr, int *error)
 // *	type instead of separators, so are builtins if detected so each token
 // *	has it's precise type
 // */
-// t_astnode*	ast_cmd_node(const char *input, size_t *index, int nbr, int *error)
+// t_astn*	ast_cmd_node(const char *input, size_t *index, int nbr, int *error)
 // {
-// 	t_astnode	*node;
+// 	t_astn	*node;
 // 	int			i;
 
 // 	i = 0;
 // 	if (!nbr)
 // 		return (NULL);
-// 	node = malloc(sizeof(t_astnode));
+// 	node = malloc(sizeof(t_astn));
 // 	if (node == NULL)
 // 		return (*error = 1, err_msg(AST_CN_ERR), NULL);
 // 	if (!init_node(node, nbr, error))
@@ -116,21 +116,21 @@ int	init_node(t_astnode *node, int nbr, int *error)
 // 	return (node);
 // }
 
-t_astnode*	ast_sym_node(const char *input, size_t *i, t_astnode *parent)
+t_astn*	ast_sym_node(const char *input, size_t *i, t_astn *parent)
 {
-	t_astnode	*node;
-	t_astnode	*right;
-	t_astnode	*left;
-	int			error;
+	t_astn	*node;
+	t_astn	*right;
+	t_astn	*left;
+	int		error;
 
 	error = 0;
-	left = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+	left = ast_cmd_node(input, i, (t_cms){parent, node}, &error);
 	if (error)
 		return (NULL);
 	node = create_ast_node(input, i, parent, type(input, *i));
 	if (node == NULL)
 		return (free_cmd_node(left), NULL);
-	right = ast_cmd_node(input, i, nbr_token(&input[*i]), &error);
+	right = ast_cmd_node(input, i, (t_cms){parent, node}, &error);
 	if (error)
 		return (free_cmd_node(left), free_cmd_node(right), NULL);
 	right->parent = node;
@@ -142,11 +142,11 @@ t_astnode*	ast_sym_node(const char *input, size_t *i, t_astnode *parent)
 
 /*
 make sure that index is on a redirection 
-t_astnode	ast_red_node(char *input, size_t *i, int *error)
+t_astn	ast_red_node(char *input, size_t *i, int *error)
 {
-	t_astnode	*node;
+	t_astn	*node;
 
-	node = malloc(sizeof(t_astnode));
+	node = malloc(sizeof(t_astn));
 	if (*error = 1, NULL)
 	node->token[0] = malloc(sizeof(t_tokens));
 	if (node->token[0] == NULL)
@@ -159,10 +159,10 @@ t_astnode	ast_red_node(char *input, size_t *i, int *error)
 */
 
 /*
-t_astnode	*create_ast(const char *input, size_t *index, t_lus utl, t_astnode *parent)
+t_astn	*create_ast(const char *input, size_t *index, t_lus utl, t_astn *parent)
 {
-	t_astnode	*cmd;
-	t_astnode	*node;
+	t_astn	*cmd;
+	t_astn	*node;
 
 	cmd = ast_cmd_node(input, index, nbr_token(&input[*index]), &utl.error);
 	if(type(input, index) == PIPE)
@@ -185,11 +185,11 @@ t_astnode	*create_ast(const char *input, size_t *index, t_lus utl, t_astnode *pa
 *	
 */
 //kind off recursive because of pipes, but if no pipes there is no need
-// t_astnode	*create_ast(char *input, size_t *index, t_lus utl)
+// t_astn	*create_ast(char *input, size_t *index, t_lus utl)
 // {
-// 	t_astnode	*node;
+// 	t_astn	*node;
 
-// 	node = (t_astnode *)malloc(sizeof(t_astnode *));
+// 	node = (t_astn *)malloc(sizeof(t_astn *));
 // 	if (node == NULL)
 // 		return (NULL);
 // 	while (input[*index] != 0)
@@ -215,7 +215,7 @@ t_astnode	*create_ast(const char *input, size_t *index, t_lus utl, t_astnode *pa
 // 	return (node);
 // }
 
-t_astnode	*free_main1(t_astnode *node)
+t_astn	*free_main1(t_astn *node)
 {
 	for (int i = 0; node->token[i] != NULL; i++)
 		free(node->token[i]->content);
@@ -248,7 +248,7 @@ char	*print_type(int type)
 	return ("NULL");
 }
 
-void	print_node(t_astnode *node)
+void	print_node(t_astn *node)
 {
 	
 	printf ("{node type: %s\n", print_type(node->type));
@@ -274,8 +274,8 @@ int	main(int argc, char *argv[], char *env[])
 	(void)argc;
 	(void)argv;
 	(void)env;
-	t_astnode	*astroot;// = create_ast(input, &index, (t_lus){0, 0, 0});
-	t_astnode	*current_node = astroot;
+	t_astn	*astroot;// = create_ast(input, &index, (t_lus){0, 0, 0});
+	t_astn	*current_node = astroot;
 	print_node (current_node);
 	return 0;
 }

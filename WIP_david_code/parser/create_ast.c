@@ -69,9 +69,9 @@ bool	_cmd(const char *input)
 }
 
 
-t_astnode	*ast_red(const char *input, size_t *i, t_astnode *n, int *error)
+t_astn	*ast_red(const char *input, size_t *i, t_astn *n, int *error)
 {
-	n = malloc(sizeof(t_astnode));
+	n = malloc(sizeof(t_astn));
 
 	n->token[0] = get_token(input, i, n->token[0]);
 	if (n->token[0] == NULL)
@@ -79,16 +79,16 @@ t_astnode	*ast_red(const char *input, size_t *i, t_astnode *n, int *error)
 	
 }
 
-t_astnode	*ast_pipe(const char *input, size_t *i, t_astnode *n, int *error)
+t_astn	*ast_pipe(const char *input, size_t *i, t_astn *n, int *error)
 {
-	n = malloc(sizeof(t_astnode));
+	n = malloc(sizeof(t_astn));
 	
 	n->token[0] = get_token(input, i, n->token[0]);
 }
 
-t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *node)
+t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *node)
 {
-	t_astnode	*current;
+	t_astn	*current;
 
 	if (*error || node == NULL)
 		return (NULL);
@@ -114,7 +114,7 @@ t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *node)
 
 int	main(void)
 {
-	t_astnode	*tree;
+	t_astn	*tree;
 	const char	input[] = "cat << EOF > file | wc -c | tr =d "" > file2";
 	size_t		index = 0;
 	int			error = 0;
@@ -127,13 +127,13 @@ int	main(void)
 }
 
 
-// t_astnode	*ast_red(const char *input, size_t *i, int *error)
+// t_astn	*ast_red(const char *input, size_t *i, int *error)
 // {
-// 	t_astnode	*node;
+// 	t_astn	*node;
 // 	size_t		len;
 
 // 	len = 0;
-// 	node = malloc(sizeof(t_astnode));
+// 	node = malloc(sizeof(t_astn));
 // 	node->left = ast_cmd_node(input, i, nbr_token(&input[*i]), error);
 // 	if (*error)
 // 		return (NULL);
@@ -146,23 +146,23 @@ int	main(void)
 	
 // }
 
-// t_astnode	*ast_pipe(const char *input, size_t *i, int *error)
+// t_astn	*ast_pipe(const char *input, size_t *i, int *error)
 // {
-// 	t_astnode	*left;
+// 	t_astn	*left;
 	
 // 	left = ast_red(input, i, error);
 // }
 
-// t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *node)
+// t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *node)
 // {
-// 	t_astnode	*left;
+// 	t_astn	*left;
 	
 // 	left = ast_pipe(input, i, error);
 // }
 
 // int	main(void)
 // {
-// 	t_astnode	*tree;
+// 	t_astn	*tree;
 // 	const char	input[] = "cat << EOF > file | wc -c | tr =d "" > file2";
 // 	size_t		index = 0;
 // 	int			error = 0;
@@ -222,9 +222,9 @@ bool	_cmd(const char *input)
 }
 
 
-t_astnode	*ast_red(const char *input, size_t *i, t_astnode *n, int *error)
+t_astn	*ast_red(const char *input, size_t *i, t_astn *n, int *error)
 {
-	n = malloc(sizeof(t_astnode));
+	n = malloc(sizeof(t_astn));
 
 	n->token[0] = get_token(input, i, n->token[0]);
 	if (n->token[0] == NULL)
@@ -232,22 +232,22 @@ t_astnode	*ast_red(const char *input, size_t *i, t_astnode *n, int *error)
 	
 }
 
-t_astnode	*ast_pipe(const char *input, size_t *i, t_astnode *n, int *error)
+t_astn	*ast_pipe(const char *input, size_t *i, t_astn *n, int *error)
 {
-	n = malloc(sizeof(t_astnode));
+	n = malloc(sizeof(t_astn));
 	
 	n->token[0] = get_token(input, i, n->token[0]);
 }
 
-t_astnode	*left_pipe(const char *input, size_t *i, int *error)
+t_astn	*left_pipe(const char *input, size_t *i, int *error)
 {
 	
 }
 
 
-t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *node)
+t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *node)
 {
-	t_astnode	*current;
+	t_astn	*current;
 
 	if (*error || (node == NULL && *i))
 		return (NULL);
@@ -272,7 +272,7 @@ t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *node)
 
 int	main(void)
 {
-	t_astnode	*tree;
+	t_astn	*tree;
 	const char	input[] = "cat << EOF > file | wc -c | tr =d "" > file2";
 	size_t		index = 0;
 	int			error = 0;
@@ -282,7 +282,7 @@ int	main(void)
 
 /*
 
-t_astnode	*ast_pipe(t_astnode *pipe, t_astnode *p)
+t_astn	*ast_pipe(t_astn *pipe, t_astn *p)
 {
 	pipe->token[0]->content = NULL;
 	pipe->type = PIPE;
@@ -290,7 +290,7 @@ t_astnode	*ast_pipe(t_astnode *pipe, t_astnode *p)
 	return (pipe);
 }
 
-t_astnode	*ast_red(const char *input, size_t *i, int *error, t_astnode *p)
+t_astn	*ast_red(const char *input, size_t *i, int *error, t_astn *p)
 {
 
 
@@ -313,11 +313,11 @@ const char	*cut_left_pipe(const char *input)
 }
 
 //this implies that you have to allocate input, index will increment so i can't tell when the recursivity will go back(i would have used it)
-t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *p)
+t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p)
 {
 	t_asnode	*currentnode;
 
-	currentnode = malloc(sizeof(t_astnode));
+	currentnode = malloc(sizeof(t_astn));
 	if (currentnode == NULL)
 		return (*error = 1, NULL);
 	if ((p == NULL && *i) || *error)
@@ -341,7 +341,7 @@ t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *p)
 
 int	main(void)
 {
-	t_astnode	*tree;
+	t_astn	*tree;
 	const char	input[] = "cat << EOF > file | wc -c | tr =d "" > file2";
 	size_t		index = 0;
 	int			error = 0;

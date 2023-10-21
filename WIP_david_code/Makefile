@@ -18,7 +18,7 @@ CFLAGS			= -g3 -Wall -Wextra -Werror
 
 LINKER			= -L/usr/include -lreadline
 
-SRCS			= parser/lexer.c parser/lexerutils_A.c parser/lexerutils_B.c \
+SRCS			= parser/lexerutils_A.c parser/lexerutils_B.c \
 				parser/lexerutils_C.c parser/utils.c parser/create_ast2.c parser/lexerutils_D.c
 
 OBJS			= $(SRCS:.c=.o)

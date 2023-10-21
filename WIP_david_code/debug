@@ -1,4 +1,3 @@
-break main
 break create_ast
-break cut_left_pipe
-break cut_left_red
+break ast_pipe
+break ast_red

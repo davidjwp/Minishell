@@ -20,31 +20,27 @@
 *	type instead of separators, so are builtins if detected so each token
 *	has it's precise type
 */
-t_astnode*	ast_cmd_node(const char *input, size_t *index, int nbr, int *error)
+t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *err)
 {
-	t_astnode	*node;
-	int			i;
+	int		nbr;
+	int		i;
 
 	i = 0;
-	if (!nbr)
-		return (NULL);
-	node = malloc(sizeof(t_astnode));
-	if (node == NULL)
-		return (*error = 1, err_msg(AST_CN_ERR), NULL);
-	if (!init_node(node, nbr, error))
+	nbr = nbr_token(input);
+	if (!nbr || !init_node(c.node, nbr, c.parent, err))
 		return (NULL);
 	while (nbr != 0)
 	{
-		node->token[i] = (t_token *)malloc(sizeof(t_token));
-		if (node->token[i] == NULL)
-			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
-		node->token[i] = get_token(input, index, node->token[i]);
-		if (node->token[i] == NULL)
-			return (free_tokens(node->token, i), free(node), *error = 1, NULL);
+		c.node->token[i] = (t_token *)malloc(sizeof(t_token));
+		if (c.node->token[i] == NULL)
+			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
+		c.node->token[i] = get_token(input, index, c.node->token[i]);
+		if (c.node->token[i] == NULL)
+			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
 		nbr -= 1;
 		i++;
 	}
-	return (free((char *)input), node);
+	return (free((char *)input), c.node);
 }
 
 bool	_pipe(const char *input)
@@ -76,32 +72,13 @@ bool	_red(const char *input)
 			return (true);
 		else if (t == PIPE)
 			return (false);
-		index++;			
+		index++;
 	}
 	return (false);
 }
 
-
-// t_astnode	*ast_red(const char *input, t_astnode *red, t_astnode *p)
-// {
-// 	size_t	i;
-// 	int		t;
-
-// 	i = 0;
-// 	red->token[0]->len = 0;
-// 	t = type (input, i);
-// 	while (t != REDL && t != REDR && t != APRD)
-// 	{
-// 		i++;
-// 		t = type (input, i);
-// 	}
-// 	red->token[0]->content = get_content(input, &i, &red->token[0]->len);
-// 	red->type = get_token_type(red->token[0]->content);
-// 	red->left = NULL;
-// }
-
 //could free input right here but that might cause problems later on
-const char	*cut_left_pipe(const char *input)
+const char *cut_pipe(const char *input, int flag)
 {
 	char	*str;
 	int		len;
@@ -109,49 +86,13 @@ const char	*cut_left_pipe(const char *input)
 
 	i = 0;
 	len = 0;
-	while (type(input, len) != PIPE)
-		len++;
-	str = malloc(sizeof(char) * (len + 1));//FREE THIS
-	str[len] = 0;
-	while (i < len)
-	{
-		str[i] = input[i];
-		i++;
-	}
-	return (str);
-}
-
-const char	*cut_right_pipe(const char *input)//give input from index 
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	i = 0;
-	len = 0;
-	while (input[len] && (type(input, len) != PIPE && (type(input, len) == 0 \
-	|| type(input, len) % 4 != 0)))
-		len++;
-	str = malloc(sizeof(char) * (len + 1));
-	str[len] - 0;
-	while (i < len)
-	{
-		str[i] = input[i];
-		i++;
-	}
-	return (str);
-}
-
-const char	*cut_left_red(const char *input)
-{
-	char	*str;
-	int		len ;
-	int		i;
-
-	i = 0;
-	len = 0;
-	while ((type(input, len) == 0 || type(input, len) % 4))
-		len++;
+	if (flag == C_LEFT)
+		while (input[len] && type(input, len) != PIPE)
+			len++;
+	else if (flag == C_RIGHT)
+		while (input[len] && (type(input, len) != PIPE && \
+		(type(input, len) == 0 || type(input, len) % 4 != 0)))
+			len++;
 	str = malloc(sizeof(char) * (len + 1));
 	str[len] = 0;
 	while (i < len)
@@ -162,76 +103,99 @@ const char	*cut_left_red(const char *input)
 	return (str);
 }
 
-bool	ast_pipe(const char *input, size_t *i, t_astnode *pipe, t_astnode *p)
+const char	*cut_red(const char *input, int flag)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	i = 0;
+	len = 0;
+	if (flag == C_LEFT)
+		while (input[len] && (type(input, len) == 0 || \
+		type(input, len) % 4 != 0))
+			len++;
+	else if (flag == C_RIGHT)
+		while (input[len] && ((type(input, len) == 0 || type(input, len) \
+		% 4 != 0) && type(input, len) != PIPE))//this might be useless
+			len++;
+	str = malloc(sizeof(char) * (len + 1));
+	str[len] = 0;
+	while (i < len)
+	{
+		str[i] = input[i];
+		i++;
+	}
+	return (str);
+}
+
+bool	ast_pipe(const char *input, size_t *i, t_astn *pipe, t_astn *p)
 {
 	int	error;
 
 	error = 0;
-	pipe->left = create_ast(cut_left_pipe(&input[*i]), i, &error, pipe);
+	pipe->left = create_ast(cut_pipe(&input[*i], C_LEFT), i, &error, pipe);
 	if (error)
 		return (false);
 	pipe->type = PIPE;
 	pipe->parent = p;
 	*i += 1;
-	pipe->right = create_ast(cut_right_pipe(&input[*i]), i, &error, pipe);
+	pipe->right = create_ast(cut_pipe(&input[*i], C_RIGHT), i, &error, pipe);
 	if (error)
 		return (false);
 	return (true);
 }
 
-bool	ast_red(const char *input, size_t *i, t_astnode *red, t_astnode *p)
+bool	ast_red(const char *input, size_t *i, t_astn *red, t_astn *p)
 {
-	int	error;
+	int		error;
+	size_t	l;
 
+	l = 0;
 	error = 0;
-	red->left = create_ast(cut_left_red(&input[*i]), i, &error, red);
+	red->left = create_ast(cut_red(&input[*i], C_LEFT), i, &error, red);
 	if (error)
 		return (false);
-	red->type = check_spec(input, 0, i);
-	if (red)
-	red->right = create_ast(cut_right_pipe(&input[*i]), i, &error, red);
+	red->type = check_spec(input, &l, i);
+	red->parent = p;
+	red->right = create_ast(cut_red(&input[*i], C_RIGHT), i, &error, red);
 	if (error)
 		return (false);//free here too
 	return (true);
 }
 
 //this implies that you have to allocate input, index will increment so i can't tell when the recursivity will go back(i would have used it)
-t_astnode	*create_ast(const char *input, size_t *i, int *error, t_astnode *p)
+t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p)
 {
-	t_astnode	*currentnode;
+	t_astn	*currentnode;
 
-	currentnode = malloc(sizeof(t_astnode));
+	currentnode = malloc(sizeof(t_astn));
 	if (currentnode == NULL)
-		return (*error = 1, NULL);
+		return (*error = 1, err_msg("create ast malloc failed"), NULL);
 	if ((p == NULL && *i) || *error)
 		return (free((char *)input), NULL);
 	if (_pipe(&input[*i]))
 	{
 		if (!ast_pipe(input, i, currentnode, p))
 			return (*error = 1, NULL);
-		// currentnode->left = create_ast(cut_left_pipe(&input[*i]), i, error, currentnode);
-		// currentnode = ast_pipe(currentnode, p);
-		// currentnode->right = create_ast(cut_right_pipe(&input[*i]), i, error, currentnode);
 	}
 	else if (_red(&input[*i]))
 	{
 		if (!ast_red(input, i, currentnode, p))
 			return (*error = 1, NULL);
-		currentnode->left = create_ast(cut_left_red(&input[*i]), i, error, currentnode);
-		// currentnode = ast_red(input, currentnode, p);
 	}
 	else
-		return (ast_cmd_node(input, i, nbr_token(&input[*i]), error));
+		return (ast_cmd_node(input, i, (t_cms){p, currentnode}, error));
 	if (*error)
 		return ( free((char *)input), NULL);
-	 if (p == NULL)
-	 	free((char *)input);
+	if (p == NULL)
+		free((char *)input);
 	return (currentnode);
 }
 
 int	main(void)
 {
-	t_astnode	*tree;
+	t_astn	*tree;
 	const char	input[] = "cat << EOF > file | wc -c | tr -d "" > file2";
 	size_t		index = 0;
 	int			error = 0;

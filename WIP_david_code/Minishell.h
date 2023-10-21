@@ -23,20 +23,16 @@
 # define PROMPT	"$> "
 
 //FLAGS
+# define C_RIGHT 0
+# define C_LEFT 1
 # define G_ERROR 0
 # define IT_SEP 0
 # define IT_TOK	1
-# define AST_CN_ERR "ast_cmd_node malloc fail"
-
-enum e_flags{
-	_PIP,
-	_RED,
-	_CMD
-};
 
 #ifndef MINISHELL_H
 	volatile int	g_signal;
 #endif
+
 
 enum e_builtin{
 	ECHO = 22,
@@ -101,7 +97,12 @@ typedef struct AbstractSyntaxTreeNode{
 	struct AbstractSyntaxTreeNode	*parent;
 	struct AbstractSyntaxTreeNode	*left;
 	struct AbstractSyntaxTreeNode	*right;
-}				t_astnode;
+}				t_astn;
+
+typedef struct Cmd_Struct_Nodes{
+	t_astn	*parent;
+	t_astn	*node;
+}				t_cms;
 
 //LEXER++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -123,18 +124,20 @@ char	*get_content(const char *input, size_t *index, size_t *len);
 //lexerutils_C
 t_token	*get_token(const char *input, size_t *index, t_token *token);
 int		nbr_token(const char *input);
-void	free_tokens(t_token **tokens, int last);
-void	free_cmd_node(t_astnode *cmd);
-void	free_red_node(t_astnode *red);
+void	free_tok(t_token **tokens, int last);
+void	free_cmd_node(t_astn *cmd);
+void	free_red_node(t_astn *red);
 
-int		init_node(t_astnode *node, int nbr, int *error);
+int		init_node(t_astn *node, int nbr, t_astn *p, int *error);
 //WIP
-t_astnode	*ast_cmd_node(const char *input, size_t *index, int nbr, int *error);
 
 
 // void	free_tokens(t_token *tokens, int last);
 void	err_msg(char *msg);
 char	**tokenize(char *s, int *tokens_n, int tokens_i);
 int		parser(char *input);
+t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *error);
+t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p);
+
 
 #endif
