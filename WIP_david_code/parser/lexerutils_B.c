@@ -20,15 +20,11 @@
 *   will check for unclosed quotes and iterate index *i which corresponds to 
 *   length in it_token's higher scope, this also gets the length of the token
 */
-bool	check_quote(const char *input, size_t *len, size_t *i)
+bool	check_quote(const char *input, size_t *i)
 {
 	*i += 1;
-	*len += 1;
 	while (type(input, *i) != QUOT && input[*i])
-	{
 		*i += 1;
-		*len += 1;
-	}
 	if (!input[*i])
 		return (err_msg("unclosed quote"), false);
 	return (true);
@@ -77,53 +73,42 @@ int	get_token_type(char *token)
 *   iterates the token while giving length of token, also 
 *	iterates over SEPARATORS and checks unclosed quotes 
 */
-bool	it_token(const char *input, size_t *res, size_t *i, int flag)
+bool	it_token(const char *input, size_t *l_ind, int flag)
 {
 	if (flag == IT_SEP)
-	{
-		while (type(input, *res) == SEPR && input[*res])
-		{
-			*i += 1;
-			*res += 1;
-		}
-	}
-	if (!input[*res])
+		while (type(input, *l_ind) == SEPR && input[*l_ind])
+			*l_ind += 1;
+	if (!input[*l_ind])
 		return (false);
 	else if (flag == IT_TOK)
 	{
-		if (type(input, *res) == QUOT && input[*res])
-			return (check_quote(input, res, i));
-		if (type(input, *res) != WORD && input[*res])
-			return (check_spec(input, res, i));
-		while (type(input, *res) == WORD && input[*res])
-		{
-			*res += 1;
-			*i += 1;
-		}
+		if (type(input, *l_ind) == QUOT && input[*l_ind])
+			return (check_quote(input, l_ind));
+		if (type(input, *l_ind) != WORD && input[*l_ind])
+			return (check_spec(input, l_ind));
+		while (type(input, *l_ind) == WORD && input[*l_ind])
+			*l_ind += 1;
 	}
 	return (true);
 }
 
 //returns an allocated string from input for token and gets length of token
-char	*get_content(const char *input, size_t *index, size_t *res)
+char	*get_content(const char *input, size_t *l_ind, size_t *len)
 {
 	char	*content;
-	int		len;
 	int		i;
 
 	i = 0;
-	len = 0;
-	if (!it_token(input, len, index, IT_TOK))
+	if (!it_token(&input[*l_ind], len, IT_TOK))
 		return (NULL);
-	content = malloc(sizeof(char) * (*res + 1));
+	content = malloc(sizeof(char) * (*len + 1));
 	if (content == NULL)
 		return (err_msg("get_content malloc fail"), NULL);
-	content[*res + 1] = 0;
-	*index -= *res;
-	while (i < (int)*res)
+	content[*len + 1] = 0;
+	while (i < (int)*len)
 	{
-		content[i] = input[*index];
-		*index += 1;
+		content[i] = input[*l_ind];
+		*l_ind += 1;
 		i++;
 	}
 	return (content);

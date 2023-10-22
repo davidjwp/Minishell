@@ -13,47 +13,20 @@
 
 #include "../Minishell.h"
 
-
-t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *err)
-{
-	size_t	res;
-	int		nbr;
-	int		i;
-
-	i = 0;
-	res = 0;
-	nbr = nbr_token(input);
-	if (!nbr || !init_node(c.node, nbr, c.parent, err))
-		return (NULL);
-	while (nbr != 0)
-	{
-		c.node->token[i] = (t_token *)malloc(sizeof(t_token));
-		if (c.node->token[i] == NULL)
-			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
-		c.node->token[i] = get_token(input, c.node->token[i], &res);
-		if (c.node->token[i] == NULL)
-			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
-		nbr -= 1;
-		i++;
-	}
-	index += res;
-	return (free((char *)input), c.node);
-}
-
 /*
 *	creates the COMMAND node which holds every token 
 *	of the corresponding command in the input, each token is separated by
 *	type instead of separators, so are builtins if detected so each token
 *	has it's precise type
 */
-t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *err)
+t_astn	*ast_cmd_node(const char *input, size_t *g_ind, t_cms c, int *err)
 {
-	size_t	res;
+	size_t	l_ind;
 	int		nbr;
 	int		i;
 
 	i = 0;
-	res = 0;
+	l_ind = 0;
 	nbr = nbr_token(input);
 	if (!nbr || !init_node(c.node, nbr, c.parent, err))
 		return (NULL);
@@ -62,12 +35,13 @@ t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *err)
 		c.node->token[i] = (t_token *)malloc(sizeof(t_token));
 		if (c.node->token[i] == NULL)
 			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
-		c.node->token[i] = get_token(input, index, c.node->token[i], &res);
+		c.node->token[i] = get_token(input, &l_ind, c.node->token[i]);
 		if (c.node->token[i] == NULL)
 			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
 		nbr -= 1;
 		i++;
 	}
+	*g_ind += l_ind;
 	return (free((char *)input), c.node);
 }
 
@@ -177,14 +151,12 @@ bool	ast_pipe(const char *input, size_t *i, t_astn *pipe, t_astn *p)
 bool	ast_red(const char *input, size_t *i, t_astn *red, t_astn *p)
 {
 	int		error;
-	size_t	l;
 
-	l = 0;
 	error = 0;
 	red->left = create_ast(cut_red(&input[*i], C_LEFT), i, &error, red);
 	if (error)
 		return (false);
-	red->type = check_spec(input, &l, i);
+	red->type = check_spec(input, i);
 	red->parent = p;
 	red->right = create_ast(cut_red(&input[*i], C_RIGHT), i, &error, red);
 	if (error)

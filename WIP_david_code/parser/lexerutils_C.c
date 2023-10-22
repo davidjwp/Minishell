@@ -17,40 +17,38 @@
 *	get_token(), nbr_token(), free_tokens(), free_cmd_node()
 */
 //returns the token struct with allocated content and type + length
-t_token	*get_token(const char *input, size_t *index, t_token *token, size_t *r)
+t_token	*get_token(const char *input, size_t *l_ind, t_token *token)
 {
 	token->len = 0;
-	if (!it_token(input, r, index, IT_SEP))
+	if (!it_token(input, l_ind, IT_SEP))
 		return (NULL);
-	token->content = get_content(&input[*r], index, &token->len);
+	token->content = get_content(input, l_ind, &token->len);
 	if (token->content == NULL)
 		return (NULL);
 	token->type = get_token_type(token->content);
-	it_token(input, r, index, IT_SEP);
+	it_token(input, l_ind, IT_SEP);
 	return (token);
 }
 
 //counts the number of tokens until a pipe or redirection is found
 int	nbr_token(const char *input)
 {
-	int	tokcnt;
-	size_t	i;
+	size_t	l_ind;
+	int		tokcnt;
 	int		t;
-	size_t	res;
 
-	i = 0;
+	l_ind = 0;
 	tokcnt = 0;
-	res = 0;
-	t = type(input, res);
-	while (t != REDL && t != REDR && t != APRD && t != PIPE && input[res])
+	t = type(input, l_ind);
+	while (t != REDL && t != REDR && t != APRD && t != PIPE && input[l_ind])
 	{
-		it_token(input, &res, &i, IT_SEP);
-		t = type(input, res);
-		if (t != REDL && t != REDR && t != APRD && t != PIPE && input[res])
+		it_token(input, &l_ind, IT_SEP);//CHHANGE THAT
+		t = type(input, l_ind);
+		if (t != REDL && t != REDR && t != APRD && t != PIPE && input[l_ind])
 			tokcnt += 1;
 		else
 			break ;
-		it_token(input, &res, &i, IT_TOK);
+		it_token(input, &l_ind, IT_TOK);
 	}
 	return (tokcnt);
 }

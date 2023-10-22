@@ -91,15 +91,14 @@ bool	cmp(char *content, const char *input)
 /*
 *	iterates size_t *i depending on the special character type
 */
-bool	check_spec(const char *input, size_t *res, size_t *i)
+bool	check_spec(const char *input, size_t *i)
 {
 	int	t;
 
 	t = type(input, *i);
 	if (t == EXST || t == HERD || t == APRD)
-		*res += 2;
+		*i += 2;
 	else
-		*res += 1;
-	*i += *res;
+		*i += 1;
 	return (true);
 }

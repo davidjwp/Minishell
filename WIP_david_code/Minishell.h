@@ -112,17 +112,17 @@ int		type(const char *s, size_t i);
 int		input_pipe(const char *input);
 int		input_red(const char *input);
 bool	cmp(char *content, const char *input);
-bool	check_spec(const char *input, size_t *len, size_t *i);
+bool	check_spec(const char *input, size_t *i);
 
 //lexerutils_B
-bool	check_quote(const char *input, size_t *len, size_t *i);
+bool	check_quote(const char *input, size_t *i);
 int		built_in(const char *input);
 int		get_token_type(char	*token);
-bool	it_token(const char *input, size_t *len, size_t *i, int flag);
+bool	it_token(const char *input, size_t *i, int flag);
 char	*get_content(const char *input, size_t *index, size_t *len);
 
 //lexerutils_C
-t_token	*get_token(const char *input, size_t *index, t_token *token, size_t *res);
+t_token	*get_token(const char *input, size_t *l_ind, t_token *token);
 int		nbr_token(const char *input);
 void	free_tok(t_token **tokens, int last);
 void	free_cmd_node(t_astn *cmd);
