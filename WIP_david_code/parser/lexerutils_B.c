@@ -77,22 +77,27 @@ int	get_token_type(char *token)
 *   iterates the token while giving length of token, also 
 *	iterates over SEPARATORS and checks unclosed quotes 
 */
-bool	it_token(const char *input, size_t *len, size_t *i, int flag)
+bool	it_token(const char *input, size_t *res, size_t *i, int flag)
 {
 	if (flag == IT_SEP)
-		while (type(input, *i) == SEPR && input[*i])
+	{
+		while (type(input, *res) == SEPR && input[*res])
+		{
 			*i += 1;
-	if (!input[*i])
+			*res += 1;
+		}
+	}
+	if (!input[*res])
 		return (false);
 	else if (flag == IT_TOK)
 	{
-		if (type(input, *i) == QUOT && input[*i])
-			return (check_quote(input, len, i));
-		if (type(input, *i) != WORD && input[*i])
-			return (check_spec(input, len, i));
-		while (type(input, *i) == WORD && input[*i])
+		if (type(input, *res) == QUOT && input[*res])
+			return (check_quote(input, res, i));
+		if (type(input, *res) != WORD && input[*res])
+			return (check_spec(input, res, i));
+		while (type(input, *res) == WORD && input[*res])
 		{
-			*len += 1;
+			*res += 1;
 			*i += 1;
 		}
 	}
@@ -100,20 +105,22 @@ bool	it_token(const char *input, size_t *len, size_t *i, int flag)
 }
 
 //returns an allocated string from input for token and gets length of token
-char	*get_content(const char *input, size_t *index, size_t *len)
+char	*get_content(const char *input, size_t *index, size_t *res)
 {
 	char	*content;
+	int		len;
 	int		i;
 
 	i = 0;
+	len = 0;
 	if (!it_token(input, len, index, IT_TOK))
 		return (NULL);
-	content = malloc(sizeof(char) * (*len + 1));
+	content = malloc(sizeof(char) * (*res + 1));
 	if (content == NULL)
 		return (err_msg("get_content malloc fail"), NULL);
-	content[*len + 1] = 0;
-	*index -= *len;
-	while (i < (int)*len)
+	content[*res + 1] = 0;
+	*index -= *res;
+	while (i < (int)*res)
 	{
 		content[i] = input[*index];
 		*index += 1;

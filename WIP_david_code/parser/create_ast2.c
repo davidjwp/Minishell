@@ -14,18 +14,14 @@
 #include "../Minishell.h"
 
 
-/*
-*	creates the COMMAND node which holds every token 
-*	of the corresponding command in the input, each token is separated by
-*	type instead of separators, so are builtins if detected so each token
-*	has it's precise type
-*/
 t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *err)
 {
+	size_t	res;
 	int		nbr;
 	int		i;
 
 	i = 0;
+	res = 0;
 	nbr = nbr_token(input);
 	if (!nbr || !init_node(c.node, nbr, c.parent, err))
 		return (NULL);
@@ -34,7 +30,39 @@ t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *err)
 		c.node->token[i] = (t_token *)malloc(sizeof(t_token));
 		if (c.node->token[i] == NULL)
 			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
-		c.node->token[i] = get_token(input, index, c.node->token[i]);
+		c.node->token[i] = get_token(input, c.node->token[i], &res);
+		if (c.node->token[i] == NULL)
+			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
+		nbr -= 1;
+		i++;
+	}
+	index += res;
+	return (free((char *)input), c.node);
+}
+
+/*
+*	creates the COMMAND node which holds every token 
+*	of the corresponding command in the input, each token is separated by
+*	type instead of separators, so are builtins if detected so each token
+*	has it's precise type
+*/
+t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *err)
+{
+	size_t	res;
+	int		nbr;
+	int		i;
+
+	i = 0;
+	res = 0;
+	nbr = nbr_token(input);
+	if (!nbr || !init_node(c.node, nbr, c.parent, err))
+		return (NULL);
+	while (nbr != 0)
+	{
+		c.node->token[i] = (t_token *)malloc(sizeof(t_token));
+		if (c.node->token[i] == NULL)
+			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
+		c.node->token[i] = get_token(input, index, c.node->token[i], &res);
 		if (c.node->token[i] == NULL)
 			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
 		nbr -= 1;

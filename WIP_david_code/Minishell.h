@@ -122,7 +122,7 @@ bool	it_token(const char *input, size_t *len, size_t *i, int flag);
 char	*get_content(const char *input, size_t *index, size_t *len);
 
 //lexerutils_C
-t_token	*get_token(const char *input, size_t *index, t_token *token);
+t_token	*get_token(const char *input, size_t *index, t_token *token, size_t *res);
 int		nbr_token(const char *input);
 void	free_tok(t_token **tokens, int last);
 void	free_cmd_node(t_astn *cmd);

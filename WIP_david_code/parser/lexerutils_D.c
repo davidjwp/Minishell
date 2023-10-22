@@ -18,6 +18,8 @@
 */
 int	init_node(t_astn *node, int nbr, t_astn *p, int *error)
 {
+	if (!nbr)
+		return (0);
 	node->type = COMD;
 	node->token = (t_token **)malloc(sizeof(t_token) * (nbr + 1));
 	if (node->token == NULL)
