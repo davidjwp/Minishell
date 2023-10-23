@@ -1,5 +1,4 @@
 break create_ast
-break ast_pipe
 break ast_red
+break ast_pipe
 break ast_cmd_node
-break nbr_token

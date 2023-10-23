@@ -80,7 +80,7 @@ bool	_red(const char *input)
 }
 
 //could free input right here but that might cause problems later on
-const char *cut_pipe(const char *input, int flag)
+const char *c_pip(const char *input, int flag)
 {
 	char	*str;
 	int		len;
@@ -92,8 +92,7 @@ const char *cut_pipe(const char *input, int flag)
 		while (input[len] && type(input, len) != PIPE)
 			len++;
 	else if (flag == C_RIGHT)
-		while (input[len] && (type(input, len) != PIPE && \
-		(type(input, len) == 0 || type(input, len) % 4 != 0)))
+		while (input[len])
 			len++;
 	str = malloc(sizeof(char) * (len + 1));
 	str[len] = 0;
@@ -105,7 +104,7 @@ const char *cut_pipe(const char *input, int flag)
 	return (str);
 }
 
-const char	*cut_red(const char *input, int flag)
+const char	*cut_red(const char *input, int flag)//it global if a sep
 {
 	char	*str;
 	int		len;
@@ -118,8 +117,7 @@ const char	*cut_red(const char *input, int flag)
 		type(input, len) % 4 != 0))
 			len++;
 	else if (flag == C_RIGHT)
-		while (input[len] && ((type(input, len) == 0 || type(input, len) \
-		% 4 != 0) && type(input, len) != PIPE))//this might be useless
+		while (input[len])
 			len++;
 	str = malloc(sizeof(char) * (len + 1));
 	str[len] = 0;
@@ -131,34 +129,35 @@ const char	*cut_red(const char *input, int flag)
 	return (str);
 }
 
-bool	ast_pipe(const char *input, size_t *i, t_astn *pipe, t_astn *p)
+bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
 {
 	int	error;
 
 	error = 0;
-	pipe->left = create_ast(cut_pipe(&input[*i], C_LEFT), i, &error, pipe);
+	pipe->left = create_ast(c_pip(&in[*g_ind], C_LEFT), g_ind, &error, pipe);
 	if (error)
 		return (false);
 	pipe->type = PIPE;
 	pipe->parent = p;
-	*i += 1;
-	pipe->right = create_ast(cut_pipe(&input[*i], C_RIGHT), i, &error, pipe);
+	*g_ind += 1;
+	pipe->right = create_ast(c_pip(&in[*g_ind], C_RIGHT), g_ind, &error, pipe);
 	if (error)
 		return (false);
 	return (true);
 }
 
-bool	ast_red(const char *input, size_t *i, t_astn *red, t_astn *p)
+//this is not secure 
+bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 {
 	int		error;
 
 	error = 0;
-	red->left = create_ast(cut_red(&input[*i], C_LEFT), i, &error, red);
+	red->left = create_ast(cut_red(&in[*g_ind], C_LEFT), g_ind, &error, red);
 	if (error)
 		return (false);
-	red->type = check_spec(input, i);
+	red->type = check_spec(in, g_ind);
 	red->parent = p;
-	red->right = create_ast(cut_red(&input[*i], C_RIGHT), i, &error, red);
+	red->right = create_ast(cut_red(&in[*g_ind], C_RIGHT), g_ind, &error, red);
 	if (error)
 		return (false);//free here too
 	return (true);
@@ -169,7 +168,7 @@ t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p)
 {
 	t_astn	*currentnode;
 
-	currentnode = malloc(sizeof(t_astn));
+	currentnode = malloc(sizeof(t_astn));//FREE THIS SHIT
 	if (currentnode == NULL)
 		return (*error = 1, err_msg("create ast malloc failed"), NULL);
 	if ((p == NULL && *i) || *error)
@@ -188,7 +187,7 @@ t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p)
 		return (ast_cmd_node(input, i, (t_cms){p, currentnode}, error));
 	if (*error)
 		return ( free((char *)input), NULL);
-	if (p == NULL)
+	if (p == NULL)//might not need that 
 		free((char *)input);
 	return (currentnode);
 }

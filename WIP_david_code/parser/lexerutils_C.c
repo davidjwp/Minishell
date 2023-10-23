@@ -39,10 +39,12 @@ int	nbr_token(const char *input)
 
 	l_ind = 0;
 	tokcnt = 0;
+	if (!*input)
+		return (0);
 	t = type(input, l_ind);
 	while (t != REDL && t != REDR && t != APRD && t != PIPE && input[l_ind])
 	{
-		it_token(input, &l_ind, IT_SEP);//CHHANGE THAT
+		it_token(input, &l_ind, IT_SEP);
 		t = type(input, l_ind);
 		if (t != REDL && t != REDR && t != APRD && t != PIPE && input[l_ind])
 			tokcnt += 1;
