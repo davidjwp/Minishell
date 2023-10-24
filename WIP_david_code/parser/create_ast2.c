@@ -104,7 +104,7 @@ const char *c_pip(const char *input, int flag)
 	return (str);
 }
 
-const char	*cut_red(const char *input, int flag)//it global if a sep
+const char	*c_red(const char *input, int flag)//it global if a sep
 {
 	char	*str;
 	int		len;
@@ -152,12 +152,13 @@ bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 	int		error;
 
 	error = 0;
-	red->left = create_ast(cut_red(&in[*g_ind], C_LEFT), g_ind, &error, red);
+	red->left = create_ast(c_red(&in[*g_ind], C_LEFT), g_ind, &error, red);
 	if (error)
 		return (false);
-	red->type = check_spec(in, g_ind);
+	red->type = type(in, *g_ind);
+	check_spec(in, g_ind);
 	red->parent = p;
-	red->right = create_ast(cut_red(&in[*g_ind], C_RIGHT), g_ind, &error, red);
+	red->right = create_ast(c_red(&in[*g_ind], C_RIGHT), g_ind, &error, red);
 	if (error)
 		return (false);//free here too
 	return (true);
@@ -173,7 +174,7 @@ t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p)
 		return (*error = 1, err_msg("create ast malloc failed"), NULL);
 	if ((p == NULL && *i) || *error)
 		return (free((char *)input), NULL);
-	if (_pipe(&input[*i]))
+	if (_pipe(&input[*i]))//doesn't go back in for some reason 
 	{
 		if (!ast_pipe(input, i, currentnode, p))
 			return (*error = 1, NULL);
@@ -189,14 +190,14 @@ t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p)
 		return ( free((char *)input), NULL);
 	if (p == NULL)//might not need that 
 		free((char *)input);
-	return (currentnode);
+	return (free(input), currentnode);
 }
 
 int	main(void)
 {
-	t_astn	*tree;
-	const char	input[] = "cat << EOF > file | wc -c | tr -d "" > file2";
+	t_astn		*tree;
 	size_t		index = 0;
+	const char	input[] = "cat << EOF > file | wc -c | tr -d "" > file2";
 	int			error = 0;
 
 	tree = create_ast(input, &index, &error, NULL);

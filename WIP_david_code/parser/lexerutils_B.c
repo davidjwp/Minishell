@@ -40,7 +40,7 @@ int	built_in(const char *input)
 	i = -1;
 	while (++i < 7)
 	{
-		builtin[i] = (char* [8]){"echo", "cd", "pwd", "export", "unset", \
+		builtin[i] = (char *[8]){"echo", "cd", "pwd", "export", "unset", \
 		"env", "exit", NULL}[i];
 		type[i] = (int [7]){22, 33, 44, 55, 66, 77, 88}[i];
 	}
