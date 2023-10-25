@@ -109,36 +109,39 @@ typedef struct Cmd_Struct_Nodes{
 
 
 //lexerutils_A
-int		type(const char *s, size_t i);
-bool	_pipe(const char *input);
-bool	_red(const char *input);
-bool	cmp(char *content, const char *input);
-bool	check_spec(const char *input, size_t *i);
+int			type(const char *s, size_t i);
+bool		_pipe(const char *input);
+bool		_red(const char *input);
+bool		cmp(char *content, const char *input);
+bool		check_spec(const char *input, size_t *i);
 
 //lexerutils_B
-bool	check_quote(const char *input, size_t *i);
-int		built_in(const char *input);
-int		get_token_type(char	*token);
-bool	it_token(const char *input, size_t *i, int flag);
-char	*get_content(const char *input, size_t *index, size_t *len);
+bool		check_quote(const char *input, size_t *i);
+int			built_in(const char *input);
+int			get_token_type(char	*token);
+bool		it_token(const char *input, size_t *i, int flag);
+char		*get_content(const char *input, size_t *index, size_t *len);
 
 //lexerutils_C
-t_token	*get_token(const char *input, size_t *l_ind, t_token *token);
-int		nbr_token(const char *input);
-void	free_tok(t_token **tokens, int last);
-void	free_cmd_node(t_astn *cmd);
-void	free_red_node(t_astn *red);
+t_token		*get_token(const char *input, size_t *l_ind, t_token *token);
+int			nbr_token(const char *input);
+void		free_tok(t_token **tokens, int last);
+void		free_cmd_node(t_astn *cmd);
+void		free_node(t_astn *red);
 
-int		init_node(t_astn *node, int nbr, t_astn *p, int *error);
+int			init_node(t_astn *node, int nbr, t_astn *p, int *error);
+const char	*cut_r(const char *input, int flag);
+const char	*cut_l(const char *input, int flag);
+
 //WIP
 
 
 // void	free_tokens(t_token *tokens, int last);
-void	err_msg(char *msg);
-char	**tokenize(char *s, int *tokens_n, int tokens_i);
-int		parser(char *input);
-t_astn	*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
-t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p);
+void		err_msg(char *msg);
+char		**tokenize(char *s, int *tokens_n, int tokens_i);
+int			parser(char *input);
+t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
+t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
 
 
 #endif

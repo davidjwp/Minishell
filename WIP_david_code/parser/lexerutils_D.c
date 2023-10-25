@@ -30,3 +30,51 @@ int	init_node(t_astn *node, int nbr, t_astn *p, int *error)
 	node->parent = p;
 	return (1);
 }
+
+const char	*cut_r(const char *input, int flag)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	i = 0;
+	len = 0;
+	if (flag == C_PIPE)
+		while (input[len] && type(input, len) != PIPE)
+			len++;
+	else if (flag == C_RED)
+		while (input[len] && (type(input, len) == 0 || \
+		type(input, len) % 4 != 0))
+			len++;		
+	while (input[++len])
+		i++;
+	str = malloc(sizeof(char) * (i + 1));
+	str[i] = 0;
+	len -= i;
+	i = -1;
+	while (input[len] != 0)
+		str[++i] = input[len++];
+	return (str);
+}
+
+const char	*cut_l(const char *input, int flag)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	i = -1;
+	len = 0;
+	if (flag == C_PIPE)
+		while (input[len] && type(input, len) != PIPE)
+			len++;
+	else if (flag == C_RED)
+		while (input[len] && (type(input, len) == 0 || \
+		type(input, len) % 4 != 0))
+			len++;
+	str = malloc(sizeof(char) * (len + 1));
+	str[len] = 0;
+	while (++i < len)
+		str[i] = input[i];
+	return (str);
+}

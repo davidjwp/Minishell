@@ -45,54 +45,6 @@ t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 	return (free((char *)input), c.node);
 }
 
-const char	*cut_r(const char *input, int flag)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	i = 0;
-	len = 0;
-	if (flag == C_PIPE)
-		while (input[len] && type(input, len) != PIPE)
-			len++;
-	else if (flag == C_RED)
-		while (input[len] && (type(input, len) == 0 || \
-		type(input, len) % 4 != 0))
-			len++;		
-	while (input[++len])
-		i++;
-	str = malloc(sizeof(char) * (i + 1));
-	str[i] = 0;
-	len -= i;
-	i = -1;
-	while (input[len] != 0)
-		str[++i] = input[len++];
-	return (str);
-}
-
-const char	*cut_l(const char *input, int flag)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	i = -1;
-	len = 0;
-	if (flag == C_PIPE)
-		while (input[len] && type(input, len) != PIPE)
-			len++;
-	else if (flag == C_RED)
-		while (input[len] && (type(input, len) == 0 || \
-		type(input, len) % 4 != 0))
-			len++;
-	str = malloc(sizeof(char) * (len + 1));
-	str[len] = 0;
-	while (++i < len)
-		str[i] = input[i];
-	return (str);
-}
-
 bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
 {
 	int	error;
@@ -168,16 +120,28 @@ t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 	return (free((char *)input), node);
 }
 
+void	free_tree(t_astn *node)
+{
+	if (node->left != NULL)
+		free_tree(node->left);
+	if (node->right != NULL)
+		free_tree(node->right);
+	if (node->type == COMD)
+		free_cmd_node(node);
+	else
+		free_node(node);
+	exit(0);
+}
+
 int	main(void)
 {
 	t_astn		*tree;
 	size_t		index = 0;
-	const char	input[] = "cat << EOF > file | wc -c | tr -d "" > file2";
+	// const char	input[] = "cat << EOF > file | wc -c | tr -d "" > file2";
+	const char	input[] = "echo hello > file | cat > file2";
 	int			error = 0;
 
 	tree = create_ast(input, &index, &error, NULL);
-	(void)tree;
-	//two choices here either free  input everytime and lose input later on
-	//or make sure to free cut down input everytime which will add lines 
+	free_tree(tree);
 }
 

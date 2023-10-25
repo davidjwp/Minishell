@@ -31,7 +31,7 @@ bool	check_quote(const char *input, size_t *i)
 }
 
 //compares the token with all builtin and returns it's builtin type if found
-int	built_in(const char *input)
+int	built_in(const char *input)//this doesn't work well 
 {
 	char	*builtin[7];
 	int		type[7];
@@ -44,6 +44,7 @@ int	built_in(const char *input)
 		"env", "exit", NULL}[i];
 		type[i] = (int [7]){22, 33, 44, 55, 66, 77, 88}[i];
 	}
+	i = 0;
 	while (builtin[i] != NULL)
 	{
 		if (cmp(builtin[i], input))

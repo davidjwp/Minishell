@@ -84,8 +84,8 @@ void	free_cmd_node(t_astn *cmd)
 		return ;
 	while (cmd->token[i] != NULL)
 	{
-		free(cmd->token[i]->content);
-		free(&cmd->token[i]);
+		free(cmd->token[i]->content);//SEGFAULT
+		free(&cmd->token[i]);//maybe  this 
 		i++;
 	}
 	free(cmd->token);
@@ -93,7 +93,7 @@ void	free_cmd_node(t_astn *cmd)
 }
 
 //free the redirection node
-void	free_red_node(t_astn *red)
+void	free_node(t_astn *red)
 {
 	free_cmd_node(red->left);
 	free_cmd_node(red->right);
