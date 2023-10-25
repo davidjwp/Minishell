@@ -19,7 +19,7 @@
 *	type instead of separators, so are builtins if detected so each token
 *	has it's precise type
 */
-t_astn	*ast_cmd_node(const char *input, size_t *g_ind, t_cms c, int *err)
+t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 {
 	size_t	l_ind;
 	int		nbr;
@@ -78,7 +78,7 @@ bool	_red(const char *input)
 	}
 	return (false);
 }
-
+/*
 //could free input right here but that might cause problems later on
 const char *c_pip(const char *input, int flag)
 {
@@ -86,7 +86,7 @@ const char *c_pip(const char *input, int flag)
 	int		len;
 	int		i;
 
-	i = 0;
+	i = -1;
 	len = 0;
 	if (flag == C_LEFT)
 		while (input[len] && type(input, len) != PIPE)
@@ -96,15 +96,35 @@ const char *c_pip(const char *input, int flag)
 			len++;
 	str = malloc(sizeof(char) * (len + 1));
 	str[len] = 0;
-	while (i < len)
-	{
+	while (++i < len)
 		str[i] = input[i];
-		i++;
-	}
 	return (str);
 }
 
-const char	*c_red(const char *input, int flag)//it global if a sep
+const char	*c_red(const char *input, int flag)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	i = -1;
+	len = 0;
+	if (flag == C_LEFT)
+		while (input[len] && (type(input, len) == 0 || \
+		type(input, len) % 4 != 0))
+			len++;
+	else if (flag == C_RIGHT)
+		while (input[len] && (type(input, len) == 0 || \
+		type(input, len) % 4 != 0))
+			len++;
+	str = malloc(sizeof(char) * (len + 1));
+	str[len] = 0;
+	while (++i < len)
+		str[i] = input[i];
+	return (str);
+}
+*/
+const char	*cut_r(const char *input, int flag)
 {
 	char	*str;
 	int		len;
@@ -112,20 +132,43 @@ const char	*c_red(const char *input, int flag)//it global if a sep
 
 	i = 0;
 	len = 0;
-	if (flag == C_LEFT)
+	if (flag == C_PIPE)
+		while (input[len] && type(input, len) != PIPE)
+			len++;
+	else if (flag == C_RED)
 		while (input[len] && (type(input, len) == 0 || \
 		type(input, len) % 4 != 0))
+			len++;		
+	while (input[++len])
+		i++;
+	str = malloc(sizeof(char) * (i + 1));
+	str[i] = 0;
+	len -= i;
+	i = -1;
+	while (input[len] != 0)
+		str[++i] = input[len++];
+	return (str);
+}
+
+const char	*cut_l(const char *input, int flag)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	i = -1;
+	len = 0;
+	if (flag == C_PIPE)
+		while (input[len] && type(input, len) != PIPE)
 			len++;
-	else if (flag == C_RIGHT)
-		while (input[len])
+	else if (flag == C_RED)
+		while (input[len] && (type(input, len) == 0 || \
+type(input, len) % 4 != 0))
 			len++;
 	str = malloc(sizeof(char) * (len + 1));
 	str[len] = 0;
-	while (i < len)
-	{
+	while (++i < len)
 		str[i] = input[i];
-		i++;
-	}
 	return (str);
 }
 
@@ -134,63 +177,74 @@ bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
 	int	error;
 
 	error = 0;
-	pipe->left = create_ast(c_pip(&in[*g_ind], C_LEFT), g_ind, &error, pipe);
+	pipe->left = create_ast(cut_l(in, C_PIPE), g_ind, &error, pipe);
 	if (error)
 		return (false);
 	pipe->type = PIPE;
 	pipe->parent = p;
 	*g_ind += 1;
-	pipe->right = create_ast(c_pip(&in[*g_ind], C_RIGHT), g_ind, &error, pipe);
+	pipe->right = create_ast(cut_r(in, C_PIPE), g_ind, &error, pipe);
 	if (error)
 		return (false);
 	return (true);
 }
 
-//this is not secure 
+int	get_node_type(const char *input)
+{
+	size_t	i;
+
+	i = 0;
+	while (input[i] && (type(input, i) == 0 || type(input, i) % 4 != 0))
+		i++;
+	return (type(input, i));
+}
+
 bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 {
 	int		error;
 
 	error = 0;
-	red->left = create_ast(c_red(&in[*g_ind], C_LEFT), g_ind, &error, red);
+	red->left = create_ast(cut_l(in, C_RED), g_ind, &error, red);
 	if (error)
 		return (false);
-	red->type = type(in, *g_ind);
+	red->type = get_node_type(in);
 	check_spec(in, g_ind);
 	red->parent = p;
-	red->right = create_ast(c_red(&in[*g_ind], C_RIGHT), g_ind, &error, red);
+	red->right = create_ast(cut_r(in, C_RED), g_ind, &error, red);
 	if (error)
 		return (false);//free here too
 	return (true);
 }
 
-//this implies that you have to allocate input, index will increment so i can't tell when the recursivity will go back(i would have used it)
-t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p)
-{
-	t_astn	*currentnode;
+//you might not need to cut input at all and only use global index
 
-	currentnode = malloc(sizeof(t_astn));//FREE THIS SHIT
-	if (currentnode == NULL)
+//this implies that you have to allocate input, index will increment so i can't tell when the recursivity will go back(i would have used it)
+t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
+{
+	t_astn	*node;
+
+	node = malloc(sizeof(t_astn));
+	if (node == NULL)
 		return (*error = 1, err_msg("create ast malloc failed"), NULL);
-	if ((p == NULL && *i) || *error)
+	if ((par == NULL && *g_ind) || *error)
 		return (free((char *)input), NULL);
-	if (_pipe(&input[*i]))//doesn't go back in for some reason 
+	if (_pipe(input))
 	{
-		if (!ast_pipe(input, i, currentnode, p))
+		if (!ast_pipe(input, g_ind, node, par))
 			return (*error = 1, NULL);
 	}
-	else if (_red(&input[*i]))
+	else if (_red(input))
 	{
-		if (!ast_red(input, i, currentnode, p))
+		if (!ast_red(input, g_ind, node, par))
 			return (*error = 1, NULL);
 	}
 	else
-		return (ast_cmd_node(input, i, (t_cms){p, currentnode}, error));
+		return (ast_cmd(input, g_ind, (t_cms){par, node}, error));
 	if (*error)
 		return ( free((char *)input), NULL);
-	if (p == NULL)//might not need that 
-		free((char *)input);
-	return (free(input), currentnode);
+	if (par == NULL)//might not need that 
+		return (node);
+	return (free((char *)input), node);
 }
 
 int	main(void)

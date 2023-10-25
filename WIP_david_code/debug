@@ -1,4 +1,4 @@
 break create_ast
-break ast_red
+break cut_r
 break ast_pipe
-break ast_cmd_node
+break ast_red

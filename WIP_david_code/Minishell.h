@@ -23,8 +23,9 @@
 # define PROMPT	"$> "
 
 //FLAGS
-# define C_RIGHT 0
-# define C_LEFT 1
+# define C_PIPE 0
+# define C_RED 1
+
 # define G_ERROR 0
 # define IT_SEP 0
 # define IT_TOK	1
@@ -136,7 +137,7 @@ int		init_node(t_astn *node, int nbr, t_astn *p, int *error);
 void	err_msg(char *msg);
 char	**tokenize(char *s, int *tokens_n, int tokens_i);
 int		parser(char *input);
-t_astn	*ast_cmd_node(const char *input, size_t *index, t_cms c, int *error);
+t_astn	*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
 t_astn	*create_ast(const char *input, size_t *i, int *error, t_astn *p);
 
 
