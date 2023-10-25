@@ -2,7 +2,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_ast2.c                                      :+:      :+:    :+:   */
+/*   create_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djacobs <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -45,85 +45,6 @@ t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 	return (free((char *)input), c.node);
 }
 
-bool	_pipe(const char *input)
-{
-	int	index;
-	int	t;
-
-	index = 0;
-	while (input[index] != 0)
-	{
-		t = type(input, index);
-		if (t == PIPE)
-			return (true);
-		index++;
-	}
-	return (false);
-}
-
-bool	_red(const char *input)
-{
-	int	index;
-	int	t;
-
-	index = 0;
-	while (input[index] != 0)
-	{
-		t = type(input, index);
-		if (t == REDL || t == REDR || t == APRD)
-			return (true);
-		else if (t == PIPE)
-			return (false);
-		index++;
-	}
-	return (false);
-}
-/*
-//could free input right here but that might cause problems later on
-const char *c_pip(const char *input, int flag)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	i = -1;
-	len = 0;
-	if (flag == C_LEFT)
-		while (input[len] && type(input, len) != PIPE)
-			len++;
-	else if (flag == C_RIGHT)
-		while (input[len])
-			len++;
-	str = malloc(sizeof(char) * (len + 1));
-	str[len] = 0;
-	while (++i < len)
-		str[i] = input[i];
-	return (str);
-}
-
-const char	*c_red(const char *input, int flag)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	i = -1;
-	len = 0;
-	if (flag == C_LEFT)
-		while (input[len] && (type(input, len) == 0 || \
-		type(input, len) % 4 != 0))
-			len++;
-	else if (flag == C_RIGHT)
-		while (input[len] && (type(input, len) == 0 || \
-		type(input, len) % 4 != 0))
-			len++;
-	str = malloc(sizeof(char) * (len + 1));
-	str[len] = 0;
-	while (++i < len)
-		str[i] = input[i];
-	return (str);
-}
-*/
 const char	*cut_r(const char *input, int flag)
 {
 	char	*str;
@@ -163,7 +84,7 @@ const char	*cut_l(const char *input, int flag)
 			len++;
 	else if (flag == C_RED)
 		while (input[len] && (type(input, len) == 0 || \
-type(input, len) % 4 != 0))
+		type(input, len) % 4 != 0))
 			len++;
 	str = malloc(sizeof(char) * (len + 1));
 	str[len] = 0;

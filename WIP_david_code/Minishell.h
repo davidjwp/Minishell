@@ -110,8 +110,8 @@ typedef struct Cmd_Struct_Nodes{
 
 //lexerutils_A
 int		type(const char *s, size_t i);
-int		input_pipe(const char *input);
-int		input_red(const char *input);
+bool	_pipe(const char *input);
+bool	_red(const char *input);
 bool	cmp(char *content, const char *input);
 bool	check_spec(const char *input, size_t *i);
 

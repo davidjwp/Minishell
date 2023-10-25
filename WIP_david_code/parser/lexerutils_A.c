@@ -17,7 +17,7 @@
 *	type(), input_pipe(), input_red(), cmp(), check_spec()
 */
 //returns type for first pointed chars in *s
-inline int	type(const char *s, size_t i)//could be inlined not sure if i should might not even work properly
+inline int	type(const char *s, size_t i)
 {
 	if (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
 		return (SEPR);
@@ -40,37 +40,40 @@ inline int	type(const char *s, size_t i)//could be inlined not sure if i should 
 	return (WORD);
 }
 
-//finds pipe if there is one and returns it's position if not zero
-int	input_pipe(const char *input)
+//finds first pipe in input
+bool	_pipe(const char *input)
 {
-	size_t	i;
-
-	i = 0;
-	while (type(input, i) != PIPE && input[i])
-		i++;
-	if (input[i])
-		return (i);
-	return (0);
-}
-
-//same as input pipe
-int	input_red(const char *input)
-{
-	size_t	i;
+	int	index;
 	int	t;
 
-	i = 0;
-	t = type(input, i);
-	while (t != REDL && t != REDR && t != APRD && input[i])
+	index = 0;
+	while (input[index] != 0)
 	{
-		t = type(input, i);
-		if (t == REDL && t == REDR && t == APRD && input[i])
-			break ;
-		i++;
+		t = type(input, index);
+		if (t == PIPE)
+			return (true);
+		index++;
 	}
-	if (input[i])
-		return (i);
-	return (0);
+	return (false);
+}
+
+//finds first redirection in input
+bool	_red(const char *input)
+{
+	int	index;
+	int	t;
+
+	index = 0;
+	while (input[index] != 0)
+	{
+		t = type(input, index);
+		if (t == REDL || t == REDR || t == APRD)
+			return (true);
+		else if (t == PIPE)
+			return (false);
+		index++;
+	}
+	return (false);
 }
 
 //cmp two strings returns bool if same string or not 
