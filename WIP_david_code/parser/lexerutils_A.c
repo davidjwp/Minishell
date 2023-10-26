@@ -77,17 +77,15 @@ bool	_red(const char *input)
 }
 
 //cmp two strings returns bool if same string or not 
-bool	cmp(char *content, const char *input)
+bool	cmp(char *content, const char *input)//WIP
 {
 	size_t	i;
 
 	i = 0;
-	while (content[i] == input[i])
-	{
-		if ((!content[i] || type(content, i) == SEPR) && !input[i])
-			return (true);
+	while (content[i] == input[i] && (content[i] && input[i]))
 		i++;
-	}
+	if (!content[i] && !input[i])
+		return (true);
 	return (false);
 }
 

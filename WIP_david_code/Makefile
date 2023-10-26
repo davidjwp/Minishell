@@ -26,10 +26,10 @@ OBJS			= $(SRCS:.c=.o)
 all:$(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -g3 Minishell.h $(OBJS) $(LINKER) -o $(NAME)
+	$(CC) $(CFLAGS) Minishell.h $(OBJS) $(LINKER) -o $(NAME)
 
 %.o: %.c
-	$(CC) -c -g3 $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
 	rm -f $(OBJS)

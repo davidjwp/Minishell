@@ -31,14 +31,14 @@ bool	check_quote(const char *input, size_t *i)
 }
 
 //compares the token with all builtin and returns it's builtin type if found
-int	built_in(const char *input)//this doesn't work well 
+int	built_in(const char *input)
 {
 	char	*builtin[7];
 	int		type[7];
 	int		i;
 
 	i = -1;
-	while (++i < 7)
+	while (++i < 8)
 	{
 		builtin[i] = (char *[8]){"echo", "cd", "pwd", "export", "unset", \
 		"env", "exit", NULL}[i];
@@ -105,7 +105,7 @@ char	*get_content(const char *input, size_t *l_ind, size_t *len)
 	content = malloc(sizeof(char) * (*len + 1));
 	if (content == NULL)
 		return (err_msg("get_content malloc fail"), NULL);
-	content[*len + 1] = 0;
+	content[*len] = 0;
 	while (i < (int)*len)
 	{
 		content[i] = input[*l_ind];

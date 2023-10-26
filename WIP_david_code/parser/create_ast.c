@@ -42,7 +42,7 @@ t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 		i++;
 	}
 	*g_ind += l_ind;
-	return (free((char *)input), c.node);
+	return (c.node);
 }
 
 bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
@@ -62,13 +62,17 @@ bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
 	return (true);
 }
 
-int	get_node_type(const char *input)
+int	get_node_type(const char *input, size_t *g_ind)
 {
 	size_t	i;
+	size_t	n;
 
 	i = 0;
+	n = 0;
 	while (input[i] && (type(input, i) == 0 || type(input, i) % 4 != 0))
 		i++;
+	check_spec(&input[i], &n);
+	*g_ind += n;
 	return (type(input, i));
 }
 
@@ -80,8 +84,7 @@ bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 	red->left = create_ast(cut_l(in, C_RED), g_ind, &error, red);
 	if (error)
 		return (false);
-	red->type = get_node_type(in);
-	check_spec(in, g_ind);
+	red->type = get_node_type(in, g_ind);
 	red->parent = p;
 	red->right = create_ast(cut_r(in, C_RED), g_ind, &error, red);
 	if (error)
@@ -91,7 +94,7 @@ bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 
 //you might not need to cut input at all and only use global index
 
-//this implies that you have to allocate input, index will increment so i can't tell when the recursivity will go back(i would have used it)
+//this implies that you have to allocate input everytime
 t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 {
 	t_astn	*node;
@@ -112,10 +115,10 @@ t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 			return (*error = 1, NULL);
 	}
 	else
-		return (ast_cmd(input, g_ind, (t_cms){par, node}, error));
+		ast_cmd(input, g_ind, (t_cms){par, node}, error);
 	if (*error)
 		return ( free((char *)input), NULL);
-	if (par == NULL)//might not need that 
+	if (par == NULL)
 		return (node);
 	return (free((char *)input), node);
 }
@@ -129,19 +132,18 @@ void	free_tree(t_astn *node)
 	if (node->type == COMD)
 		free_cmd_node(node);
 	else
-		free_node(node);
-	exit(0);
+		free(node);
 }
 
 int	main(void)
 {
 	t_astn		*tree;
 	size_t		index = 0;
+	const char	input[] = "echo hello";
 	// const char	input[] = "cat << EOF > file | wc -c | tr -d "" > file2";
-	const char	input[] = "echo hello > file | cat > file2";
+	// const char	input[] = "echo hello > file | cat > file2";
 	int			error = 0;
 
 	tree = create_ast(input, &index, &error, NULL);
 	free_tree(tree);
 }
-

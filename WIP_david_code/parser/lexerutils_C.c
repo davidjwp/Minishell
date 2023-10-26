@@ -85,7 +85,7 @@ void	free_cmd_node(t_astn *cmd)
 	while (cmd->token[i] != NULL)
 	{
 		free(cmd->token[i]->content);//SEGFAULT
-		free(&cmd->token[i]);//maybe  this 
+		free((t_token *)cmd->token[i]);
 		i++;
 	}
 	free(cmd->token);
