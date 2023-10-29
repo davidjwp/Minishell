@@ -129,9 +129,11 @@ void		free_tok(t_token **tokens, int last);
 void		free_cmd_node(t_astn *cmd);
 void		free_node(t_astn *red);
 
+//lexerutils_D
 int			init_node(t_astn *node, int nbr, t_astn *p, int *error);
 const char	*cut_r(const char *input, int flag);
 const char	*cut_l(const char *input, int flag);
+void	free_tree(t_astn *node);
 
 //WIP
 
@@ -142,6 +144,5 @@ char		**tokenize(char *s, int *tokens_n, int tokens_i);
 int			parser(char *input);
 t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
 t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
-
 
 #endif

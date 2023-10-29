@@ -78,3 +78,15 @@ const char	*cut_l(const char *input, int flag)
 		str[i] = input[i];
 	return (str);
 }
+
+void	free_tree(t_astn *node)
+{
+	if (node->left != NULL)
+		free_tree(node->left);
+	if (node->right != NULL)
+		free_tree(node->right);
+	if (node->type == COMD)
+		free_cmd_node(node);
+	else
+		free(node);
+}

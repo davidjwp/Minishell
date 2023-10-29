@@ -1,4 +1,2 @@
 break create_ast
-break cut_r
 break ast_pipe
-break ast_red

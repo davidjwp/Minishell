@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -29,7 +28,7 @@ t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 	l_ind = 0;
 	nbr = nbr_token(input);
 	if (!nbr || !init_node(c.node, nbr, c.parent, err))
-		return (NULL);
+		return (free(c.node), NULL);
 	while (nbr != 0)
 	{
 		c.node->token[i] = (t_token *)malloc(sizeof(t_token));
@@ -53,6 +52,7 @@ bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
 	pipe->left = create_ast(cut_l(in, C_PIPE), g_ind, &error, pipe);
 	if (error)
 		return (false);
+	pipe->token = NULL;
 	pipe->type = PIPE;
 	pipe->parent = p;
 	*g_ind += 1;
@@ -84,17 +84,15 @@ bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 	red->left = create_ast(cut_l(in, C_RED), g_ind, &error, red);
 	if (error)
 		return (false);
+	red->token = NULL;
 	red->type = get_node_type(in, g_ind);
 	red->parent = p;
 	red->right = create_ast(cut_r(in, C_RED), g_ind, &error, red);
 	if (error)
-		return (false);//free here too
+		return (false);
 	return (true);
 }
 
-//you might not need to cut input at all and only use global index
-
-//this implies that you have to allocate input everytime
 t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 {
 	t_astn	*node;
@@ -102,8 +100,8 @@ t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 	node = malloc(sizeof(t_astn));
 	if (node == NULL)
 		return (*error = 1, err_msg("create ast malloc failed"), NULL);
-	if ((par == NULL && *g_ind) || *error)
-		return (free((char *)input), NULL);
+	// if (!*input)
+	// 	return (free((char *)input), NULL);
 	if (_pipe(input))
 	{
 		if (!ast_pipe(input, g_ind, node, par))
@@ -115,35 +113,10 @@ t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 			return (*error = 1, NULL);
 	}
 	else
-		ast_cmd(input, g_ind, (t_cms){par, node}, error);
+		node = ast_cmd(input, g_ind, (t_cms){par, node}, error);
 	if (*error)
 		return ( free((char *)input), NULL);
 	if (par == NULL)
 		return (node);
 	return (free((char *)input), node);
-}
-
-void	free_tree(t_astn *node)
-{
-	if (node->left != NULL)
-		free_tree(node->left);
-	if (node->right != NULL)
-		free_tree(node->right);
-	if (node->type == COMD)
-		free_cmd_node(node);
-	else
-		free(node);
-}
-
-int	main(void)
-{
-	t_astn		*tree;
-	size_t		index = 0;
-	const char	input[] = "echo hello";
-	// const char	input[] = "cat << EOF > file | wc -c | tr -d "" > file2";
-	// const char	input[] = "echo hello > file | cat > file2";
-	int			error = 0;
-
-	tree = create_ast(input, &index, &error, NULL);
-	free_tree(tree);
 }
