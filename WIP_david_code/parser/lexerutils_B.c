@@ -27,6 +27,7 @@ bool	check_quote(const char *input, size_t *i)
 		*i += 1;
 	if (!input[*i])
 		return (err_msg("unclosed quote"), false);
+	*i += 1;
 	return (true);
 }
 

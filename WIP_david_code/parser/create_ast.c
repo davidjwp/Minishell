@@ -100,8 +100,6 @@ t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 	node = malloc(sizeof(t_astn));
 	if (node == NULL)
 		return (*error = 1, err_msg("create ast malloc failed"), NULL);
-	// if (!*input)
-	// 	return (free((char *)input), NULL);
 	if (_pipe(input))
 	{
 		if (!ast_pipe(input, g_ind, node, par))

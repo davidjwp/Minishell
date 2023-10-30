@@ -83,19 +83,18 @@ void	print_tree(t_astn *node, FILE *file)
 		print_tree(node->right, file);
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	t_astn		*tree;
 	size_t		index = 0;
+	const char	input[] = "echo \"cd ls\" | das";
 	// const char	input[] = "cat << EOF > file | wc -c | tr -d "" > file2";
 	// const char	input[] = "echo hello > file | cat > file2";
 	int	error = 0;
 	FILE *file = fopen("file", "wa+");
 
-	if (argc != 2)
-		return (printf ("Error missing input\n"), 0);
-	tree = create_ast(argv[1], &index, &error, NULL);
-	fprintf(file, "%s\n\n", argv[1]);
+	tree = create_ast(input, &index, &error, NULL);
+	fprintf(file, "%s\n\n", input);
 	print_tree(tree, file);
 	free_tree(tree);
 	return (1);
