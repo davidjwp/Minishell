@@ -90,10 +90,16 @@ typedef struct PipexStruct{
 }
 
 typedef struct LexerUtilsStructure{
-	int	r;
-	int	p;
-	int	error;
-}				t_lus;
+	int		r;
+	int		p;
+	pid_t	pid;
+	char	**args;
+	char	**paths;
+	char	*pathname;
+	int		pipe_fd[2];
+	char	*input_file;
+}	t_lus;
+
 
 typedef struct s_token{
 	int		type;
@@ -144,11 +150,13 @@ const char	*cut_l(const char *input, int flag);
 int			get_node_type(const char *input, size_t *g_ind);
 void		free_tree(t_astn *node);
 
+//create_ast
+char		**tokenize(char *s, int *tokens_n, int tokens_i);
+t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
+
+int			parser(char *input);
+void		err_msg(char *msg);
 t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
 
-void		err_msg(char *msg);
-char		**tokenize(char *s, int *tokens_n, int tokens_i);
-int			parser(char *input);
-t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
 
 #endif

@@ -14,7 +14,7 @@
 
 bool	parser_r(t_astn *node)
 {
-	if 
+	if (node)
 }
 
 bool	parse(t_astn *node)
@@ -23,27 +23,34 @@ bool	parse(t_astn *node)
 		parser_r(node->left);
 	if (node->right != NULL)
 		parser_r(node->right);
-	
 }
 
-int	b_exe(t_astn *node)
+int	pipe()
 {
+	t_lus	pipe;
 
+	pipe.o = open_file()
 }
 
-int	a_exe(t_astn *node)
+
+
+void	executor(t_astn *node)
 {
+	void	*gen;
+
 	if (node->type == PIPE)
 	{
-		b_exe(node->left);
+		gen = (void *)pipe();
+		executor(node->right);
+		
+
 	}
-	
+
+
 }
 
-
-
 //separate
-int	execute(const char *input, )
+int	pre_exe(const char *input, )
 {
 	t_astn	*ast_root;
 	int		error;

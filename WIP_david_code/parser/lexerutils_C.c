@@ -14,7 +14,7 @@
 
 /*
 *	lexerutils_C contains the following functions :
-*	get_token(), nbr_token(), free_tokens(), free_cmd_node()
+*	get_token(), nbr_token(), free_tok(), free_cmd_node(), free_node()
 */
 //returns the token struct with allocated content and type + length
 t_token	*get_token(const char *input, size_t *l_ind, t_token *token)

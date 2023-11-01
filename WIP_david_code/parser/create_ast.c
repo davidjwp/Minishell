@@ -13,11 +13,10 @@
 #include "../Minishell.h"
 
 /*
-*	creates the COMMAND node which holds every token 
-*	of the corresponding command in the input, each token is separated by
-*	type instead of separators, so are builtins if detected so each token
-*	has it's precise type
+*	create_ast.c contains the following functions :
+*	ast_cmd(), ast_pipe(), ast_red(), create_ast()
 */
+//creates a command node, the node contains the tokens and links to other nodes 
 t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 {
 	size_t	l_ind;
@@ -44,6 +43,10 @@ t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 	return (c.node);
 }
 
+/*
+*	creates a pipe node while cutting the left and right side of 
+*	the input from the pipe
+*/
 bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
 {
 	int	error;
@@ -62,6 +65,10 @@ bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
 	return (true);
 }
 
+/*
+*	creates a redirection node while cutting the left and right side of
+*	the input from the redirection
+*/
 bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 {
 	int		error;
@@ -79,6 +86,7 @@ bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 	return (true);
 }
 
+//creates the abstract syntax tree via recursion
 t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 {
 	t_astn	*node;
@@ -89,12 +97,12 @@ t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 	if (_pipe(input))
 	{
 		if (!ast_pipe(input, g_ind, node, par))
-			return (*error = 1, NULL);
+			return (*error = 1, free(node), NULL);
 	}
 	else if (_red(input))
 	{
 		if (!ast_red(input, g_ind, node, par))
-			return (*error = 1, NULL);
+			return (*error = 1, free(node), NULL);
 	}
 	else
 		node = ast_cmd(input, g_ind, (t_cms){par, node}, error);
