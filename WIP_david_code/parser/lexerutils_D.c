@@ -14,8 +14,9 @@
 
 /*
 *	lexerutils_D contains the following functions :
-*	
+*	init_node(), cut_r(), cut_l(), free_tree()
 */
+//initializes node members
 int	init_node(t_astn *node, int nbr, t_astn *p, int *error)
 {
 	if (!nbr)
@@ -31,6 +32,7 @@ int	init_node(t_astn *node, int nbr, t_astn *p, int *error)
 	return (1);
 }
 
+//cuts the right side of the input depending on which type
 const char	*cut_r(const char *input, int flag)
 {
 	char	*str;
@@ -57,6 +59,7 @@ const char	*cut_r(const char *input, int flag)
 	return (str);
 }
 
+//cuts the left side of the input depending on which type
 const char	*cut_l(const char *input, int flag)
 {
 	char	*str;
@@ -79,6 +82,22 @@ const char	*cut_l(const char *input, int flag)
 	return (str);
 }
 
+//gets the node type for redirections
+int	get_node_type(const char *input, size_t *g_ind)
+{
+	size_t	i;
+	size_t	n;
+
+	i = 0;
+	n = 0;
+	while (input[i] && (type(input, i) == 0 || type(input, i) % 4 != 0))
+		i++;
+	check_spec(&input[i], &n);
+	*g_ind += n;
+	return (type(input, i));
+}
+
+//free tree from root to bottom
 void	free_tree(t_astn *node)
 {
 	if (node->left != NULL)

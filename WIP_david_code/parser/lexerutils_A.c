@@ -14,7 +14,7 @@
 
 /*
 *	lexerutils_A contains the following functions :
-*	type(), input_pipe(), input_red(), cmp(), check_spec()
+*	type(), _pipe(), _red(), cmp(), check_spec()
 */
 //returns type for first pointed chars in *s
 inline int	type(const char *s, size_t i)

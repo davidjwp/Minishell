@@ -17,7 +17,7 @@ bool	parser_r(t_astn *node)
 	if 
 }
 
-bool	parser(t_astn *node)
+bool	parse(t_astn *node)
 {
 	if (node->left != NULL)
 		parser_r(node->left);
@@ -26,9 +26,24 @@ bool	parser(t_astn *node)
 	
 }
 
+int	b_exe(t_astn *node)
+{
+
+}
+
+int	a_exe(t_astn *node)
+{
+	if (node->type == PIPE)
+	{
+		b_exe(node->left);
+	}
+	
+}
+
+
 
 //separate
-void	executor(const char *input, )
+int	execute(const char *input, )
 {
 	t_astn	*ast_root;
 	int		error;
@@ -38,7 +53,9 @@ void	executor(const char *input, )
 	index = 0;
 	ast_root = create_ast(input, &index, &error, NULL);
 	if (error || ast_root == NULL)
-		return ();
+		return (0);
 	if (!parser(ast_root))
 		return (0);
+	if (ast_root->type == PIPE)
+		pipex();
 }

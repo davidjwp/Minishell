@@ -1,44 +1,28 @@
-cd ds | ||echo
+echo "cd ls" | das
 
 	_______________
-node	- 0x4a8f260
+node	- 0x561aa094e480
 type	- PIPELINE
 parent	- (nil)
-right	- 0x4a8f5d0
-left	- 0x4a8f320
+right	- 0x561aa094e5d0
+left	- 0x561aa094e4d0
 
 
 	_______________
-node	- 0x4a8f320
+node	- 0x561aa094e4d0
 type	- COMMAND
-parent	- 0x4a8f260
+parent	- 0x561aa094e480
 right	- (nil)
 left	- (nil)
-"cd ds "
-CD WORD 
+"echo "cd ls" "
+ECHO QUOTE 
 
 	_______________
-node	- 0x4a8f5d0
-type	- PIPELINE
-parent	- 0x4a8f260
-right	- 0x4a8f750
-left	- (nil)
-
-
-	_______________
-node	- 0x4a8f750
-type	- PIPELINE
-parent	- 0x4a8f5d0
-right	- 0x4a8f8d0
-left	- (nil)
-
-
-	_______________
-node	- 0x4a8f8d0
+node	- 0x561aa094e5d0
 type	- COMMAND
-parent	- 0x4a8f750
+parent	- 0x561aa094e480
 right	- (nil)
 left	- (nil)
-"echo "
-ECHO 
+"das "
+WORD 
 

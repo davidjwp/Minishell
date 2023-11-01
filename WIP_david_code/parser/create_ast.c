@@ -62,20 +62,6 @@ bool	ast_pipe(const char *in, size_t *g_ind, t_astn *pipe, t_astn *p)
 	return (true);
 }
 
-int	get_node_type(const char *input, size_t *g_ind)
-{
-	size_t	i;
-	size_t	n;
-
-	i = 0;
-	n = 0;
-	while (input[i] && (type(input, i) == 0 || type(input, i) % 4 != 0))
-		i++;
-	check_spec(&input[i], &n);
-	*g_ind += n;
-	return (type(input, i));
-}
-
 bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 {
 	int		error;

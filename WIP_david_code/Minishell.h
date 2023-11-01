@@ -13,10 +13,13 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <unistd.h>
 # include <stdbool.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -33,7 +36,6 @@
 #ifndef MINISHELL_H
 	volatile int	g_signal;
 #endif
-
 
 enum e_builtin{
 	ECHO = 22,
@@ -80,6 +82,13 @@ enum e_type{
 	COMD,
 };	
 
+typedef struct PipexStruct{
+	int		i;
+	int 	o;
+	pid_t	pid;
+	int		_int;
+}
+
 typedef struct LexerUtilsStructure{
 	int	r;
 	int	p;
@@ -107,7 +116,6 @@ typedef struct Cmd_Struct_Nodes{
 
 //LEXER++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
 //lexerutils_A
 int			type(const char *s, size_t i);
 bool		_pipe(const char *input);
@@ -133,16 +141,14 @@ void		free_node(t_astn *red);
 int			init_node(t_astn *node, int nbr, t_astn *p, int *error);
 const char	*cut_r(const char *input, int flag);
 const char	*cut_l(const char *input, int flag);
-void	free_tree(t_astn *node);
+int			get_node_type(const char *input, size_t *g_ind);
+void		free_tree(t_astn *node);
 
-//WIP
+t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
 
-
-// void	free_tokens(t_token *tokens, int last);
 void		err_msg(char *msg);
 char		**tokenize(char *s, int *tokens_n, int tokens_i);
 int			parser(char *input);
-t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
 t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
 
 #endif

@@ -1,2 +1,7 @@
+break main
 break create_ast
 break ast_pipe
+break ast_cmd
+break get_token
+break it_token
+break nbr_token
