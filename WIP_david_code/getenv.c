@@ -1,12 +1,10 @@
-# include <stdlib.h>
-# include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv)
 {
-	char	*l_env;
-	
-	l_env = getenv(env[2]);
+	char	env[] = "PATH";
 
-	printf ("%s\n", l_env);
+	printf ("%s\n", getenv(env) ? getenv(env) : "env not found");
 	return (0);
 }

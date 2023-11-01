@@ -101,8 +101,39 @@ bool	it_token(const char *input, size_t *l_ind, int flag)
 	return (true);
 }
 
-void	check_var(const char *input, size_t *l_ind)
+int	ft_strlen(char *str)
 {
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+
+//WIP
+//you have to pass a cut input from l_ind 
+char	get_var(const char *input, size_t *l_ind)
+{
+	char	*env;
+	char	*var;
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	while (input[len] >= 65 && input[len] <= 90 || input[len])
+		len++;
+	var = malloc(sizeof(char) * (len + 1));
+	while (input[i] >= 65 && input[i] <= 90 || input[i])
+	{
+		var[i] = input[i];
+		i++;
+	}
+	if (!getenv(var))
+		return ()
+	env = malloc(sizeof(char) * (ft_strlen(getenv(var)) + 1));
 	while ()
 
 }
@@ -115,7 +146,11 @@ char	*get_quote(const char *input, size_t *l_ind, size_t *len)
 
 	i = 0;
 	if (!check_quote(input, l_ind))
-		return (0)
+		return (0);
+	*l_ind += 1;
+	if (!it_token(input, l_ind, IT_TOK))
+		return (0);
+	
 }
 
 //returns an allocated string from input for token and gets length of token
@@ -126,7 +161,7 @@ char	*get_content(const char *input, size_t *l_ind, size_t *len)
 
 	i = 0;
 	if (type(input, *l_ind) == QUOT)
-		return (!get_quote(input, l_ind, len));
+		return (get_quote(input, l_ind, len));
 	if (!it_token(&input[*l_ind], len, IT_TOK))
 		return (NULL);
 	content = malloc(sizeof(char) * (*len + 1));
