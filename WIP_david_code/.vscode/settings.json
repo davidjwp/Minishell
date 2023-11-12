@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"ctype.h": "c",
-		"endian.h": "c",
-		"types.h": "c",
-		"features.h": "c",
-		"stdbool.h": "c"
-	}
-}

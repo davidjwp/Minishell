@@ -1,3 +1,10 @@
 {
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "structures.h": "c",
+        "minishell.h": "c",
+        "includes": "c",
+        "sh_structs.h": "c",
+        "sh_functs.h": "c"
+    }
 }

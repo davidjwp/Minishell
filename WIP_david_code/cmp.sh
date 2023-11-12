@@ -1,1 +1,0 @@
-gcc -g3 -o bit bitwise.c
