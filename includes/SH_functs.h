@@ -25,7 +25,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
 //LEXER++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //lexerutils_A
@@ -65,29 +64,35 @@ void		err_msg(char *msg);
 char		**ft_split(const char *s, char c);
 void		free_split(char **split);
 
-
 //EXEC+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //exe.c
 void		open_file(t_astn *tree, t_red *_red, int flag);
-void		sh_red(t_astn *tree, t_env *sh_env);
-int			sh_pipe(t_astn *tree, t_env *sh_env);
-int			execute(t_astn *tree, t_env *sh_env);
+void		sh_red(t_astn *tree, t_env *sh_env, t_cleanup cl);
+int			sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup cl);
+int			execute(t_astn *tree, t_env *sh_env, t_cleanup cl);
 
 //exe_utils_A
 char		*cr_pathname(const char *cmd, t_env *sh_env);
 char		**cr_envp(t_env *sh_env);
 char		**cr_args(t_token **tokens, char *pathname);
 char		*envcat(const char *name, const char *value);
-char		*ft_strcat(const char *str1, const char *str2);
+char		*strccat(const char *str1, char c, const char *str2);
+
+//exe_utils_B
+t_env		*find_env(const char *name, t_env *sh_env);
+int			sh_envlen(t_env *sh_env);
+void		close_pipe(int *pipe);
+void		close_fds(t_fds *fds);
+void		wait_pipe(t_pipe p);
+
+void	clean_up(t_cleanup cl);
+
 
 //MAIN+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //minishell.c
-int			shell_loop(t_astn *tree, t_env *sh_env);
-
-void		close_pipe(int *pipe);
-
+int			shell_loop(t_astn *tree, t_env *sh_env, t_cleanup cl);
 
 int			sh_envlen(t_env *sh_env);
 
@@ -95,11 +100,11 @@ int			sh_envlen(t_env *sh_env);
 
 int			ft_strlen(const char *str);
 t_env		*cr_env(char **env);
-t_astn		*parser(char *input);
+t_astn		*parser(const char *input);
 t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
 
 void		*ft_calloc(size_t nmemb, size_t size);
 t_env		*find_env(const char *name, t_env *sh_env);
-void    	ctrl_c(int sig);
+void		ctrl_c(int sig);
 
 #endif

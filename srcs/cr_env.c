@@ -52,14 +52,14 @@ t_env	*env_node(char *env)
 	node = malloc(sizeof(t_env));
 	node->name = split[0];
 	node->value = split[1];
+	node->cl = split;
 	node->next = NULL;
-	free_split(split);
 	return (node);
 }
 
 /*
 *	creates the env list to be used in the shell
-*	each list will have to be reconstructed into an array of strings 
+*	each list will have to be reconstructed into an array of string
 *	before execution to serve as execution environment
 */
 t_env	*cr_env(char **env)

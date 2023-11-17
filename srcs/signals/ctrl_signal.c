@@ -10,28 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include "../../includes/structures.h"
+#include "../../includes/SH_functs.h"
+#include "../../includes/SH_structs.h"
 
-void    ctrl_c(int sig)
+void	ctrl_c(int sig)
 {
-    if (sig == SIGINT)
-    {
-        exit_status = 130;
-        putchar('\n');
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
+	if (sig == SIGINT)
+	{
+		g_signal = 130;
+		putchar('\n');
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-void	ctrl_d(char *str, char *prompt)
-{
-    exit_status = 0;
-    ft_putendl_fd("", STDOUT_FILENO);
-    ft_putendl_fd(str, STDOUT_FILENO);
-    rl_clear_history();
-    free(prompt);
-    exit(exit_status);
-}
-
+// void	ctrl_d(char *str, char *prompt)
+// {
+// 	g_signal = 0;
+// 	ft_putendl_fd("", STDOUT_FILENO);
+// 	ft_putendl_fd(str, STDOUT_FILENO);
+// 	rl_clear_history();
+// 	free(prompt);
+// 	exit(EXIT_SUCCESS);
+// }

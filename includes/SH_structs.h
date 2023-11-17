@@ -81,13 +81,6 @@ enum e_type{
 	COMD,
 };	
 
-
-
-typedef struct ExecuteStruct{
-	pid_t	pid;
-	int		status;
-}	t_exe;
-
 typedef struct s_token{
 	int		type;
 	size_t	len;
@@ -111,19 +104,35 @@ typedef struct ShellEnvNode{
 	char				*name;
 	char				*value;
 	struct ShellEnvNode	*next;
+	char				**cl;
 }	t_env;
 
 typedef struct PipeStruct{
-	t_exe		exe;
-	char		**args;
-	char		**paths;
-	char		*pathname;
-	int			pipe_fd[2];
+	pid_t	r_pid;
+	pid_t	l_pid;
+	int		pipe_fd[2];
 }	t_pipe;
 
 typedef struct RedirectionStruct{
 	int	in;
 	int	out;
 }	t_red;
+
+typedef struct FileDescriptors{
+	int						fd;
+	struct FileDescriptors	*next;
+}	t_fds;
+
+typedef struct CleanUp{
+	t_fds	*fds;
+	t_astn	*tree;
+	t_env	*env;
+}	t_cleanup;
+
+typedef struct ExecuteArgumentStruct{
+	char	*__path;
+	char	**__envp;
+	char	**argv;
+}	t_exe;
 
 #endif

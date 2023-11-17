@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/SH_functs.h"
-#include "../includes/SH_structs.h"
+#include "../../includes/SH_functs.h"
+#include "../../includes/SH_structs.h"
 
 t_astn	*parser(const char *input)
 {
 	t_astn		*tree;
-	static int	error;//might not need to pass it down
-	static int	g_ind;//might not even need to pass it down 
+	int	error;//might not need to pass it down
+	size_t	g_ind;//might not even need to pass it down 
 
 	error = 0;
 	g_ind = 0;
-	tree = create_ast(input, g_ind, &error, NULL);
+	tree = create_ast(input, &g_ind, &error, NULL);
 	if (error)
 		return (0);
 	/*parsing rules here*/

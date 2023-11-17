@@ -31,12 +31,12 @@ char	*cr_pathname(const char *cmd, t_env *sh_env)
 		paths = ft_split(sh_env->value, ':');
 	if (paths == NULL)
 		return (err_msg("ft_split Malloc fail"), NULL);
-	pathname = ft_strcat(paths[i], cmd);
+	pathname = strccat(paths[i], '/', cmd);
 	while (access(pathname, X_OK) != 0 && paths[i] != NULL)
 	{
 		free(pathname);
 		i++;
-		pathname = ft_strcat(paths[i], cmd);
+		pathname = strccat(paths[i], '/', cmd);
 	}
 	if (paths[i] == NULL)
 		return (free_split(paths), free(pathname), err_msg("no access"), NULL);
@@ -54,13 +54,13 @@ char	**cr_envp(t_env *sh_env)
 	if (sh_env == NULL)
 		return (envp = ft_split(ABS_PATHS, ':'));
 	len = sh_envlen(sh_env);
-	envp = malloc(sizeof(char *) * len + 1);
+	envp = malloc(sizeof(char *) * (len + 1));
 	if (envp == NULL)
 		return (err_msg("cr_envp malloc fail"), NULL);
 	envp[len] = NULL;
 	while (++i < len)
 	{
-		envp[i] = envcat(sh_env->name, sh_env->value);
+		envp[i] = strccat(sh_env->name, '=', sh_env->value);
 		sh_env = sh_env->next;
 	}
 	return (envp);
@@ -74,7 +74,7 @@ char	**cr_args(t_token **tokens, char *pathname)
 
 	i = 0;
 	len = 0;
-	if (tokens[0] == NULL)
+	if (tokens[1] == NULL)
 	{
 		args = malloc(sizeof(char *) * 2);
 		if (args == NULL)
@@ -95,31 +95,8 @@ char	**cr_args(t_token **tokens, char *pathname)
 	return (args);
 }
 
-//this is exactly like ft_strcat but the equal sign is added between the two
-char	*envcat(const char *name, const char *value)
-{
-	char	*pathname;
-	int		len;
-	int		y;
-	int		i;
-
-	i = -1;
-	y = -1;
-	len = ft_strlen(name) + ft_strlen(value) + 2;
-	pathname = malloc(sizeof(char) * len);
-	if (pathname == NULL)
-		return (err_msg("envcat malloc fail"), NULL);
-	pathname[len] = 0;
-	pathname[ft_strlen(name) - 1] = '=';
-	while (name[++i])
-		pathname[i] = name[i];
-	while (value[++y])
-		pathname[i] = value[y];
-	return (pathname);
-}
-
-//concatenates the str2 after str1
-char	*ft_strcat(const char *str1, const char *str2)
+//concatenates the str2 after str1 with c in the middle
+char	*strccat(const char *str1, char c, const char *str2)
 {
 	char	*pathname;
 	int		len;
@@ -135,7 +112,26 @@ char	*ft_strcat(const char *str1, const char *str2)
 	pathname[len] = 0;
 	while (str1[++i])
 		pathname[i] = str1[i];
-	while (str2[++y])
+	pathname[i] = c;
+	while (str2[++y] && ++i < len)
 		pathname[i] = str2[y];
 	return (pathname);
+}
+
+//find the shell environment variable by name
+t_env	*find_env(const char *name, t_env *sh_env)
+{
+	t_env	*tmp;
+
+	tmp = sh_env;
+	if (sh_env == NULL)
+		return (NULL);
+	if (cmp(name, sh_env->name) == true)
+		return (sh_env);
+	sh_env = sh_env->next;
+	while (cmp(name, sh_env->name) != true && sh_env != tmp)
+		sh_env = sh_env->next;
+	if (sh_env == tmp)
+		return (NULL);
+	return (sh_env);
 }

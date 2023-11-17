@@ -25,9 +25,9 @@ SRCS			= srcs/parser/lexerutils_A.c srcs/parser/lexerutils_B.c \
 				srcs/parser/create_ast.c srcs/parser/lexerutils_D.c \
 				srcs/executor/exe.c srcs/executor/exeutils_A.c \
 				srcs/executor/exeutils_B.c srcs/cr_env.c srcs/g_utils.c \
-				srcs/minishell.c
+				srcs/minishell.c srcs/parser/parser.c srcs/signals/ctrl_signal.c
 
-OBJS			= $(SRCS:.c=.o)
+OBJS			= $(SRCS:.c=.o)#make it so that objs go to objs folder
 
 all:$(NAME)
 
