@@ -68,9 +68,9 @@ void		free_split(char **split);
 
 //exe.c
 void		open_file(t_astn *tree, t_red *_red, int flag);
-void		sh_red(t_astn *tree, t_env *sh_env, t_cleanup cl);
-int			sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup cl);
-int			execute(t_astn *tree, t_env *sh_env, t_cleanup cl);
+void		sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl);
+int			sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl);
+int			execute(t_astn *tree, t_env *sh_env, t_cleanup *cl);
 
 //exe_utils_A
 char		*cr_pathname(const char *cmd, t_env *sh_env);
@@ -86,13 +86,14 @@ void		close_pipe(int *pipe);
 void		close_fds(t_fds *fds);
 void		wait_pipe(t_pipe p);
 
-void	clean_up(t_cleanup cl);
+void		clean_up(t_cleanup *cl, bool flag);
 
+//BUILTINS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //MAIN+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //minishell.c
-int			shell_loop(t_astn *tree, t_env *sh_env, t_cleanup cl);
+int			shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl);
 
 int			sh_envlen(t_env *sh_env);
 
@@ -106,5 +107,8 @@ t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
 void		*ft_calloc(size_t nmemb, size_t size);
 t_env		*find_env(const char *name, t_env *sh_env);
 void		ctrl_c(int sig);
+
+void		free_env(t_env *env);
+void	print_sh_env(t_env *sh_env);
 
 #endif

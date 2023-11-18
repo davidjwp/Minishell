@@ -127,6 +127,7 @@ typedef struct CleanUp{
 	t_fds	*fds;
 	t_astn	*tree;
 	t_env	*env;
+	char	*input;
 }	t_cleanup;
 
 typedef struct ExecuteArgumentStruct{

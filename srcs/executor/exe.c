@@ -43,7 +43,7 @@ void	open_file(t_astn *tree, t_red *_red, int flag)
 //if the right side of '>' isn't a file or isn't found the parser will catch it
 //so this might not even be needed
 //there could be case where it is a folder or something else be careful
-void	sh_red(t_astn *tree, t_env *sh_env, t_cleanup cl)
+void	sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	t_red	_red;
 
@@ -69,7 +69,7 @@ void	sh_red(t_astn *tree, t_env *sh_env, t_cleanup cl)
 }
 
 //creates a pipe by forking in the left then right side of the pipe
-int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup cl)
+int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	t_pipe	p;
 
@@ -99,32 +99,18 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup cl)
 }
 
 //cleans up file descriptors the abstract synthax tree and the shell envs
-void	clean_up(t_cleanup cl)
+void	clean_up(t_cleanup *cl, bool flag)
 {
-	if (cl.tree != NULL)
-		free_tree(cl.tree);
-	if (cl.fds != NULL)
-		close_fds(cl.fds);
-	if (cl.env != NULL)
-		free_env(cl.env);
+	if (cl->tree != NULL)
+		free_tree(cl->tree);
+	if (cl->fds != NULL)
+		close_fds(cl->fds);
+	if (cl->env != NULL && flag)
+		free_env(cl->env);
 }
 
-void	printfenv(char **envp)
-{
-	int		i;
-	FILE	*_file;
-
-	i = 0;
-	_file = fopen("F_minitest", "rw");
-	while (envp[i] != NULL)
-	{
-		fprintf(_file, "%s\n",envp[i]);
-		i++;
-	}
-}
-
-//executes the command node
-int	execute(t_astn *tree, t_env *sh_env, t_cleanup cl)
+//executes the command node, might not need that last freeing
+int	execute(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	pid_t	pid;
 	t_exe	exe;
@@ -144,8 +130,7 @@ int	execute(t_astn *tree, t_env *sh_env, t_cleanup cl)
 	exe.argv = cr_args(tree->token, exe.__path);
 	if (!exe.argv)
 		return (err_msg(""), free_split(exe.__envp), 0);
-	printfenv(exe.__envp);
 	execve(exe.__path, exe.argv, exe.__envp);
 	return (free(exe.__path), free_split(exe.argv), free_split(exe.__envp), \
-	clean_up(cl), 0);
+	clean_up(cl, 1), 0);
 }

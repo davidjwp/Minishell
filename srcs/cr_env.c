@@ -36,7 +36,7 @@ char	**split_env(char *env)
 		len++;
 	split[0] = ft_calloc((len + 1), sizeof(char));
 	putnsplit(split[0], env, len);
-	split[1] = ft_calloc(ft_strlen(&env[len + 1]), sizeof(char));
+	split[1] = ft_calloc(ft_strlen(&env[len + 1]) + 1, sizeof(char));
 	putnsplit(split[1], &env[len + 1], ft_strlen(&env[len + 1]));
 	split[2] = NULL;
 	return (split);

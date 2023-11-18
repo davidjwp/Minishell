@@ -38,3 +38,20 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		ptr[ptr_size] = 0;
 	return (ptr);
 }
+
+void	print_sh_env(t_env *sh_env)
+{
+	FILE	*_file;
+	t_env	*tmp;
+
+	tmp = sh_env;
+	_file = fopen("sh_env_file", "w+");
+	fprintf(_file, "%s=%s\n", sh_env->name, sh_env->value);
+	sh_env = sh_env->next;
+	while (sh_env != tmp)
+	{
+		fprintf(_file, "%s=%s\n", sh_env->name, sh_env->value);
+		sh_env = sh_env->next;
+	}
+	fclose(_file);
+}

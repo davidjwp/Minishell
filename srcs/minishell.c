@@ -26,34 +26,45 @@ int	check_input(char *input)
 	return (1);
 }
 
+//might not need the rl_redisplay function 
+int	sh_init(char *input, t_env *sh_env, t_cleanup *cl)
+{
+	rl_redisplay();
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &ctrl_c);
+	cl->fds = NULL;
+	cl->env = sh_env;
+	cl->tree = parser(input);
+	cl->input = input;
+	if (cl->tree == NULL)
+		return (0);
+	return (1);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char		*input;
 	t_env		*sh_env;
-	t_cleanup	*cl;
+	t_cleanup 	*cl;
 
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 		return (0);
 	sh_env = cr_env(env);
+	print_sh_env(sh_env);//test
 	cl = malloc(sizeof(t_cleanup));
 	while (42)
 	{
-		rl_redisplay();
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, &ctrl_c);
-
-		input = readline(PROMPT);
-		if (check_input(input))
-			exit(EXIT_SUCCESS);
-
-		if (input && *input)
-			add_history(input);
-		cl = (t_cleanup*){NULL, parser(input), sh_env};
-		if (cl->tree != NULL)
+		input = readline(PROMPT);//fon't forget to free that
+		if (sh_init(input, sh_env, cl))
+		{
+			if (check_input(input))
+				return (clean_up(cl, 1), 0);
+			if (input && *input)
+				add_history(input);
 			shell_loop(cl->tree, sh_env, cl);
+		}
 	}
-	(void)ac;
-	(void)av;
+	(void)ac, (void)av;
 	return (1);
 }
 
@@ -82,8 +93,11 @@ void	input_enter(void)
 
 // }
 
-int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup cl)
+int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
+	static int	nb;
+
+	nb++;
 	if (tree == NULL)
 		return (input_enter(), 0);
 	if (tree->type == PIPE)
@@ -92,6 +106,8 @@ int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup cl)
 		sh_red(tree, sh_env, cl);
 	// else if (tree->token[0]->type % 11)
 	// 	exe_builtin(tree, tree->token[0]->type);
-	return(execute(tree, sh_env, cl), clean_up(cl), 1);
+	execute(tree, sh_env, cl);
+	if (nb == 1)
+		clean_up(cl, 0);
+	return (1);
 }
-
