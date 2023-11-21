@@ -27,57 +27,6 @@ int	check_input(char *input)
 	return (1);
 }
 
-//hti
-void	rem_fd(t_fds *fd_lst, int fd)
-{
-	t_fds	*tmp;
-	t_fds	*back;
-
-	tmp = fd_lst;
-	back = tmp;
-	if (tmp->fd == fd)
-		while (back->next != tmp)
-			back = back->next;
-	while (tmp->fd != fd && tmp->next != fd_lst)
-	{
-		back = tmp;
-		tmp = tmp->next;
-	}
-	if (tmp->fd == fd)
-	{
-		back->next = tmp->next;
-		free(tmp);
-	}
-}
-
-void	add_fd(t_fds *fd_lst, int fd)
-{
-	t_fds	*tmp;
-	t_fds	*node;
-
-	node = malloc(sizeof(t_fds *));
-	node->fd = fd;
-	tmp = fd_lst;
-	while (tmp->next != fd_lst)
-		tmp = tmp->next;
-	tmp->next = node;
-	node->next = fd_lst;
-}
-
-t_fds	*init_fds(void)
-{
-	t_fds	*in;
-	t_fds	*out;
-
-	in = malloc(sizeof(t_fds *));
-	out = malloc(sizeof(t_fds *));
-	in->fd = dup(STDIN_FILENO);
-	out->fd = dup(STDOUT_FILENO);
-	in->next = out;
-	out->next = in;
-	return (in);
-}
-
 //might not need the rl_redisplay function 
 int	sh_init(char *input, t_env *sh_env, t_cleanup *cl)
 {
@@ -109,7 +58,8 @@ int	main(int ac, char **av, char **env)
 		if (sh_init(input, sh_env, cl))
 		{
 			if (check_input(input))
-				return (clean_up(cl, CL_FDS | CL_HIS), exit(EXIT_SUCCESS), 0);
+				return (clean_up(cl, CL_FDS | CL_HIS | CL_CL), \
+				exit(EXIT_SUCCESS), 0);
 			if (input && *input)
 				add_history(input);
 			shell_loop(cl->tree, sh_env, cl);

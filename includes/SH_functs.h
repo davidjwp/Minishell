@@ -112,6 +112,13 @@ void		print_sh_env(t_env *sh_env);
 void		printenvp(char **envp);
 void		input_enter(void);
 
+//fds.c
+void		fd_redirection(void *type, bool redpipe);
+void		rem_fd(t_fds *fd_lst, int fd);
+void		add_fd(t_fds *fd_lst, int fd);
+t_fds		*init_fds(void);
+
+
 //MESSAGES+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 void		not_found(const char *cmd);

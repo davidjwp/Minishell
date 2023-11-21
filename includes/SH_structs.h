@@ -87,7 +87,14 @@ enum e_clflags{
 	CL_ENV = 4,
 	CL_INP = 8,
 	CL_HIS = 16,
-	CL_ALL = 31,
+	CL_CL = 32,
+	CL_ALL = 63,
+};
+
+enum e_resflags{
+	RES_IN,
+	RES_OUT,
+	RES_ERR,
 };
 
 typedef struct s_token{

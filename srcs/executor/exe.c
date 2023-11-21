@@ -62,18 +62,18 @@ int	sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 	{
 		if (!open_file(tree, &_red, 0))
 			return (err_msg("open file fail"), 0);
-		dup2(_red.out, STDOUT_FILENO);
-		close(_red.out);
+		fd_redirection(&_red, 0);
 	}
 	else
 	{
 		if (open_file(tree, &_red, O_APPEND))
 			return (err_msg("open file fail"), 0);
-		dup2(_red.out, STDOUT_FILENO);
-		close(_red.out);
+		fd_redirection(&_red, 0);
 	}
-	return (shell_loop(tree->left, sh_env, cl), 1);
+	return (shell_loop(tree->left, sh_env, cl), res_fd(), 1);
 }
+
+void	
 
 //creates a pipe by forking in the left then right side of the pipe
 int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
@@ -87,8 +87,7 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		return (err_msg("sh_pipe fork error"), 0);
 	if (!p.l_pid)
 	{
-		dup2(p.pipe_fd[1], STDOUT_FILENO);
-		close_pipe(p.pipe_fd);
+		fd_redirection(&p, 0);
 		shell_loop(tree->left, sh_env, cl);
 		exit(EXIT_SUCCESS);
 	}
@@ -97,8 +96,7 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		return (err_msg("sh_pipe pipe fork error"), 0);
 	if (!p.r_pid)
 	{
-		dup2(p.pipe_fd[0], STDIN_FILENO);
-		close_pipe(p.pipe_fd);
+		fd_redirection(&p, 0);
 		shell_loop(tree->right, sh_env, cl);
 		exit(EXIT_SUCCESS);
 	}
@@ -121,6 +119,8 @@ void	clean_up(t_cleanup *cl, int flag)
 	}
 	if ((flag & CL_HIS))
 		rl_clear_history();
+	if ((flag & CL_CL))
+		free(cl);
 }
 
 //executes the command node, might not need that last freeing
