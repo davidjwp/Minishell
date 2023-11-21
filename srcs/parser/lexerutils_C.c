@@ -93,10 +93,20 @@ void	free_cmd_node(t_astn *cmd)
 	free(cmd);
 }
 
-//free the redirection node
-void	free_node(t_astn *red)
+char	*get_quote(const char *input, size_t *l_ind, size_t *len)
 {
-	free_cmd_node(red->left);
-	free_cmd_node(red->right);
-	free(red);
+	char	*content;
+	int		i;
+
+	i = 0;
+	*len -= 2;
+	content = malloc(sizeof(char) * (*len + 1));
+	content[*len] = 0;
+	while (i < (int)*len)
+	{
+		*l_ind += 1;
+		content[i] = input[*l_ind];
+		i++;
+	}
+	return (content);
 }

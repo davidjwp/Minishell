@@ -89,3 +89,11 @@ char	**ft_split(char const *s, char c)
 	split[index] = NULL;
 	return (split);
 }
+
+//free the redirection node
+void	free_node(t_astn *red)
+{
+	free_cmd_node(red->left);
+	free_cmd_node(red->right);
+	free(red);
+}

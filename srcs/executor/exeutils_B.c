@@ -44,15 +44,19 @@ void	close_pipe(int *pipe)
 
 void	close_fds(t_fds *fds)
 {
+	t_fds	*head;
 	t_fds	*tmp;
 
-	while (fds != NULL)
+	head = fds;
+	while (fds->next != head)
 	{
 		tmp = fds;
 		fds = fds->next;
-		close(fds->fd);
+		close(tmp->fd);
 		free(tmp);
 	}
+	close(fds->fd);
+	free(fds);
 }
 
 void	wait_pipe(t_pipe p)

@@ -20,6 +20,8 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -48,20 +50,20 @@ enum e_builtin{
 
 /*
 	token types:
-	word
-	separator
-	quotes
-	exit status
-	append redirection
-	heredoc
-	argument
-	operator
-	redirection left
-	variable
-	pipeline
-	builtin
-	redirection right
-	command
+	word 0
+	separator 1
+	quotes 2
+	exit status 3
+	append redirection 4
+	heredoc 5
+	argument 6
+	operator 7
+	redirection left 8
+	variable 9
+	pipeline 10
+	builtin 11
+	redirection right 12
+	command 13
 	do not touch this, it's built like this on purpose
 */
 enum e_type{

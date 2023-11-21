@@ -5,6 +5,7 @@
         "minishell.h": "c",
         "includes": "c",
         "sh_structs.h": "c",
-        "sh_functs.h": "c"
+        "sh_functs.h": "c",
+        "wait.h": "c"
     }
 }

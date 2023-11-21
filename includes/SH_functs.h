@@ -22,6 +22,8 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -44,9 +46,9 @@ char		*get_content(const char *input, size_t *index, size_t *len);
 //lexerutils_C
 t_token		*get_token(const char *input, size_t *l_ind, t_token *token);
 int			nbr_token(const char *input);
-void		free_tok(t_token **tokens, int last);
 void		free_cmd_node(t_astn *cmd);
-void		free_node(t_astn *red);
+void		free_tok(t_token **tokens, int last);
+char		*get_quote(const char *input, size_t *l_ind, size_t *len);
 
 //lexerutils_D
 int			init_node(t_astn *node, int nbr, t_astn *p, int *error);
@@ -62,6 +64,7 @@ t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
 //utils
 char		**ft_split(const char *s, char c);
 void		free_split(char **split);
+void		free_node(t_astn *red);
 
 //EXEC+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -113,9 +116,10 @@ void		printenvp(char **envp);
 void		input_enter(void);
 
 //fds.c
-void		fd_redirection(void *type, bool redpipe);
+int			fd_redirection(void *type, int redpipe, t_cleanup *cl);
+int			res_fd(int fd, t_cleanup *cl);
 void		rem_fd(t_fds *fd_lst, int fd);
-void		add_fd(t_fds *fd_lst, int fd);
+int			add_fd(t_fds *fd_lst, int fd);
 t_fds		*init_fds(void);
 
 

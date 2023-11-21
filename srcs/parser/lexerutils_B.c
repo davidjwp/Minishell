@@ -104,6 +104,8 @@ char	*get_content(const char *input, size_t *l_ind, size_t *len)
 	i = 0;
 	if (!it_token(&input[*l_ind], len, IT_TOK))
 		return (NULL);
+	if (type(input, *l_ind) == QUOT)
+		return (get_quote(input, l_ind, len));
 	content = malloc(sizeof(char) * (*len + 1));
 	if (content == NULL)
 		return (err_msg("get_content malloc fail"), NULL);

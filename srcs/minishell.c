@@ -54,11 +54,12 @@ int	main(int ac, char **av, char **env)
 	cl = malloc(sizeof(t_cleanup));
 	while (42)
 	{
-		input = readline(PROMPT);//fon't forget to free that
+		input = readline(PROMPT);
 		if (sh_init(input, sh_env, cl))
 		{
+			// return (clean_up(cl, CL_ALL), 0);
 			if (check_input(input))
-				return (clean_up(cl, CL_FDS | CL_HIS | CL_CL), \
+				return (clean_up(cl, CL_ALL ^ CL_INP), \
 				exit(EXIT_SUCCESS), 0);
 			if (input && *input)
 				add_history(input);

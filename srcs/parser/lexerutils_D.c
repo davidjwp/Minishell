@@ -48,7 +48,9 @@ const char	*cut_r(const char *input, int flag)
 	else if (flag == C_RED)
 		while (input[len] && (type(input, len) == 0 || \
 		type(input, len) % 4 != 0))
-			len++;		
+			len++;
+	if (type(input, len) == 4)
+		len++;
 	while (input[++len])
 		i++;
 	str = malloc(sizeof(char) * (i + 1));

@@ -46,13 +46,13 @@ void	print_tree(t_astn *node)
 	if (node->right != NULL)
 		print_tree(node->right);
 	if (node->type != COMD)
-		printf ("_________\nnode %s\nleft %p\nright %p\ntoken %p\nparent %p\n"\
-		, print_type(node->type), node->left, node->right, \
+		printf ("_________\nnode %s %p\nleft %p\nright %p\ntoken %p\nparent %p\n"\
+		, print_type(node->type), node, node->left, node->right, \
 		node->token, node->parent);
 	else
 	{
-		printf ("_________\nnode %s\nleft %p\nright %p\ntoken %p\nparent %p\n" \
-		, print_type(node->type), node->left, node->right, node->token, \
+		printf ("_________\nnode %s %p\nleft %p\nright %p\ntoken %p\nparent %p\n" \
+		, print_type(node->type), node, node->left, node->right, node->token, \
 		node->parent);
 		while (node->token[i] != NULL)
 		{
@@ -72,6 +72,7 @@ t_astn	*parser(const char *input)
 	error = 0;
 	g_ind = 0;
 	tree = create_ast(input, &g_ind, &error, NULL);
+	// print_tree(tree);
 	if (error)
 		return (0);
 	return (tree);

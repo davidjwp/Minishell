@@ -26,7 +26,7 @@ SRCS			= srcs/parser/lexerutils_A.c srcs/parser/lexerutils_B.c \
 				srcs/executor/exe.c srcs/executor/exeutils_A.c \
 				srcs/executor/exeutils_B.c srcs/cr_env.c srcs/g_utils.c \
 				srcs/minishell.c srcs/parser/parser.c \
-				srcs/signals/ctrl_signal.c srcs/msgs.c srcs\fds.c
+				srcs/signals/ctrl_signal.c srcs/msgs.c srcs/fds.c
 
 OBJS_DIR		= objs/
 OBJS			= $(SRCS:srcs/%.c=$(OBJS_DIR)%.o)#make it so that objs go to objs 

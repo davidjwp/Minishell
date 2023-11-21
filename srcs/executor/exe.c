@@ -20,16 +20,7 @@
 //checks for access permissions and viability of files then opens
 int	open_file(t_astn *tree, t_red *_red, int flag)
 {
-	if (flag != O_APPEND)
-	{
-		if (access(tree->right->token[0]->content, W_OK) == -1)
-			_red->out = open(tree->right->token[0]->content, O_RDWR | \
-			__O_CLOEXEC | O_CREAT, 0644);
-		else
-			_red->out = open(tree->right->token[0]->content, O_RDWR | \
-			__O_CLOEXEC, 0644);
-	}
-	else
+	if (flag == O_APPEND)
 	{
 		if (access(tree->right->token[0]->content, W_OK) == -1)
 			_red->out = open(tree->right->token[0]->content, O_RDWR | \
@@ -37,6 +28,15 @@ int	open_file(t_astn *tree, t_red *_red, int flag)
 		else
 			_red->out = open(tree->right->token[0]->content, O_RDWR | \
 			__O_CLOEXEC | O_APPEND, 0644);
+	}
+	else if (!flag)
+	{
+		if (access(tree->right->token[0]->content, W_OK) == -1)
+			_red->out = open(tree->right->token[0]->content, O_RDWR | \
+			__O_CLOEXEC | O_CREAT, 0644);
+		else
+			_red->out = open(tree->right->token[0]->content, O_RDWR | \
+			__O_CLOEXEC, 0644);
 	}
 	if (_red->out == -1)
 		return (0);
@@ -46,6 +46,18 @@ int	open_file(t_astn *tree, t_red *_red, int flag)
 //if the right side of '>' isn't a file or isn't found the parser will catch it
 //so this might not even be needed
 //there could be case where it is a folder or something else be careful
+
+/*
+*	this is the shell redirection, it's a little scary looking because i
+*	either had too many lines or too little to make the code readable.
+*
+*	as the name suggests it redirects output or input depending on the type of
+*	redirection so first it'll get the fd for the file by using open_file(), then
+*	i use res_fd() to put the fd corresponding to the fd which will be duplicated
+*	to the file fd at the top of the list of fd(lots of fds lol) then i duplicate
+*	the file fd with stdin or stdout, close the file fd and enter shell loop to
+*	execute the command, then i make sure to restore the old fd
+*/
 int	sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	t_red	_red;
@@ -55,25 +67,23 @@ int	sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		_red.in = open(tree->right->token[0]->content, O_RDONLY | __O_CLOEXEC);
 		if (_red.in == -1)
 			return (0);
+		res_fd(STDIN_FILENO, cl);
 		dup2(_red.in, STDIN_FILENO);
 		close(_red.in);
+		shell_loop(tree->left, sh_env, cl);
+		return (dup2(cl->fds->fd, STDIN_FILENO), 1);
 	}
 	else if (tree->type == REDR)
-	{
 		if (!open_file(tree, &_red, 0))
 			return (err_msg("open file fail"), 0);
-		fd_redirection(&_red, 0);
-	}
-	else
-	{
-		if (open_file(tree, &_red, O_APPEND))
+	if (tree->type == APRD)
+		if (!open_file(tree, &_red, O_APPEND))
 			return (err_msg("open file fail"), 0);
-		fd_redirection(&_red, 0);
-	}
-	return (shell_loop(tree->left, sh_env, cl), res_fd(), 1);
+	if (!fd_redirection(&_red, RES_OUT, cl))
+		return (0);
+	shell_loop(tree->left, sh_env, cl);
+	return (dup2(cl->fds->fd, STDOUT_FILENO), 1);
 }
-
-void	
 
 //creates a pipe by forking in the left then right side of the pipe
 int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
@@ -87,7 +97,8 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		return (err_msg("sh_pipe fork error"), 0);
 	if (!p.l_pid)
 	{
-		fd_redirection(&p, 0);
+		if (!fd_redirection(&p, RES_OUT, cl))
+			exit(EXIT_FAILURE);
 		shell_loop(tree->left, sh_env, cl);
 		exit(EXIT_SUCCESS);
 	}
@@ -96,7 +107,8 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		return (err_msg("sh_pipe pipe fork error"), 0);
 	if (!p.r_pid)
 	{
-		fd_redirection(&p, 0);
+		if (!fd_redirection(&p, RES_IN, cl))
+			exit(EXIT_FAILURE);
 		shell_loop(tree->right, sh_env, cl);
 		exit(EXIT_SUCCESS);
 	}
