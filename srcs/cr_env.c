@@ -68,7 +68,7 @@ t_env	*cr_env(char **env)
 	t_env	*tmp;
 	int		i;
 
-	if (!env)
+	if (!*env)
 		return (NULL);
 	i = 0;
 	sh_env = env_node(env[i]);

@@ -60,15 +60,14 @@ char		**tokenize(char *s, int *tokens_n, int tokens_i);
 t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
 
 //utils
-void		err_msg(char *msg);
 char		**ft_split(const char *s, char c);
 void		free_split(char **split);
 
 //EXEC+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //exe.c
-void		open_file(t_astn *tree, t_red *_red, int flag);
-void		sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl);
+int			open_file(t_astn *tree, t_red *_red, int flag);
+int			sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl);
 int			sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl);
 int			execute(t_astn *tree, t_env *sh_env, t_cleanup *cl);
 
@@ -86,7 +85,7 @@ void		close_pipe(int *pipe);
 void		close_fds(t_fds *fds);
 void		wait_pipe(t_pipe p);
 
-void		clean_up(t_cleanup *cl, bool flag);
+void		clean_up(t_cleanup *cl, int flag);
 
 //BUILTINS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -109,6 +108,13 @@ t_env		*find_env(const char *name, t_env *sh_env);
 void		ctrl_c(int sig);
 
 void		free_env(t_env *env);
-void	print_sh_env(t_env *sh_env);
+void		print_sh_env(t_env *sh_env);
+void		printenvp(char **envp);
+void		input_enter(void);
+
+//MESSAGES+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+void		not_found(const char *cmd);
+void		err_msg(char *msg);
 
 #endif

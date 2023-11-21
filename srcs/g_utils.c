@@ -55,3 +55,10 @@ void	print_sh_env(t_env *sh_env)
 	}
 	fclose(_file);
 }
+
+void	input_enter(void)
+{
+	g_signal = 0;
+	rl_replace_line("", 0);
+	rl_redisplay();
+}

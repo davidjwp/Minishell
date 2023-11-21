@@ -81,6 +81,15 @@ enum e_type{
 	COMD,
 };	
 
+enum e_clflags{
+	CL_FDS = 1,
+	CL_TRE = 2,
+	CL_ENV = 4,
+	CL_INP = 8,
+	CL_HIS = 16,
+	CL_ALL = 31,
+};
+
 typedef struct s_token{
 	int		type;
 	size_t	len;
@@ -131,8 +140,8 @@ typedef struct CleanUp{
 }	t_cleanup;
 
 typedef struct ExecuteArgumentStruct{
-	char	*__path;
-	char	**__envp;
+	char	*_path;
+	char	**_envp;
 	char	**argv;
 }	t_exe;
 

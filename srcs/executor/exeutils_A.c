@@ -31,16 +31,30 @@ char	*cr_pathname(const char *cmd, t_env *sh_env)
 		paths = ft_split(sh_env->value, ':');
 	if (paths == NULL)
 		return (err_msg("ft_split Malloc fail"), NULL);
-	pathname = strccat(paths[i], '/', cmd);
-	while (access(pathname, X_OK) != 0 && paths[i] != NULL)
+	while (paths[i] != NULL)
 	{
+		pathname = strccat(paths[i], '/', cmd);
+		if (!access(pathname, X_OK))
+			break ;
 		free(pathname);
 		i++;
-		pathname = strccat(paths[i], '/', cmd);
 	}
 	if (paths[i] == NULL)
-		return (free_split(paths), free(pathname), err_msg("no access"), NULL);
+		return (free_split(paths), not_found(cmd), NULL);
 	return (free_split(paths), pathname);
+}
+
+void	printenvp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+	printf("NULL\n");
 }
 
 //convert the shell environment variables to an array of strings
@@ -61,6 +75,8 @@ char	**cr_envp(t_env *sh_env)
 	while (++i < len)
 	{
 		envp[i] = strccat(sh_env->name, '=', sh_env->value);
+		if (envp[i] == NULL)
+			break ;
 		sh_env = sh_env->next;
 	}
 	return (envp);
@@ -85,7 +101,7 @@ char	**cr_args(t_token **tokens, char *pathname)
 	}
 	while (tokens[len] != NULL)
 		len++;
-	args = malloc(sizeof(char *) * len + 1);
+	args = malloc(sizeof(char *) * (len + 1));
 	if (args == NULL)
 		return (err_msg("cr_args malloc fail"), NULL);
 	args[len] = NULL;
@@ -106,7 +122,7 @@ char	*strccat(const char *str1, char c, const char *str2)
 	i = -1;
 	y = -1;
 	len = ft_strlen(str1) + ft_strlen(str2) + 1;
-	pathname = malloc(sizeof(char) * len);
+	pathname = malloc(sizeof(char) * (len + 1));
 	if (pathname == NULL)
 		return (err_msg("cat_str2s malloc fail"), NULL);
 	pathname[len] = 0;

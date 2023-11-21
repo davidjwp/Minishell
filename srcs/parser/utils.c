@@ -13,11 +13,6 @@
 #include "../../includes/SH_functs.h"
 #include "../../includes/SH_structs.h"
 
-void	err_msg(char *msg)
-{
-	printf ("\nMinishell: %s\n", msg);
-}
-
 void	free_split(char **split)
 {
 	int	i;
@@ -80,7 +75,7 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	split = (char **)malloc(sizeof (char *) * (ft_word_count(s, c) + 1));
 	if (!split)
-		return (NULL);
+		return (err_msg("ft_split malloc fail"), NULL);
 	while (*s)
 	{
 		while (*s == c && *s)
