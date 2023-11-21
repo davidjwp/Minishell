@@ -20,18 +20,18 @@ int	fd_redirection(void *type, int redpipe, t_cleanup *cl)
 	t_red	*_red;
 	int		error;
 
-	if (redpipe == RES_IN)
+	if (redpipe & RES_IN)
 		error = res_fd(STDIN_FILENO, cl);
-	if (redpipe == RES_OUT)
+	if (redpipe & RES_OUT)
 		error = res_fd(STDOUT_FILENO, cl);
 	if (!error)
 		return (0);
-	if (redpipe)
+	if (redpipe & RED_RED)
 	{
 		_red = (t_red *)type;
 		return (dup2(_red->out, STDOUT_FILENO), close(_red->out), 1);
 	}
-	else if (!redpipe)
+	else if (redpipe & RED_PIP)
 	{
 		_pip = (t_pipe *)type;
 		if (!_pip->l_pid)
@@ -76,7 +76,7 @@ int	res_fd(int fd, t_cleanup *cl)
 	return (0);
 }
 
-//remove fd from the list
+//remove fd from the list i might not even need this at all
 void	rem_fd(t_fds *fd_lst, int fd)
 {
 	t_fds	*tmp;

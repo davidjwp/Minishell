@@ -110,8 +110,39 @@ t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 	else
 		node = ast_cmd(input, g_ind, (t_cms){par, node}, error);
 	if (*error)
-		return (free((char *)input), NULL);
+		return (free((char *)input), NULL);//don't know that i should free input 
 	if (par == NULL)
 		return (node);
 	return (free((char *)input), node);
 }
+
+//implement this shit
+/*
+int	here_doc(t_pipex _pipex, char *lmt)
+{
+	char	*line;
+	int		lmt_l;
+
+	lmt_l = ft_strlen(lmt);
+	line = NULL;
+	if (pipe(_pipex.pipe_fd) == -1)
+		return (perror("Error pipe"), 0);
+	_pipex.pid = fork();
+	if (_pipex.pid == 0)
+	{
+		close(_pipex.pipe_fd[0]);
+		while (gnl(&line))
+		{
+			if (ft_strncmp(line, lmt, lmt_l) == 0 && line[lmt_l] == '\n')
+				return (free(line), close(_pipex.pipe_fd[1]), close(_pipex.o),
+					exit(EXIT_SUCCESS), 0);
+			write (_pipex.pipe_fd[1], line, ft_strlen(line));
+			free(line);
+		}
+	}
+	else
+		return (close(_pipex.pipe_fd[1]), dup2(_pipex.pipe_fd[0], STDIN_FILENO),
+			wait(NULL), close(_pipex.pipe_fd[0]), 0);
+	return (0);
+}
+*/

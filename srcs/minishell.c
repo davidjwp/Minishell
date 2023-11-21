@@ -30,7 +30,8 @@ int	check_input(char *input)
 //might not need the rl_redisplay function 
 int	sh_init(char *input, t_env *sh_env, t_cleanup *cl)
 {
-	// rl_redisplay();
+	if (!*input)
+		return (free(input), 0);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &ctrl_c);
 	cl->fds = init_fds();
@@ -57,7 +58,6 @@ int	main(int ac, char **av, char **env)
 		input = readline(PROMPT);
 		if (sh_init(input, sh_env, cl))
 		{
-			// return (clean_up(cl, CL_ALL), 0);
 			if (check_input(input))
 				return (clean_up(cl, CL_ALL ^ CL_INP), \
 				exit(EXIT_SUCCESS), 0);
@@ -91,7 +91,7 @@ int	main(int ac, char **av, char **env)
 int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	if (tree == NULL)
-		return (input_enter(), 0);
+		return (input_enter(), clean_up(cl, CL_FDS | CL_INP), 0);
 	if (tree->type == PIPE)
 		sh_pipe(tree, sh_env, cl);
 	else if (!(tree->type % 4))
@@ -102,6 +102,5 @@ int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		clean_up(cl, CL_FDS | CL_TRE | CL_INP);
 	return (1);
 }
-
 	// else if (tree->token[0]->type % 11)
 	// 	exe_builtin(tree, tree->token[0]->type);

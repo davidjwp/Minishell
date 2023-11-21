@@ -93,10 +93,12 @@ enum e_clflags{
 	CL_ALL = 63,
 };
 
-enum e_resflags{
-	RES_IN,
-	RES_OUT,
-	RES_ERR,
+enum e_ResFDflags{
+	RES_IN = 1,
+	RES_OUT = 2,
+	RED_PIP = 4,
+	RED_RED = 8,
+
 };
 
 typedef struct s_token{

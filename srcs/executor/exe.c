@@ -79,7 +79,7 @@ int	sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 	if (tree->type == APRD)
 		if (!open_file(tree, &_red, O_APPEND))
 			return (err_msg("open file fail"), 0);
-	if (!fd_redirection(&_red, RES_OUT, cl))
+	if (!fd_redirection(&_red, RES_OUT | RED_RED, cl))
 		return (0);
 	shell_loop(tree->left, sh_env, cl);
 	return (dup2(cl->fds->fd, STDOUT_FILENO), 1);
@@ -97,7 +97,7 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		return (err_msg("sh_pipe fork error"), 0);
 	if (!p.l_pid)
 	{
-		if (!fd_redirection(&p, RES_OUT, cl))
+		if (!fd_redirection(&p, RES_OUT | RED_PIP, cl))
 			exit(EXIT_FAILURE);
 		shell_loop(tree->left, sh_env, cl);
 		exit(EXIT_SUCCESS);
@@ -107,7 +107,7 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		return (err_msg("sh_pipe pipe fork error"), 0);
 	if (!p.r_pid)
 	{
-		if (!fd_redirection(&p, RES_IN, cl))
+		if (!fd_redirection(&p, RES_IN | RED_PIP, cl))
 			exit(EXIT_FAILURE);
 		shell_loop(tree->right, sh_env, cl);
 		exit(EXIT_SUCCESS);

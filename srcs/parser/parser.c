@@ -63,6 +63,11 @@ void	print_tree(t_astn *node)
 	}
 }
 
+// bool	parser_rules(t_astn *tree)
+// {
+
+// }
+
 t_astn	*parser(const char *input)
 {
 	t_astn		*tree;
@@ -72,9 +77,10 @@ t_astn	*parser(const char *input)
 	error = 0;
 	g_ind = 0;
 	tree = create_ast(input, &g_ind, &error, NULL);
-	// print_tree(tree);
 	if (error)
-		return (0);
+		return (NULL);
+	// if (!parser_rules(tree))
+	// 	return (NULL);
 	return (tree);
 }
 
