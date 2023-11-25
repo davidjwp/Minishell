@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   SH_funcs.h                                         :+:      :+:    :+:   */
+/*   SH_functs.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: djacobs <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SH_FUNCS_H
-# define SH_FUNCS_H
+#ifndef SH_FUNCTS_H
+# define SH_FUNCTS_H
 
 # include "SH_structs.h"
 
@@ -44,11 +44,11 @@ bool		it_token(const char *input, size_t *i, int flag);
 char		*get_content(const char *input, size_t *index, size_t *len);
 
 //lexerutils_C
-t_token		*get_token(const char *input, size_t *l_ind, t_token *token);
 int			nbr_token(const char *input);
 void		free_cmd_node(t_astn *cmd);
 void		free_tok(t_token **tokens, int last);
 char		*get_quote(const char *input, size_t *l_ind, size_t *len);
+int			cut_len(const char *input, int flag);
 
 //lexerutils_D
 int			init_node(t_astn *node, int nbr, t_astn *p, int *error);
@@ -58,13 +58,27 @@ int			get_node_type(const char *input, size_t *g_ind);
 void		free_tree(t_astn *node);
 
 //create_ast
-char		**tokenize(char *s, int *tokens_n, int tokens_i);
+t_token		*get_token(const char *input, size_t *l_ind, t_token *token);
 t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
 
 //utils
 char		**ft_split(const char *s, char c);
 void		free_split(char **split);
 void		free_node(t_astn *red);
+
+//PARSER+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//parser.c
+bool		parser_rules(t_astn *node, int *error, t_cleanup *cl);
+char		*expand_exst(t_token *token, int status);
+t_astn		*parser(const char *input, t_cleanup *cl);
+
+//parser_A.c
+bool		pipe_rules(t_astn *node, int *error, t_cleanup *cl);
+bool		apr_rules(t_astn *node, int *error, t_cleanup *cl);
+bool		redl_rules(t_astn *node, int *error, t_cleanup *cl);
+bool		redr_rules(t_astn *node, int *error, t_cleanup *cl);
+bool		comd_rules(t_token **token, int *error, t_cleanup *cl);
 
 //EXEC+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -101,9 +115,11 @@ int			sh_envlen(t_env *sh_env);
 
 //UTILS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+void		print_tree(t_astn *node);
+char		*print_type(int type);
 int			ft_strlen(const char *str);
 t_env		*cr_env(char **env);
-t_astn		*parser(const char *input);
+t_astn		*parser(const char *input, t_cleanup *cl);
 t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
 
 void		*ft_calloc(size_t nmemb, size_t size);
@@ -122,9 +138,9 @@ void		rem_fd(t_fds *fd_lst, int fd);
 int			add_fd(t_fds *fd_lst, int fd);
 t_fds		*init_fds(void);
 
-
 //MESSAGES+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+void		syntax_error(const char *str, t_cleanup *cl);
 void		not_found(const char *cmd);
 void		err_msg(char *msg);
 

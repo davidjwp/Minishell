@@ -13,12 +13,24 @@
 #include "../../includes/SH_functs.h"
 #include "../../includes/SH_structs.h"
 
-//USE FUCKING STATIC TYPES AND MAKE SOME SPACE YOU DINGUS!!!
-//might have to create a struct for passing down env
 /*
 *	create_ast.c contains the following functions :
 *	ast_cmd(), ast_pipe(), ast_red(), create_ast()
 */
+//returns the token struct with allocated content and type + length
+t_token	*get_token(const char *input, size_t *l_ind, t_token *token)
+{
+	token->len = 0;
+	if (!it_token(input, l_ind, IT_SEP))
+		return (NULL);
+	token->content = get_content(input, l_ind, &token->len);
+	if (token->content == NULL)
+		return (NULL);
+	token->type = get_token_type(token->content);
+	it_token(input, l_ind, IT_SEP);
+	return (token);
+}
+
 //creates a command node, the node contains the tokens and links to other nodes 
 t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 {
@@ -88,7 +100,7 @@ bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 		return (false);
 	return (true);
 }
-
+// asjuidhasouidhg asoiufhew ouhfouiph sao  >> >> >>< <<  >> > <<< 
 //creates the abstract syntax tree via recursion
 t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 {
@@ -110,7 +122,7 @@ t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 	else
 		node = ast_cmd(input, g_ind, (t_cms){par, node}, error);
 	if (*error)
-		return (free((char *)input), NULL);//don't know that i should free input 
+		return (free((char *)input), NULL);
 	if (par == NULL)
 		return (node);
 	return (free((char *)input), node);

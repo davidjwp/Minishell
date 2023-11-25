@@ -13,62 +13,72 @@
 #include "../../includes/SH_functs.h"
 #include "../../includes/SH_structs.h"
 
-char	*print_type(int type)
+bool	parser_rules(t_astn *node, int *error, t_cleanup *cl)
 {
-	char	*types[14];
-	int		num[14];
-	int		i;
-
-	i = -1;
-	if (type != 0 && !(type % 11))
-		return ((char *[7]){"ECHO", "CD", "PWD", "EXPORT", "UNSET", "ENV"\
-		, "EXIT"}[(type / 10) - 2]);
-	while (++i < 14)
-	{
-		types[i] = (char *[15]){"WORD", "SEPR", "QUOT", "EXST", "APRD", \
-		"HERD", "ARGT", "OPER", "REDL", "VARE", "PIPE", "BUIT", "REDR", \
-		"COMD"}[i];
-		num[i] = (int [14]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}[i];
-	}
-	i = 0;
-	while (type != num[i])
-		i++;
-	return (types[i]);
+	if (node->type == PIPE && !*error)
+		pipe_rules(node, error, cl);
+	if (node->type == APRD && !*error)
+		apr_rules(node, error, cl);
+	if (node->type == REDR && !*error)
+		redr_rules(node, error, cl);
+	if (node->type == REDL && !*error)
+		redl_rules(node, error, cl);
+	if (node->type == COMD && !*error)
+		comd_rules(node->token, error, cl);
+	if (node->left != NULL && !*error)
+		parser_rules(node->left, error, cl);
+	if (node->right != NULL && !*error)
+		parser_rules(node->right, error, cl);
+	if (*error)
+		return (false);
+	return (true);
 }
 
-void	print_tree(t_astn *node)
+char	*expand_exst(t_token *token, int status)//check on that
+{
+	int		len;
+	int		tmp;
+	char	*content;
+
+	len = 0;
+	tmp = status;
+	while (tmp || !++len)
+		tmp /= 10;
+	free(token->content);
+	content = malloc(sizeof(char) * (len + 1));
+	tmp = status;
+	content[len] = 0;
+	while (--len)
+	{
+		content[len] = (tmp % 10) + 48;
+		tmp /= 10;
+	}
+	content[len] = (tmp % 10) + 48;
+	return (content);
+}
+
+int	expander(t_astn *node, t_cleanup *cl)
 {
 	int	i;
 
 	i = 0;
 	if (node->left != NULL)
-		print_tree(node->left);
+		return (expander(node->left, cl), 0);
 	if (node->right != NULL)
-		print_tree(node->right);
-	if (node->type != COMD)
-		printf ("_________\nnode %s %p\nleft %p\nright %p\ntoken %p\nparent %p\n"\
-		, print_type(node->type), node, node->left, node->right, \
-		node->token, node->parent);
-	else
+		return (expander(node->right, cl), 0);
+	while (node->token[i] != NULL)
 	{
-		printf ("_________\nnode %s %p\nleft %p\nright %p\ntoken %p\nparent %p\n" \
-		, print_type(node->type), node, node->left, node->right, node->token, \
-		node->parent);
-		while (node->token[i] != NULL)
-		{
-			printf("%s %li %s\n", node->token[i]->content, node->token[i]->len \
-			, print_type(node->token[i]->type));
-			i++;
-		}
+		if (node->token[i]->type == EXST)
+			node->token[i]->content = expand_exst(node->token[i], cl->status);
+		i++;
 	}
+	return (0);
 }
 
-// bool	parser_rules(t_astn *tree)
-// {
-
-// }
-
-t_astn	*parser(const char *input)
+/*
+*	first i create the tree then i use parser_rules to check for 	
+*/
+t_astn	*parser(const char *input, t_cleanup *cl)
 {
 	t_astn		*tree;
 	int			error;
@@ -76,18 +86,28 @@ t_astn	*parser(const char *input)
 
 	error = 0;
 	g_ind = 0;
-	tree = create_ast(input, &g_ind, &error, NULL);
-	if (error)
+	if (!*input)
 		return (NULL);
-	// if (!parser_rules(tree))
-	// 	return (NULL);
+	if (ft_strlen(input) == 1)
+	{
+		if (*input == '!')
+			return (cl->status = 1, NULL);
+		if (*input == ':' || *input == '#')
+			return (cl->status = 0, NULL);
+	}
+	tree = create_ast(input, &g_ind, &error, NULL);
+	if (error || tree == NULL)
+		return (cl->status = 0, NULL);
+	if (!parser_rules(tree, &error, cl))
+		return (free_tree(tree), NULL);
+	expander(tree, cl);
 	return (tree);
 }
 
-	/*parsing rules here*/
-	//no > > so tree->right->left->token[0] == NULL or tree->right->left == 
-	// NULL if tree->right->type == REDR
-	//no < < 
-	//you can have multiple files in those redirections but only the 
-	// first one will be redirected
-	//check file permissions for redirections, so 
+/*parsing rules here*/
+//no > > so tree->right->left->token[0] == NULL or tree->right->left == 
+// NULL if tree->right->type == REDR
+//no < < 
+//you can have multiple files in those redirections but only the 
+// first one will be redirected
+//check file permissions for redirections, so 

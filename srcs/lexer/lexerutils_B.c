@@ -23,9 +23,18 @@
 */
 bool	check_quote(const char *input, size_t *i)
 {
-	*i += 1;
-	while (type(input, *i) != QUOT && input[*i])
+	if ((type(input, *i) == DQUO))
+	{
 		*i += 1;
+		while (type(input, *i) != DQUO && input[*i])
+			*i += 1;
+	}
+	else if (type(input, *i) == SQUO)
+	{
+		*i += 1;
+		while (type(input, *i) != SQUO && input[*i])
+			*i += 1;
+	}
 	if (!input[*i])
 		return (err_msg("unclosed quote"), false);
 	*i += 1;
@@ -85,7 +94,7 @@ bool	it_token(const char *input, size_t *l_ind, int flag)
 		return (false);
 	else if (flag == IT_TOK)
 	{
-		if (type(input, *l_ind) == QUOT && input[*l_ind])
+		if (type(input, *l_ind) != 0 && !(type(input, *l_ind) % 5))
 			return (check_quote(input, l_ind));
 		if (type(input, *l_ind) != WORD && input[*l_ind])
 			return (check_spec(input, l_ind));
@@ -104,7 +113,7 @@ char	*get_content(const char *input, size_t *l_ind, size_t *len)
 	i = 0;
 	if (!it_token(&input[*l_ind], len, IT_TOK))
 		return (NULL);
-	if (type(input, *l_ind) == QUOT)
+	if (type(input, *l_ind) && !(type(input, *l_ind) % 5))
 		return (get_quote(input, l_ind, len));
 	content = malloc(sizeof(char) * (*len + 1));
 	if (content == NULL)

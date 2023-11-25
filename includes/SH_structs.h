@@ -52,10 +52,10 @@ enum e_builtin{
 	token types:
 	word 0
 	separator 1
-	quotes 2
+	heredoc 2
 	exit status 3
 	append redirection 4
-	heredoc 5
+	quotes 5
 	argument 6
 	operator 7
 	redirection left 8
@@ -69,18 +69,19 @@ enum e_builtin{
 enum e_type{
 	WORD,
 	SEPR,
-	QUOT,
+	HERD,
 	EXST,
 	APRD,
-	HERD,
+	SQUO,
 	ARGT,
 	OPER,
 	REDL,
 	VARE,
-	PIPE,
+	DQUO,
 	BUIT,
 	REDR,
 	COMD,
+	PIPE,
 };	
 
 enum e_clflags{
@@ -98,7 +99,6 @@ enum e_ResFDflags{
 	RES_OUT = 2,
 	RED_PIP = 4,
 	RED_RED = 8,
-
 };
 
 typedef struct s_token{
@@ -148,6 +148,7 @@ typedef struct CleanUp{
 	t_astn	*tree;
 	t_env	*env;
 	char	*input;
+	int		status;
 }	t_cleanup;
 
 typedef struct ExecuteArgumentStruct{

@@ -10,15 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/SH_functs.h"
-#include "../includes/SH_structs.h"
+#include "../../includes/SH_functs.h"
+#include "../../includes/SH_structs.h"
 
 void	not_found(const char *cmd)
 {
-	printf("Command \'%s\' not found\n", cmd);
+	printf("%s: command not found\n", cmd);
+}
+
+void	syntax_error(const char *str, t_cleanup *cl)
+{
+	printf("minishell: syntax error near unexpected token \'%s\'\n", str);
+	cl->status = 2;
 }
 
 void	err_msg(char *msg)
 {
-	printf ("\nMinishell: %s\n", msg);
+	printf ("minishell: %s\n", msg);
 }

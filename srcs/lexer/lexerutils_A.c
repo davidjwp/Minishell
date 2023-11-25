@@ -22,23 +22,25 @@ inline int	type(const char *s, size_t i)
 {
 	if (!s[i])
 		return (0);
-	if (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
+	if (s[i] < 33 && s[i] > 0)
 		return (SEPR);
-	if (s[i] == '\"' || s[i] == '\'')
-		return (QUOT);
-	if (s[i] == '$' && s[i + 1] == '?')
-		return (EXST);
-	else if (s[i] == '$')
-		return (VARE);
+	if (s[i] == '\"')
+		return (DQUO);
+	if (s[i] == '\'')
+		return (SQUO);
+	if (s[i] == '|')
+		return (PIPE);
 	if (s[i] == '>' && s[i + 1] == '>')
 		return (APRD);
 	if (s[i] == '<' && s[i + 1] == '<')
 		return (HERD);
-	if (s[i] == '|')
-		return (PIPE);
-	if ((s[i] == '>' && s[i + 1] != '>') && (s[i] == '>' && s[i - 1] != '>'))
+	if (s[i] == '$' && s[i + 1] == '?')
+		return (EXST);
+	if (s[i] == '$')
+		return (VARE);
+	if ((s[i] == '>' && s[i + 1] != '>'))
 		return (REDR);
-	if ((s[i] == '<' && s[i + 1] != '<') && (s[i] == '<' && s[i - 1] != '<'))
+	if ((s[i] == '<' && s[i + 1] != '<'))
 		return (REDL);
 	return (WORD);
 }
@@ -55,7 +57,8 @@ bool	_pipe(const char *input)
 		t = type(input, index);
 		if (t == PIPE)
 			return (true);
-		index++;
+		else
+			index += 1;
 	}
 	return (false);
 }
@@ -74,7 +77,10 @@ bool	_red(const char *input)
 			return (true);
 		else if (t == PIPE)
 			return (false);
-		index++;
+		if (t == HERD)
+			index += 2;
+		else
+			index += 1;
 	}
 	return (false);
 }
@@ -100,7 +106,18 @@ bool	check_spec(const char *input, size_t *i)
 	int	t;
 
 	t = type(input, *i);
-	if (t == EXST || t == HERD || t == APRD)
+	if (t == VARE)
+	{
+		while (t != SEPR && input[*i])
+		{
+			if (t == REDR || t == REDL || t == APRD || t == HERD || EXST)
+				*i += 2;
+			else
+				*i += 1;
+			t = type(input, *i);
+		}
+	}
+	else if (t == EXST || t == HERD || t == APRD)
 		*i += 2;
 	else
 		*i += 1;

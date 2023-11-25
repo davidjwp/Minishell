@@ -140,13 +140,12 @@ int	execute(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	pid_t	pid;
 	t_exe	exe;
-	int		status;
 
 	pid = fork();
 	if (pid == -1)
 		return (err_msg("execute fork fail"), 0);
 	if (pid)
-		return (wait(&status), 1);
+		return (wait(&cl->status), 1);
 	exe._path = cr_pathname(tree->token[0]->content, find_env("PATH", sh_env));
 	if (!exe._path)
 		return (clean_up(cl, CL_ALL), exit(EXIT_FAILURE), 0);

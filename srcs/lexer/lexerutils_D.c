@@ -41,15 +41,8 @@ const char	*cut_r(const char *input, int flag)
 	int		i;
 
 	i = 0;
-	len = 0;
-	if (flag == C_PIPE)
-		while (input[len] && type(input, len) != PIPE)
-			len++;
-	else if (flag == C_RED)
-		while (input[len] && (type(input, len) == 0 || \
-		type(input, len) % 4 != 0))
-			len++;
-	if (type(input, len) == 4)
+	len = cut_len(input, flag);
+	if (type(input, len) == 4)//wtf???
 		len++;
 	while (input[++len])
 		i++;
@@ -70,14 +63,7 @@ const char	*cut_l(const char *input, int flag)
 	int		i;
 
 	i = -1;
-	len = 0;
-	if (flag == C_PIPE)
-		while (input[len] && type(input, len) != PIPE)
-			len++;
-	else if (flag == C_RED)
-		while (input[len] && (type(input, len) == 0 || \
-		type(input, len) % 4 != 0))
-			len++;
+	len = cut_len(input, flag);
 	str = malloc(sizeof(char) * (len + 1));
 	str[len] = 0;
 	while (++i < len)

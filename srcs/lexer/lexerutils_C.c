@@ -17,20 +17,6 @@
 *	lexerutils_C contains the following functions :
 *	get_token(), nbr_token(), free_tok(), free_cmd_node(), free_node()
 */
-//returns the token struct with allocated content and type + length
-t_token	*get_token(const char *input, size_t *l_ind, t_token *token)
-{
-	token->len = 0;
-	if (!it_token(input, l_ind, IT_SEP))
-		return (NULL);
-	token->content = get_content(input, l_ind, &token->len);
-	if (token->content == NULL)
-		return (NULL);
-	token->type = get_token_type(token->content);
-	it_token(input, l_ind, IT_SEP);
-	return (token);
-}
-
 //counts the number of tokens until a pipe or redirection is found
 int	nbr_token(const char *input)
 {
@@ -51,7 +37,8 @@ int	nbr_token(const char *input)
 			tokcnt += 1;
 		else
 			break ;
-		it_token(input, &l_ind, IT_TOK);
+		if (!it_token(input, &l_ind, IT_TOK))
+			return (0);
 	}
 	return (tokcnt);
 }
@@ -109,4 +96,30 @@ char	*get_quote(const char *input, size_t *l_ind, size_t *len)
 		i++;
 	}
 	return (content);
+}
+
+int	cut_len(const char *input, int flag)
+{
+	int	len;
+	int	t;
+
+	len = 0;
+	t = type(input, len);
+	if (flag == C_PIPE)
+	{
+		while (input[len] && type(input, len) != PIPE)
+			len++;
+	}
+	else if (flag == C_RED)
+	{
+		while (input[len] && (!t || t % 4 != 0))
+		{
+			if (t == HERD)
+				len += 2;
+			else
+				len += 1;
+			t = type(input, len);
+		}
+	}
+	return (len);
 }
