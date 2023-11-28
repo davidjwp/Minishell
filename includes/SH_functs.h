@@ -80,6 +80,18 @@ bool		redl_rules(t_astn *node, int *error, t_cleanup *cl);
 bool		redr_rules(t_astn *node, int *error, t_cleanup *cl);
 bool		comd_rules(t_token **token, int *error, t_cleanup *cl);
 
+//parser_B.c
+int			add_line(t_herd *lines, char *line);
+void		free_herd(t_herd *lines);
+int			comp_lines(t_herd *lines, char **line);
+t_herd		*lines_init(t_astn *node, int pos);
+int			here_doc(t_astn *node, int *error, int pos, t_cleanup *cl);
+
+//parser_C.c
+int			gnl(char **line);
+int			rem_herd(t_astn *node, int pos);
+size_t		ft_strcat(char *dest, const char *src);
+
 //EXEC+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //exe.c
@@ -115,21 +127,32 @@ int			sh_envlen(t_env *sh_env);
 
 //UTILS++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-void		print_tree(t_astn *node);
+//utils_A.c
 char		*print_type(int type);
+void		print_tree(t_astn *node);
 int			ft_strlen(const char *str);
+void		*ft_calloc(size_t nmemb, size_t size);
+void		print_sh_env(t_env *sh_env);
+
+//utils_B.c
+void		input_enter(void);
+int			get_fd(t_fds *fds);
+size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t		ft_strlcat(char *dst, const char *src, size_t size);
+
+//utils_C.c
+int			gnl(char **line);
+
+
 t_env		*cr_env(char **env);
 t_astn		*parser(const char *input, t_cleanup *cl);
 t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
-
-void		*ft_calloc(size_t nmemb, size_t size);
 t_env		*find_env(const char *name, t_env *sh_env);
 void		ctrl_c(int sig);
 
 void		free_env(t_env *env);
-void		print_sh_env(t_env *sh_env);
 void		printenvp(char **envp);
-void		input_enter(void);
 
 //fds.c
 int			fd_redirection(void *type, int redpipe, t_cleanup *cl);

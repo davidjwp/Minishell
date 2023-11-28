@@ -101,6 +101,11 @@ enum e_ResFDflags{
 	RED_RED = 8,
 };
 
+enum e_stdIO{
+	STDI,
+	STDO,
+};
+
 typedef struct s_token{
 	int		type;
 	size_t	len;
@@ -139,6 +144,7 @@ typedef struct RedirectionStruct{
 }	t_red;
 
 typedef struct FileDescriptors{
+	int						std;
 	int						fd;
 	struct FileDescriptors	*next;
 }	t_fds;
@@ -157,4 +163,8 @@ typedef struct ExecuteArgumentStruct{
 	char	**argv;
 }	t_exe;
 
+typedef struct HereDocStruct{
+	struct HereDocStruct	*next;
+	char					*line;
+}	t_herd;
 #endif

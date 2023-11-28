@@ -46,14 +46,14 @@ void	print_tree(t_astn *node)
 	if (node->right != NULL)
 		print_tree(node->right);
 	if (node->type != COMD)
-		printf ("_________\nnode %s %p\nleft %p\nright %p\ntoken %p\nparent %p\n"\
+		printf ("______\nnode %s %p\nleft %p\nright %p\ntoken %p\nparent %p\n"\
 		, print_type(node->type), node, node->left, node->right, \
 		node->token, node->parent);
 	else
 	{
-		printf ("_________\nnode %s %p\nleft %p\nright %p\ntoken %p\nparent %p\n"\
-		, print_type(node->type), node, node->left, node->right, node->token,\
-		 node->parent);
+		printf ("______\nnode %s %p\nleft %p\nright %p\ntoken %p\nparent %p\n"\
+		, print_type(node->type), node, node->left, node->right, node->token, \
+		node->parent);
 		while (node->token[i] != NULL)
 		{
 			printf("%s %li %s\n", node->token[i]->content, node->token[i]->len \

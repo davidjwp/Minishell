@@ -51,7 +51,7 @@ void	free_herd(t_herd *lines)
 	}
 }
 
-int	comp_lines(t_herd *lines, char *line)
+int	comp_lines(t_herd *lines, char **line)
 {
 	char	*comp;
 	t_herd	*tmp;
@@ -67,13 +67,13 @@ int	comp_lines(t_herd *lines, char *line)
 	tmp = lines;
 	comp = ft_calloc(len + 1, sizeof(char));
 	if (comp == NULL)
-		return (free(line), 0);
+		return (free(*line), 0);
 	while (tmp != NULL)
 	{
 		ft_strcat(comp, tmp->line);
 		tmp = tmp->next;
 	}
-	return (free(line), line = comp, 1);
+	return (free(*line), *line = comp, 1);
 }
 
 t_herd	*lines_init(t_astn *node, int pos)
@@ -103,7 +103,7 @@ t_herd	*lines_init(t_astn *node, int pos)
 	return (lines);
 }
 
-int	here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
+char	*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
 {
 	t_herd	*lines;
 	char	*line;
@@ -112,23 +112,21 @@ int	here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
 	line = NULL;
 	lines = lines_init(node, pos);
 	if (lines == NULL)
-		return (0);
+		return (NULL);
 	if (node->token[pos + 1] == NULL)
-		return (syntax_error("newline", cl), *error += 1, 0);
+		return (syntax_error("newline", cl), *error += 1, NULL);
 	lmt_l = ft_strlen(node->token[pos + 1]->content);
 	while (gnl(&line))
 	{
 		if (ft_strncmp(line, node->token[pos + 1]->content, lmt_l) == 0)
 			break ;
 		if (!add_line(lines, line))
-			return (free_herd(lines), 0);
+			return (free_herd(lines), NULL);
 		free(line);
 	}
-	free(line);
-	if (!comp_lines(lines, line))
-		return (free_herd(lines), 0);
-	write (get_fd(cl->fds), line, ft_strlen(line));
-	return (free_herd(lines), free(line), 1);
+	if (!comp_lines(lines, &line))
+		return (free(line), free_herd(lines), NULL);
+	return (free_herd(lines), line);
 }
 
 // free(cmd->token[i]->content);

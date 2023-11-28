@@ -1,2 +1,2 @@
-break execute
-break clean_up
+break here_doc
+break comp_lines

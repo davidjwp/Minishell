@@ -139,6 +139,9 @@ t_fds	*init_fds(void)
 	in->next = out;
 	out->next = err;
 	err->next = in;
+	in->std = STDI;
+	out->std = STDO;
+	err->std = 2;
 	return (in);
 }
 //this might lead to error in the grand loop, before i close all fds 

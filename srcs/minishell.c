@@ -44,8 +44,8 @@ int	sh_init(char *input, t_env *sh_env, t_cleanup *cl)
 		cl->status = 0;
 	cl->tree = parser(input, cl);
 	passes += 1;
-	if (input && *input)
-		add_history(input);
+	if (cl->input && *cl->input)
+		add_history(cl->input);
 	if (cl->tree == NULL)
 		return (clean_up(cl, CL_FDS | CL_INP | CL_FDS), 0);
 	return (1);
@@ -56,6 +56,11 @@ void	print_exit(int status)
 	printf("exit:%d\n", status);
 }
 
+/*
+* the main function which checks for the availability of the stdio fds
+* then the shell env consisting of the env being passed to the main function
+* then the main loop 
+*/
 int	main(int ac, char **av, char **env)
 {
 	char		*input;
@@ -99,14 +104,38 @@ int	main(int ac, char **av, char **env)
 
 // }
 
+bool	is_herd(t_token **token)
+{
+	int	i;
+
+	i = -1;
+	while (token[i] != NULL)
+		if (token[++i]->type == HERD)
+			break ;
+	if (token[i]->type == HERD)
+		return (true);
+	return (false);
+}
+
+int	exe_herd(t_astn *node, t_cleanup *cl)
+{
+
+}
+
+/*
+* the main shell loop which redirects or pipes the output in order of the tree
+* being recursively called
+*/
 int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	if (tree == NULL)
 		return (input_enter(), clean_up(cl, CL_FDS | CL_INP), 0);
 	if (tree->type == PIPE)
-		sh_pipe(tree, sh_env, cl);
+		sh_pipe(tree, sh_env, cl);//i have to add available pids to cl in order to exit when in a pipe or redirection
 	else if (!(tree->type % 4))
 		sh_red(tree, sh_env, cl);
+	else if (is_herd(tree->token))
+		exe_herd(tree, cl);
 	else
 		execute(tree, sh_env, cl);
 	if (tree == cl->tree)
