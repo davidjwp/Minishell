@@ -57,17 +57,19 @@ char	*expand_exst(t_token *token, int status)//check on that
 	return (content);
 }
 
-int	expander(t_astn *node, t_cleanup *cl)
+int	expander(t_astn *node, int *error, t_cleanup *cl)
 {
 	int	i;
 
 	i = 0;
 	if (node->left != NULL)
-		return (expander(node->left, cl), 0);
+		return (expander(node->left, error, cl), 0);
 	if (node->right != NULL)
-		return (expander(node->right, cl), 0);
+		return (expander(node->right, error, cl), 0);
 	while (node->token[i] != NULL)
 	{
+		if (node->token[i]->type == HERD)
+			here_doc(node, error, i, cl);
 		if (node->token[i]->type == EXST)
 			node->token[i]->content = expand_exst(node->token[i], cl->status);
 		i++;
@@ -100,7 +102,7 @@ t_astn	*parser(const char *input, t_cleanup *cl)
 		return (cl->status = 0, NULL);
 	if (!parser_rules(tree, &error, cl))
 		return (free_tree(tree), NULL);
-	expander(tree, cl);
+	expander(tree, &error, cl);
 	return (tree);
 }
 

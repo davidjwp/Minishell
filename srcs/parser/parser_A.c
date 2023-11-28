@@ -38,6 +38,10 @@ bool	redr_rules(t_astn *node, int *error, t_cleanup *cl)
 
 bool	redl_rules(t_astn *node, int *error, t_cleanup *cl)
 {
+	if (node->left != NULL)
+		return (comd_rules(node->left->token, error, cl));
+	if (node->right != NULL)
+		return (comd_rules(node->right->token, error, cl));
 	if (node->left == NULL || node->right == NULL)
 		return (*error += 1, syntax_error("newline", cl), false);
 	return (true);
