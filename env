@@ -1,0 +1,750 @@
+Script started on 2023-11-29 17:09:56+01:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="186" LINES="66"]
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ env
+[?2004lSHELL=/bin/bash
+LIBGL_ALWAYS_INDIRECT=1
+WSL2_GUI_APPS_ENABLED=1
+WSL_DISTRO_NAME=Ubuntu
+NAME=DESKTOP-PGAG9KC
+PWD=/home/davidjwp/Minishell
+LOGNAME=davidjwp
+HOME=/home/davidjwp
+LANG=C.UTF-8
+WSL_INTEROP=/run/WSL/362_interop
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+WAYLAND_DISPLAY=wayland-0
+LESSCLOSE=/usr/bin/lesspipe %s %s
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=davidjwp
+DISPLAY=172.25.240.1:0
+SHLVL=3
+XDG_RUNTIME_DIR=/run/user/1000/
+WSLENV=
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
+PATH=/home/davidjwp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_1.2.5.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Users/david/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/david/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/david/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+HOSTTYPE=x86_64
+PULSE_SERVER=unix:/mnt/wslg/PulseServer
+OLDPWD=/home/davidjwp
+_=/usr/bin/env
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ exxpo[K[K[Kport
+[?2004ldeclare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
+declare -x DISPLAY="172.25.240.1:0"
+declare -x HOME="/home/davidjwp"
+declare -x HOSTTYPE="x86_64"
+declare -x LANG="C.UTF-8"
+declare -x LESSCLOSE="/usr/bin/lesspipe %s %s"
+declare -x LESSOPEN="| /usr/bin/lesspipe %s"
+declare -x LIBGL_ALWAYS_INDIRECT="1"
+declare -x LOGNAME="davidjwp"
+declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+declare -x NAME="DESKTOP-PGAG9KC"
+declare -x OLDPWD="/home/davidjwp"
+declare -x PATH="/home/davidjwp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_1.2.5.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Users/david/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/david/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/david/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin"
+declare -x PULSE_SERVER="unix:/mnt/wslg/PulseServer"
+declare -x PWD="/home/davidjwp/Minishell"
+declare -x SHELL="/bin/bash"
+declare -x SHLVL="3"
+declare -x TERM="xterm-256color"
+declare -x USER="davidjwp"
+declare -x WAYLAND_DISPLAY="wayland-0"
+declare -x WSL2_GUI_APPS_ENABLED="1"
+declare -x WSLENV=""
+declare -x WSL_DISTRO_NAME="Ubuntu"
+declare -x WSL_INTEROP="/run/WSL/362_interop"
+declare -x XDG_DATA_DIRS="/usr/local/share:/usr/share:/var/lib/snapd/desktop"
+declare -x XDG_RUNTIME_DIR="/run/user/1000/"
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ export USER=b[Kvalue ZZ
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ env
+[?2004lSHELL=/bin/bash
+LIBGL_ALWAYS_INDIRECT=1
+WSL2_GUI_APPS_ENABLED=1
+WSL_DISTRO_NAME=Ubuntu
+NAME=DESKTOP-PGAG9KC
+PWD=/home/davidjwp/Minishell
+LOGNAME=davidjwp
+HOME=/home/davidjwp
+LANG=C.UTF-8
+WSL_INTEROP=/run/WSL/362_interop
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+WAYLAND_DISPLAY=wayland-0
+LESSCLOSE=/usr/bin/lesspipe %s %s
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=value
+DISPLAY=172.25.240.1:0
+SHLVL=3
+XDG_RUNTIME_DIR=/run/user/1000/
+WSLENV=
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
+PATH=/home/davidjwp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_1.2.5.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Users/david/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/david/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/david/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+HOSTTYPE=x86_64
+PULSE_SERVER=unix:/mnt/wslg/PulseServer
+OLDPWD=/home/davidjwp
+_=/usr/bin/env
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ export
+[?2004ldeclare -x DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
+declare -x DISPLAY="172.25.240.1:0"
+declare -x HOME="/home/davidjwp"
+declare -x HOSTTYPE="x86_64"
+declare -x LANG="C.UTF-8"
+declare -x LESSCLOSE="/usr/bin/lesspipe %s %s"
+declare -x LESSOPEN="| /usr/bin/lesspipe %s"
+declare -x LIBGL_ALWAYS_INDIRECT="1"
+declare -x LOGNAME="davidjwp"
+declare -x LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"
+declare -x NAME="DESKTOP-PGAG9KC"
+declare -x OLDPWD="/home/davidjwp"
+declare -x PATH="/home/davidjwp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_1.2.5.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Users/david/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/david/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/david/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin"
+declare -x PULSE_SERVER="unix:/mnt/wslg/PulseServer"
+declare -x PWD="/home/davidjwp/Minishell"
+declare -x SHELL="/bin/bash"
+declare -x SHLVL="3"
+declare -x TERM="xterm-256color"
+declare -x USER="value"
+declare -x WAYLAND_DISPLAY="wayland-0"
+declare -x WSL2_GUI_APPS_ENABLED="1"
+declare -x WSLENV=""
+declare -x WSL_DISTRO_NAME="Ubuntu"
+declare -x WSL_INTEROP="/run/WSL/362_interop"
+declare -x XDG_DATA_DIRS="/usr/local/share:/usr/share:/var/lib/snapd/desktop"
+declare -x XDG_RUNTIME_DIR="/run/user/1000/"
+declare -x ZZ
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ ./m,[Kinitest
+[?2004l[?2004h$> /bin/echo 
+[?2004l/bin/echo: command not found
+exit:256
+[?2004h$> ls /bin
+[?2004l FileCheck-14			      du			    llvm-bcanalyzer-14		       pkgdata			        tempfile
+ NF				      dumpkeys			    llvm-bitcode-strip-14	       pkill			        test
+ X				      dwp			    llvm-c-test-14		       pkmon			        tic
+ X11				      ebrowse			    llvm-cat-14			       pkttyagent		        time
+ Xorg				      ebrowse.emacs		    llvm-cfi-verify-14		       pl2pm			        timedatectl
+'['				      echo			    llvm-config-14		       pldd			        timeout
+ aa-enabled			      ed			    llvm-cov-14			       plymouth			        tload
+ aa-exec			      editor			    llvm-cvtres-14		       pmap			        tmux
+ aa-features-abi		      editres			    llvm-cxxdump-14		       pod2html			        tnftp
+ add-apt-repository		      egrep			    llvm-cxxfilt-14		       pod2man			        toe
+ addpart			      eject			    llvm-cxxmap-14		       pod2text			        top
+ addr2line			      elfedit			    llvm-debuginfod-find-14	       pod2usage		        touch
+ apport-bug			      emacs			    llvm-diff-14		       podchecker		        tput
+ apport-cli			      emacs-gtk			    llvm-dis-14			       pr			        tr
+ apport-collect			      emacsclient		    llvm-dlltool-14		       precat			        tracepath
+ apport-unpack			      emacsclient.emacs		    llvm-dwarfdump-14		       preconv			        transset
+ appres				      enc2xs			    llvm-dwp-14			       preunzip			        troff
+ apropos			      encguess			    llvm-exegesis-14		       prezip			        true
+ apt				      enchant-2			    llvm-extract-14		       prezip-bin		        truncate
+ apt-add-repository		      enchant-lsmod-2		    llvm-gsymutil-14		       printenv			        tset
+ apt-cache			      env			    llvm-ifs-14			       printf			        tsort
+ apt-cdrom			      envsubst			    llvm-install-name-tool-14	       prlimit			        tty
+ apt-config			      eqn			    llvm-jitlink-14		       pro			        tzselect
+ apt-extracttemplates		      etags			    llvm-jitlink-executor-14	       prove			        ua
+ apt-ftparchive			      etags.emacs		    llvm-lib-14			       prtstat			        ubuntu-advantage
+ apt-get			      ex			    llvm-libtool-darwin-14	       ps			        ubuntu-bug
+ apt-key			      expand			    llvm-link-14		       psfaddtable		        ubuntu-core-launcher
+ apt-mark			      expiry			    llvm-lipo-14		       psfgettable		        ubuntu-distro-info
+ apt-sortpkgs			      expr			    llvm-lto-14			       psfstriptable		        ubuntu-security-status
+ ar				      factor			    llvm-lto2-14		       psfxtable		        ucf
+ arch				      faillog			    llvm-mc-14			       pslog			        ucfq
+ as				      faked-sysv		    llvm-mca-14			       pstree			        ucfr
+ asan_symbolize			      faked-tcp			    llvm-ml-14			       pstree.x11		        uclampset
+ asan_symbolize-14		      fakeroot			    llvm-modextract-14		       ptar			        uconv
+ aspell				      fakeroot-sysv		    llvm-mt-14			       ptardiff			        ucs2any
+ aspell-import			      fakeroot-tcp		    llvm-nm-14			       ptargrep			        udevadm
+ atobm				      fallocate			    llvm-objcopy-14		       ptx			        udisksctl
+ awk				      false			    llvm-objdump-14		       purge-old-kernels	        ul
+ b2sum				      fc-cache			    llvm-opt-report-14		       pw-cat			        umount
+ base32				      fc-cat			    llvm-otool-14		       pw-cli			        uname
+ base64				      fc-conflist		    llvm-pdbutil-14		       pw-dot			        unattended-upgrade
+ basename			      fc-list			    llvm-profdata-14		       pw-dsdplay		        unattended-upgrades
+ basenc				      fc-match			    llvm-profgen-14		       pw-dump			        uncompress
+ bash				      fc-pattern		    llvm-ranlib-14		       pw-link			        unexpand
+ bashbug			      fc-query			    llvm-rc-14			       pw-loopback		        unicode_start
+ bdftopcf			      fc-scan			    llvm-readelf-14		       pw-metadata		        unicode_stop
+ bdftruncate			      fc-validate		    llvm-readobj-14		       pw-mididump		        uniq
+ bitmap				      fgconsole			    llvm-reduce-14		       pw-midiplay		        unlink
+ bmtoa				      fgrep			    llvm-rtdyld-14		       pw-midirecord		        unlzma
+ bootctl			      file			    llvm-sim-14			       pw-mon			        unshare
+ broadwayd			      fincore			    llvm-size-14		       pw-play			        unsquashfs
+ bugpoint-14			      find			    llvm-split-14		       pw-profiler		        unxz
+ bunzip2			      findmnt			    llvm-stress-14		       pw-record		        update-alternatives
+ busctl				      flex			    llvm-strings-14		       pw-reserve		        update-desktop-database
+ busybox			      flex++			    llvm-strip-14		       pw-top			        update-mime-database
+ bwrap				      flock			    llvm-symbolizer-14		       pw-v4l2			        uptime
+ byobu				      fmt			    llvm-tapi-diff-14		       pwd			        usb-devices
+ byobu-config			      fold			    llvm-tblgen-14		       pwdx			        usbhid-dump
+ byobu-ctrl-a			      fonttosfnt		    llvm-tli-checker-14		       py3clean			        usbreset
+ byobu-disable			      free			    llvm-undname-14		       py3compile		        users
+ byobu-disable-prompt		      ftp			    llvm-windres-14		       py3versions		        utmpdump
+ byobu-enable			      fuser			    llvm-xray-14		       pydoc3			        uuidgen
+ byobu-enable-prompt		      fusermount		    ln				       pydoc3.10		        uuidparse
+ byobu-export			      fusermount3		    lnstat			       pygettext3		        valgrind
+ byobu-janitor			      g++			    loadkeys			       pygettext3.10		        valgrind-di-server
+ byobu-keybindings		      g++-11			    loadunimap			       pygmentize		        valgrind-listener
+ byobu-launch			      gapplication		    locale			       python3			        valgrind.bin
+ byobu-launcher			      gawk			    locale-check		       python3-config		        vdir
+ byobu-launcher-install		      gcc			    localectl			       python3.10		        verify-uselistorder-14
+ byobu-launcher-uninstall	      gcc-11			    localedef			       python3.10-config	        vgdb
+ byobu-layout			      gcc-ar			    logger			       ranlib			        vi
+ byobu-prompt			      gcc-ar-11			    login			       rbash			        view
+ byobu-quiet			      gcc-nm			    loginctl			       rcp			        viewres
+ byobu-reconnect-sockets	      gcc-nm-11			    logname			       rdma			        vigpg
+ byobu-screen			      gcc-ranlib		    look			       readelf			        vim
+ byobu-select-backend		      gcc-ranlib-11		    lowntfs-3g			       readlink			        vim.basic
+ byobu-select-profile		      gcore			    ls				       realpath			        vim.tiny
+ byobu-select-session		      gcov			    lsattr			       red			        vimdiff
+ byobu-shell			      gcov-11			    lsb_release			       rendercheck		        vimtutor
+ byobu-silent			      gcov-dump			    lsblk			       renice			        vmstat
+ byobu-status			      gcov-dump-11		    lscpu			       reset			        vmwarectrl
+ byobu-status-detail		      gcov-tool			    lshw			       resizecons		        w
+ byobu-tmux			      gcov-tool-11		    lsipc			       resizepart		        wall
+ byobu-ugraph			      gdb			    lslocks			       resolvectl		        watch
+ byobu-ulevel			      gdb-add-index		    lslogins			       rev			        watchgnupg
+ bzcat				      gdbtui			    lsmem			       rgrep			        wc
+ bzcmp				      gdbus			    lsmod			       rlogin			        wdctl
+ bzdiff				      gdk-pixbuf-csource	    lsns			       rm			        wget
+ bzegrep			      gdk-pixbuf-pixdata	    lsof			       rmdir			        whatis
+ bzexe				      gdk-pixbuf-thumbnailer	    lspci			       rnano			        whereis
+ bzfgrep			      genbrk			    lspgpot			       routef			        which
+ bzgrep				      gencat			    lsusb			       routel			        which.debianutils
+ bzip2				      gencfu			    lto-dump-11			       rpcgen			        whiptail
+ bzip2recover			      gencnval			    luit			       rrsync			        who
+ bzless				      gendict			    lzcat			       rsh			        whoami
+ bzmore				      genrb			    lzcmp			       rstart			        wifi-status
+ c++				      geqn			    lzdiff			       rstartd			        word-list-compress
+ c++filt			      getconf			    lzegrep			       rsync			        write
+ c89				      getent			    lzfgrep			       rsync-ssl		        write.ul
+ c89-gcc			      getkeycodes		    lzgrep			       rtstat			        wslpath
+ c99				      getopt			    lzless			       run-one			        x-terminal-emulator
+ c99-gcc			      gettext			    lzma			       run-one-constantly	        x11perf
+ c_rehash			      gettext.sh		    lzmainfo			       run-one-until-failure	        x11perfcomp
+ callgrind_annotate		      ginstall-info		    lzmore			       run-one-until-success	        x86_64
+ callgrind_control		      gio			    m17n-db			       run-parts		        x86_64-linux-gnu-addr2line
+ captoinfo			      gio-querymodules		    m4				       run-this-one		        x86_64-linux-gnu-ar
+ cat				      git			    make			       run-with-aspell		        x86_64-linux-gnu-as
+ catman				      git-receive-pack		    make-first-existing-target	       runcon			        x86_64-linux-gnu-c++filt
+ cc				      git-shell			    makeconv			       rview			        x86_64-linux-gnu-cpp
+ cg_annotate			      git-upload-archive	    man				       rvim			        x86_64-linux-gnu-cpp-11
+ cg_diff			      git-upload-pack		    man-recode			       rzsh			        x86_64-linux-gnu-dwp
+ cg_merge			      glib-compile-schemas	    mandb			       sanstats-14		        x86_64-linux-gnu-elfedit
+ chage				      gmake			    manifest			       savelog			        x86_64-linux-gnu-g++
+ chattr				      gnome-help		    manpath			       scp			        x86_64-linux-gnu-g++-11
+ chcon				      gnome-terminal		    mapscrn			       screen			        x86_64-linux-gnu-gcc
+ chfn				      gnome-terminal.real	    mawk			       screendump		        x86_64-linux-gnu-gcc-11
+ chgrp				      gnome-terminal.wrapper	    mcookie			       script			        x86_64-linux-gnu-gcc-ar
+ chmod				      gold			    md5sum			       scriptlive		        x86_64-linux-gnu-gcc-ar-11
+ choom				      gpasswd			    md5sum.textutils		       scriptreplay		        x86_64-linux-gnu-gcc-nm
+ chown				      gpg			    mdig			       sdiff			        x86_64-linux-gnu-gcc-nm-11
+ chrt				      gpg-agent			    memusage			       sed			        x86_64-linux-gnu-gcc-ranlib
+ chsh				      gpg-connect-agent		    memusagestat		       select-default-iwrap	        x86_64-linux-gnu-gcc-ranlib-11
+ chvt				      gpg-wks-server		    mesa-overlay-control.py	       select-editor		        x86_64-linux-gnu-gcov
+ ckbcomp			      gpg-zip			    mesg			       sensible-browser		        x86_64-linux-gnu-gcov-11
+ cksum				      gpgcompose		    migrate-pubring-from-classic-gpg   sensible-editor		        x86_64-linux-gnu-gcov-dump
+ clang				      gpgconf			    mk_modmap			       sensible-pager		        x86_64-linux-gnu-gcov-dump-11
+ clang++			      gpgparsemail		    mkdir			       seq			        x86_64-linux-gnu-gcov-tool
+ clang++-14			      gpgsm			    mkfifo			       session-migration	        x86_64-linux-gnu-gcov-tool-11
+ clang-14			      gpgsplit			    mkfontdir			       sessreg			        x86_64-linux-gnu-gold
+ clang-cpp-14			      gpgtar			    mkfontscale			       setarch			        x86_64-linux-gnu-gprof
+ clear				      gpgv			    mknod			       setfont			        x86_64-linux-gnu-ld
+ clear_console			      gpic			    mksquashfs			       setkeycodes		        x86_64-linux-gnu-ld.bfd
+ cmake				      gprof			    mktemp			       setleds			        x86_64-linux-gnu-ld.gold
+ cmp				      grep			    more			       setlogcons		        x86_64-linux-gnu-lto-dump-11
+ codepage			      gresource			    mount			       setmetamode		        x86_64-linux-gnu-nm
+ col				      groff			    mountpoint			       setpci			        x86_64-linux-gnu-objcopy
+ col1				      grog			    ms_print			       setpriv			        x86_64-linux-gnu-objdump
+ col2				      grops			    mt				       setsid			        x86_64-linux-gnu-pkg-config
+ col3				      grotty			    mt-gnu			       setterm			        x86_64-linux-gnu-python3-config
+ col4				      groups			    mtr				       setupcon			        x86_64-linux-gnu-python3.10-config
+ col5				      gsettings			    mtr-packet			       setxkbmap		        x86_64-linux-gnu-ranlib
+ col6				      gtbl			    mtrace			       sftp			        x86_64-linux-gnu-readelf
+ col7				      gtf			    mv				       sg			        x86_64-linux-gnu-size
+ col8				      gtk-builder-tool		    namei			       sh			        x86_64-linux-gnu-strings
+ col9				      gtk-encode-symbolic-svg	    nano			       sha1sum			        x86_64-linux-gnu-strip
+ colcrt				      gtk-launch		    nawk			       sha224sum		        x86_64-pc-linux-gnu-pkg-config
+ colrm				      gtk-query-settings	    nc				       sha256sum		        xargs
+ column				      gtk-update-icon-cache	    nc.openbsd			       sha384sum		        xauth
+ comm				      gunzip			    ncurses5-config		       sha512sum		        xbiff
+ corelist			      gzexe			    ncurses6-config		       shasum			        xcalc
+ count-14			      gzip			    ncursesw5-config		       showconsolefont		        xclipboard
+ cp				      h2ph			    ncursesw6-config		       showkey			        xclock
+ cpack				      h2xs			    neqn			       showrgb			        xcmsdb
+ cpan				      hardlink			    netcat			       shred			        xconsole
+ cpan5.34-x86_64-linux-gnu	      hd			    netstat			       shuf			        xcursorgen
+ cpio				      head			    networkctl			       size			        xcutsel
+ cpp				      helpztags			    networkd-dispatcher		       skill			        xdg-dbus-proxy
+ cpp-11				      hexdump			    newgrp			       slabtop			        xdg-user-dir
+ crontab			      host			    ngettext			       sleep			        xdg-user-dirs-update
+ csplit				      hostid			    nice			       slogin			        xditview
+ ctags				      hostname			    nisdomainname		       smproxy			        xdpyinfo
+ ctags.emacs			      hostnamectl		    nl				       snap			        xdriinfo
+ ctail				      htop			    nm				       snapctl			        xedit
+ ctest				      hwe-support-status	    nohup			       snapfuse			        xev
+ ctstat				      i386			    not-14			       snice			        xeyes
+ curl				      iceauth			    nproc			       soelim			        xfd
+ cut				      ico			    nroff			       sort			        xfontsel
+ cvt				      iconv			    nsenter			       sotruss			        xgamma
+ cvtsudoers			      icuexportdata		    nslookup			       spa-acp-tool		        xgc
+ dash				      icuinfo			    nstat			       spa-inspect		        xhost
+ date				      id			    nsupdate			       spa-json-dump		        xinit
+ dbus-cleanup-sockets		      info			    ntfs-3g			       spa-monitor		        xinput
+ dbus-daemon			      infobrowser		    ntfs-3g.probe		       spa-resample		        xkbbell
+ dbus-launch			      infocmp			    ntfscat			       splain			        xkbcomp
+ dbus-monitor			      infotocap			    ntfscluster			       split			        xkbevd
+ dbus-run-session		      install			    ntfscmp			       split-file-14		        xkbprint
+ dbus-send			      install-info		    ntfsdecrypt			       splitfont		        xkbvleds
+ dbus-update-activation-environment   instmodsh			    ntfsfallocate		       sprof			        xkbwatch
+ dbus-uuidgen			      intel-virtual-output	    ntfsfix			       sqfscat			        xkeystone
+ dd				      ionice			    ntfsinfo			       sqfstar			        xkill
+ deallocvt			      ip			    ntfsls			       ss			        xload
+ deb-systemd-helper		      ipcmk			    ntfsmove			       ssh			        xlogo
+ deb-systemd-invoke		      ipcrm			    ntfsrecover			       ssh-add			        xlsatoms
+ debconf			      ipcs			    ntfssecaudit		       ssh-agent		        xlsclients
+ debconf-apt-progress		      iptables-xml		    ntfstruncate		       ssh-argv0		        xlsfonts
+ debconf-communicate		      ischroot			    ntfsusermap			       ssh-copy-id		        xmag
+ debconf-copydb			      isdv4-serial-debugger	    ntfswipe			       ssh-keygen		        xman
+ debconf-escape			      isdv4-serial-inputattach	    numfmt			       ssh-keyscan		        xmessage
+ debconf-set-selections		      ispell-wrapper		    obj2yaml-14			       startx			        xml2-config
+ debconf-show			      join			    objcopy			       stat			        xmodmap
+ debian-distro-info		      journalctl		    objdump			       static-sh		        xmore
+ delpart			      json_pp			    oclock			       stdbuf			        xprop
+ delv				      kbd_mode			    od				       strace			        xrandr
+ derb				      kbdinfo			    oem-getlogs			       strace-log-merge		        xrdb
+ desktop-file-edit		      kbxutil			    on_ac_power			       streamzip		        xrefresh
+ desktop-file-install		      keep-one-running		    openssl			       strings			        xset
+ desktop-file-validate		      kernel-install		    openvt			       strip			        xsetmode
+ df				      keyring			    opt-14			       stty			        xsetpointer
+ dh_bash-completion		      kill			    pager			       su			        xsetroot
+ dh_installxmlcatalogs		      killall			    partx			       sudo			        xsetwacom
+ diff				      kmod			    passwd			       sudoedit			        xsm
+ diff3				      last			    paste			       sudoreplay		        xstdcmap
+ dig				      lastb			    pastebinit			       sum			        xsubpp
+ dir				      lastlog			    patch			       sync			        xvidtune
+ dircolors			      lcf			    pathchk			       systemctl		        xvinfo
+ dirmngr			      ld			    pbget			       systemd			        xwd
+ dirmngr-client			      ld.bfd			    pbput			       systemd-analyze		        xwininfo
+ dirname			      ld.gold			    pbputs			       systemd-ask-password	        xwud
+ distro-info			      ldd			    pdb3			       systemd-cat		        xxd
+ dmesg				      less			    pdb3.10			       systemd-cgls		        xz
+ dnsdomainname			      lessecho			    peekfd			       systemd-cgtop		        xzcat
+ do-release-upgrade		      lessfile			    perl			       systemd-cryptenroll	        xzcmp
+ domainname			      lesskey			    perl5.34-x86_64-linux-gnu	       systemd-delta		        xzdiff
+ dpkg				      lesspipe			    perl5.34.0			       systemd-detect-virt	        xzegrep
+ dpkg-architecture		      lex			    perlbug			       systemd-escape		        xzfgrep
+ dpkg-buildflags		      lexgrog			    perldoc			       systemd-hwdb		        xzgrep
+ dpkg-buildpackage		      libnetcfg			    perlivp			       systemd-id128		        xzless
+ dpkg-checkbuilddeps		      libwacom-list-devices	    perlthanks			       systemd-inhibit		        xzmore
+ dpkg-deb			      libwacom-list-local-devices   pgrep			       systemd-machine-id-setup         yaml-bench-14
+ dpkg-distaddfile		      libwacom-show-stylus	    pic				       systemd-mount		        yaml2obj-14
+ dpkg-divert			      libwacom-update-db	    pico			       systemd-notify		        yelp
+ dpkg-genbuildinfo		      link			    piconv			       systemd-path		        yes
+ dpkg-genchanges		      linux32			    pidof			       systemd-run		        ypdomainname
+ dpkg-gencontrol		      linux64			    pidwait			       systemd-socket-activate	        zcat
+ dpkg-gensymbols		      listres			    pinentry			       systemd-stdio-bridge	        zcmp
+ dpkg-maintscript-helper	      llc-14			    pinentry-curses		       systemd-sysext		        zdiff
+ dpkg-mergechangelogs		      lldb			    ping			       systemd-sysusers		        zdump
+ dpkg-name			      lldb-14			    ping4			       systemd-tmpfiles		        zegrep
+ dpkg-parsechangelog		      lldb-argdumper		    ping6			       systemd-tty-ask-password-agent   zfgrep
+ dpkg-query			      lldb-argdumper-14		    pinky			       systemd-umount		        zforce
+ dpkg-realpath			      lldb-instr-14		    pip				       tabs			        zgrep
+ dpkg-scanpackages		      lldb-server		    pip3			       tac			        zipdetails
+ dpkg-scansources		      lldb-server-14		    pip3.10			       tail			        zless
+ dpkg-shlibdeps			      lldb-vscode-14		    pipewire			       tar			        zmore
+ dpkg-source			      lli-14			    pipewire-media-session	       taskset			        znew
+ dpkg-split			      lli-child-target-14	    pkaction			       tbl			        zsh
+ dpkg-statoverride		      llvm-PerfectShuffle-14	    pkcheck			       tcpdump			        zsh5
+ dpkg-trigger			      llvm-addr2line-14		    pkcon			       tee
+ dpkg-vendor			      llvm-ar-14		    pkexec			       telnet
+ dsymutil-14			      llvm-as-14		    pkg-config			       telnet.netkit
+exit:0
+[?2004h$> q[Keix[K[Kxit
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb ./miin[K[Knitest
+[?2004l[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32m./minitest[m...
+[?2004h(gdb) b sh_ell[K[K[K[Kell_loop
+[?2004lBreakpoint 1 at [34m0x49b2[m: file [32msrcs/minishell.c[m, line 216.
+[?2004h(gdb) r 
+[?2004lStarting program: [32m/home/davidjwp/Minishell/minitest[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[?2004h$> //b/i/n/[Cenv
+[?2004l
+Breakpoint 1, [33mshell_loop[m ([36mtree[m=0x5555555782b0, [36msh_env[m=0x55555555f300, [36mcl[m=0x555555560ee0) at [32msrcs/minishell.c[m:216
+warning: Source file is more recent than executable.
+216			[01;34mreturn[m [31m([m[01minput_enter[m[31m(),[m [01mclean_up[m[31m([mcl[31m,[m CL_FDS [31m|[m CL_INP[31m),[m [35m0[m[31m);[m
+[?2004h[?2004l[?2004h(gdb) l
+[?2004l211	[36m* being recursively called[m
+212	[36m*/[m
+213	[32mint[m	[01mshell_loop[m[31m([mt_astn [31m*[mtree[31m,[m t_env [31m*[msh_env[31m,[m t_cleanup [31m*[mcl[31m)[m
+214	[31m{[m
+215		[01;34mif[m [31m([mtree [31m==[m NULL[31m)[m
+216			[01;34mreturn[m [31m([m[01minput_enter[m[31m(),[m [01mclean_up[m[31m([mcl[31m,[m CL_FDS [31m|[m CL_INP[31m),[m [35m0[m[31m);[m
+217		[01;34mif[m [31m([mtree[31m->[mtype [31m==[m PIPE[31m)[m
+218			[01msh_pipe[m[31m([mtree[31m,[m sh_env[31m,[m cl[31m);[m
+219		[01;34melse[m [01;34mif[m [31m(!([mtree[31m->[mtype [31m%[m [35m4[m[31m))[m
+220			[01msh_red[m[31m([mtree[31m,[m sh_env[31m,[m cl[31m);[m
+[?2004h(gdb) p tree
+[?2004l$1 = (t_astn *[36m[m) [34m0x5555555782b0[m
+[?2004h(gdb) p tree*tree[C[C[C[C->node[K[K[K[Ktoken
+[?2004l$2 = (t_token *[36m[m) [34m0x555555578b90[m
+[?2004h(gdb) p *tree->token[0]
+[?2004l$3 = {[36mtype[m = 0, [36mlen[m = 8, [36mcontent[m = [34m0x555555578bb0[m "/bin/env"}
+[?2004h(gdb) quit
+[?2004l[?2004hA debugging session is active.
+
+	Inferior 1 [process 47698] will be killed.
+
+Quit anyway? (y or n) y
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ envasd
+[?2004lenvasd: command not found
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ env [Kaenvsenvdenv[1Penv[1Penv[1Penv/env
+[?2004lbash: /env: No such file or directory
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ /bin/env
+[?2004lSHELL=/bin/bash
+LIBGL_ALWAYS_INDIRECT=1
+WSL2_GUI_APPS_ENABLED=1
+WSL_DISTRO_NAME=Ubuntu
+NAME=DESKTOP-PGAG9KC
+PWD=/home/davidjwp/Minishell
+LOGNAME=davidjwp
+HOME=/home/davidjwp
+LANG=C.UTF-8
+WSL_INTEROP=/run/WSL/362_interop
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+WAYLAND_DISPLAY=wayland-0
+LESSCLOSE=/usr/bin/lesspipe %s %s
+TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=value
+DISPLAY=172.25.240.1:0
+SHLVL=3
+XDG_RUNTIME_DIR=/run/user/1000/
+WSLENV=
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
+PATH=/home/davidjwp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_1.2.5.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Users/david/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/david/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/david/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+HOSTTYPE=x86_64
+PULSE_SERVER=unix:/mnt/wslg/PulseServer
+OLDPWD=/home/davidjwp
+_=/bin/env
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ make re
+[?2004lrm -f objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o
+rm -f minitest
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_A.c -o objs/lexer/lexerutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_B.c -o objs/lexer/lexerutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_C.c -o objs/lexer/lexerutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/utils.c -o objs/lexer/utils.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/create_ast.c -o objs/lexer/create_ast.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_D.c -o objs/lexer/lexerutils_D.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exe.c -o objs/executor/exe.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_A.c -o objs/executor/exeutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_B.c -o objs/executor/exeutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/cr_env.c -o objs/cr_env.o
+[01m[Ksrcs/cr_env.c:[m[K In function ‘[01m[Kcr_blank_env[m[K’:
+[01m[Ksrcs/cr_env.c:82:17:[m[K [01;31m[Kerror: [m[Kassignment to ‘[01m[Kchar *[m[K’ from ‘[01m[Ksize_t[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} makes pointer from integer without a cast [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wint-conversion-Werror=int-conversion]8;;[m[K]
+   82 |         pwd_env [01;31m[K=[m[K ft_strcat(dest, buffer);
+      |                 [01;31m[K^[m[K
+cc1: all warnings being treated as errors
+make: *** [Makefile:54: objs/cr_env.o] Error 1
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ maake re
+[?2004lCommand 'maake' not found, did you mean:
+  command 'mmake' from deb mmake (2.3-8)
+  command 'make' from deb make (4.3-4.1build1)
+  command 'make' from deb make-guile (4.3-4.1build1)
+Try: sudo apt install <deb name>
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ make re
+[?2004lrm -f objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o
+rm -f minitest
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_A.c -o objs/lexer/lexerutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_B.c -o objs/lexer/lexerutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_C.c -o objs/lexer/lexerutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/utils.c -o objs/lexer/utils.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/create_ast.c -o objs/lexer/create_ast.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_D.c -o objs/lexer/lexerutils_D.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exe.c -o objs/executor/exe.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_A.c -o objs/executor/exeutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_B.c -o objs/executor/exeutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/cr_env.c -o objs/cr_env.o
+[01m[Ksrcs/cr_env.c:[m[K In function ‘[01m[Kcr_blank_env[m[K’:
+[01m[Ksrcs/cr_env.c:85:18:[m[K [01;31m[Kerror: [m[K‘[01m[Knode[m[K’ may be used uninitialized [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmaybe-uninitialized-Werror=maybe-uninitialized]8;;[m[K]
+   85 |         [01;31m[Knode->cl = split[m[K;
+      |         [01;31m[K~~~~~~~~~^~~~~~~[m[K
+cc1: all warnings being treated as errors
+make: *** [Makefile:54: objs/cr_env.o] Error 1
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ mkae re[K[K[K[K[K[Km[Kalk[K[Kke re
+[?2004lrm -f objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o
+rm -f minitest
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_A.c -o objs/lexer/lexerutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_B.c -o objs/lexer/lexerutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_C.c -o objs/lexer/lexerutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/utils.c -o objs/lexer/utils.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/create_ast.c -o objs/lexer/create_ast.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_D.c -o objs/lexer/lexerutils_D.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exe.c -o objs/executor/exe.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_A.c -o objs/executor/exeutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_B.c -o objs/executor/exeutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/cr_env.c -o objs/cr_env.o
+[01m[Ksrcs/cr_env.c:[m[K In function ‘[01m[Kcr_blank_env[m[K’:
+[01m[Ksrcs/cr_env.c:77:9:[m[K [01;31m[Kerror: [m[K‘[01m[Kpwd[m[K’ may be used uninitialized [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmaybe-uninitialized-Werror=maybe-uninitialized]8;;[m[K]
+   77 |         [01;31m[Kft_strcat(pwd, "PWD=")[m[K;
+      |         [01;31m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+cc1: all warnings being treated as errors
+make: *** [Makefile:54: objs/cr_env.o] Error 1
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ make re
+[?2004lrm -f objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o
+rm -f minitest
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_A.c -o objs/lexer/lexerutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_B.c -o objs/lexer/lexerutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_C.c -o objs/lexer/lexerutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/utils.c -o objs/lexer/utils.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/create_ast.c -o objs/lexer/create_ast.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_D.c -o objs/lexer/lexerutils_D.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exe.c -o objs/executor/exe.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_A.c -o objs/executor/exeutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_B.c -o objs/executor/exeutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/cr_env.c -o objs/cr_env.o
+[01m[Ksrcs/cr_env.c:[m[K In function ‘[01m[Kcr_blank_env[m[K’:
+[01m[Ksrcs/cr_env.c:75:12:[m[K [01;31m[Kerror: [m[K‘[01m[Knode[m[K’ may be used uninitialized [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmaybe-uninitialized-Werror=maybe-uninitialized]8;;[m[K]
+   75 |         if [01;31m[K([m[Knode == NULL)
+      |            [01;31m[K^[m[K
+cc1: all warnings being treated as errors
+make: *** [Makefile:54: objs/cr_env.o] Error 1
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ make re
+[?2004lrm -f objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o
+rm -f minitest
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_A.c -o objs/lexer/lexerutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_B.c -o objs/lexer/lexerutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_C.c -o objs/lexer/lexerutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/utils.c -o objs/lexer/utils.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/create_ast.c -o objs/lexer/create_ast.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_D.c -o objs/lexer/lexerutils_D.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exe.c -o objs/executor/exe.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_A.c -o objs/executor/exeutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_B.c -o objs/executor/exeutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/cr_env.c -o objs/cr_env.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/minishell.c -o objs/minishell.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser.c -o objs/parser/parser.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/signals/ctrl_signal.c -o objs/signals/ctrl_signal.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/msgs.c -o objs/parser/msgs.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/fds.c -o objs/fds.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_A.c -o objs/parser/parser_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/utils/utils_A.c -o objs/utils/utils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/utils/utils_B.c -o objs/utils/utils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_B.c -o objs/parser/parser_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_C.c -o objs/parser/parser_C.o
+gcc -g3 -Wall -Wextra -Werror includes/SH_functs.h includes/SH_structs.h objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o -L/usr/include -lreadline -o minitest
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ ./[K[Kenv -i ./minitest
+[?2004l$> env
+PWD=/home/davidjwp/Minishell
+exit:0
+$> exit
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdf[K[K[Kgdnb [K[K[K[Kb [K[Kdb ./minitest
+[?2004l[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32m./minitest[m...
+[?2004h(gdb) b execute 
+[?2004lBreakpoint 1 at [34m0x3632[m: file [32msrcs/executor/exe.c[m, line 199.
+[?2004h(gdb) set folo[Klow=[K-fork-mode hcild[K[K[K[K[Kchyild [K[K[K[K[Kild 
+[?2004l[?2004h(gdb) r 
+[?2004lStarting program: [32m/home/davidjwp/Minishell/minitest[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[?2004h$> ///b//i//n//[Cl/s/[K
+[?2004l
+Breakpoint 1, [33mexecute[m ([36mtree[m=0x5555555782b0, [36msh_env[m=0x55555555f300, [36mcl[m=0x555555560d00) at [32msrcs/executor/exe.c[m:199
+199		pid [31m=[m [01mfork[m[31m();[m
+[?2004h[?2004l[?2004h(gdb) n
+[?2004l[Attaching after Thread 0x7ffff7d01740 (LWP 59172) fork to child process 59199]
+[New inferior 2 (process 59199)]
+[Detaching after fork from parent process 59172]
+[Inferior 1 (process 59172) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[Switching to Thread 0x7ffff7d01740 (LWP 59199)]
+[33mexecute[m ([36mtree[m=0x5555555782b0, [36msh_env[m=0x55555555f300, [36mcl[m=0x555555560d00) at [32msrcs/executor/exe.c[m:200
+200		[01;34mif[m [31m([mpid [31m==[m [31m-[m[35m1[m[31m)[m
+[?2004h[?2004l[?2004h(gdb) 
+[?2004l202		[01;34mif[m [31m([mpid[31m)[m
+[?2004h[?2004l[?2004h(gdb) 
+[?2004l204		exe[31m.[m_path [31m=[m [01mcr_pathname[m[31m([mtree[31m->[mtoken[31m[[m[35m0[m[31m]->[mcontent[31m,[m [01mfind_env[m[31m([m[31m"PATH"[m[31m,[m sh_env[31m));[m
+[?2004h[?2004l[?2004h(gdb) p tree[K[K[K[K[K[Kquit
+[?2004l[?2004hA debugging session is active.
+
+	Inferior 2 [process 59199] will be killed.
+
+Quit anyway? (y or n) y
+[?2004lexit:9
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ make re
+[?2004lrm -f objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o srcs/executor/exe_utils_C
+rm -f minitest
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_A.c -o objs/lexer/lexerutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_B.c -o objs/lexer/lexerutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_C.c -o objs/lexer/lexerutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/utils.c -o objs/lexer/utils.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/create_ast.c -o objs/lexer/create_ast.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_D.c -o objs/lexer/lexerutils_D.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exe.c -o objs/executor/exe.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_A.c -o objs/executor/exeutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_B.c -o objs/executor/exeutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/cr_env.c -o objs/cr_env.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/minishell.c -o objs/minishell.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser.c -o objs/parser/parser.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/signals/ctrl_signal.c -o objs/signals/ctrl_signal.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/msgs.c -o objs/parser/msgs.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/fds.c -o objs/fds.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_A.c -o objs/parser/parser_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/utils/utils_A.c -o objs/utils/utils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/utils/utils_B.c -o objs/utils/utils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_B.c -o objs/parser/parser_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_C.c -o objs/parser/parser_C.o
+make: *** No rule to make target 'srcs/executor/exe_utils_C', needed by 'minitest'.  Stop.
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gdb [K[K[K[Kmake re
+[?2004lrm -f objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/executor/exeutils_C.o objs/executor/exeutils_C.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o
+rm -f minitest
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_A.c -o objs/lexer/lexerutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_B.c -o objs/lexer/lexerutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_C.c -o objs/lexer/lexerutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/utils.c -o objs/lexer/utils.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/create_ast.c -o objs/lexer/create_ast.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_D.c -o objs/lexer/lexerutils_D.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exe.c -o objs/executor/exe.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_A.c -o objs/executor/exeutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_B.c -o objs/executor/exeutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_C.c -o objs/executor/exeutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/cr_env.c -o objs/cr_env.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/minishell.c -o objs/minishell.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser.c -o objs/parser/parser.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/signals/ctrl_signal.c -o objs/signals/ctrl_signal.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/msgs.c -o objs/parser/msgs.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/fds.c -o objs/fds.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_A.c -o objs/parser/parser_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/utils/utils_A.c -o objs/utils/utils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/utils/utils_B.c -o objs/utils/utils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_B.c -o objs/parser/parser_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_C.c -o objs/parser/parser_C.o
+gcc -g3 -Wall -Wextra -Werror includes/SH_functs.h includes/SH_structs.h objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/executor/exeutils_C.o objs/executor/exeutils_C.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o -L/usr/include -lreadline -o minitest
+/usr/bin/ld: objs/executor/exeutils_C.o: in function `find_env':
+/home/davidjwp/Minishell/srcs/executor/exeutils_C.c:18: multiple definition of `find_env'; objs/executor/exeutils_C.o:/home/davidjwp/Minishell/srcs/executor/exeutils_C.c:18: first defined here
+/usr/bin/ld: objs/executor/exeutils_C.o: in function `path_cmd':
+/home/davidjwp/Minishell/srcs/executor/exeutils_C.c:35: multiple definition of `path_cmd'; objs/executor/exeutils_C.o:/home/davidjwp/Minishell/srcs/executor/exeutils_C.c:35: first defined here
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:52: minitest] Error 1
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ make re
+[?2004lrm -f objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/executor/exeutils_C.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o
+rm -f minitest
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_A.c -o objs/lexer/lexerutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_B.c -o objs/lexer/lexerutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_C.c -o objs/lexer/lexerutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/utils.c -o objs/lexer/utils.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/create_ast.c -o objs/lexer/create_ast.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/lexer/lexerutils_D.c -o objs/lexer/lexerutils_D.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exe.c -o objs/executor/exe.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_A.c -o objs/executor/exeutils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_B.c -o objs/executor/exeutils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/executor/exeutils_C.c -o objs/executor/exeutils_C.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/cr_env.c -o objs/cr_env.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/minishell.c -o objs/minishell.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser.c -o objs/parser/parser.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/signals/ctrl_signal.c -o objs/signals/ctrl_signal.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/msgs.c -o objs/parser/msgs.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/fds.c -o objs/fds.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_A.c -o objs/parser/parser_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/utils/utils_A.c -o objs/utils/utils_A.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/utils/utils_B.c -o objs/utils/utils_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_B.c -o objs/parser/parser_B.o
+gcc -c -g3 -Wall -Wextra -Werror srcs/parser/parser_C.c -o objs/parser/parser_C.o
+gcc -g3 -Wall -Wextra -Werror includes/SH_functs.h includes/SH_structs.h objs/lexer/lexerutils_A.o objs/lexer/lexerutils_B.o objs/lexer/lexerutils_C.o objs/lexer/utils.o objs/lexer/create_ast.o objs/lexer/lexerutils_D.o objs/executor/exe.o objs/executor/exeutils_A.o objs/executor/exeutils_B.o objs/executor/exeutils_C.o objs/cr_env.o objs/minishell.o objs/parser/parser.o objs/signals/ctrl_signal.o objs/parser/msgs.o objs/fds.o objs/parser/parser_A.o objs/utils/utils_A.o objs/utils/utils_B.o objs/parser/parser_B.o objs/parser/parser_C.o -L/usr/include -lreadline -o minitest
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ ./minitest
+[?2004l[?2004h$> sada
+[?2004lsada: command not found
+exit:256
+[?2004h$> exit
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ valgrind ./minitest
+[?2004l==95477== Memcheck, a memory error detector
+==95477== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==95477== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==95477== Command: ./minitest
+==95477== 
+[?2004h$> dsa
+[?2004ldsa: command not found
+==95484== 
+==95484== HEAP SUMMARY:
+==95484==     in use at exit: 208,165 bytes in 222 blocks
+==95484==   total heap usage: 633 allocs, 411 frees, 242,474 bytes allocated
+==95484== 
+==95484== LEAK SUMMARY:
+==95484==    definitely lost: 0 bytes in 0 blocks
+==95484==    indirectly lost: 0 bytes in 0 blocks
+==95484==      possibly lost: 0 bytes in 0 blocks
+==95484==    still reachable: 208,165 bytes in 222 blocks
+==95484==         suppressed: 0 bytes in 0 blocks
+==95484== Rerun with --leak-check=full to see details of leaked memory
+==95484== 
+==95484== For lists of detected and suppressed errors, rerun with: -s
+==95484== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+exit:256
+[?2004h$> exit
+[?2004l==95477== 
+==95477== HEAP SUMMARY:
+==95477==     in use at exit: 208,165 bytes in 222 blocks
+==95477==   total heap usage: 585 allocs, 363 frees, 240,335 bytes allocated
+==95477== 
+==95477== LEAK SUMMARY:
+==95477==    definitely lost: 0 bytes in 0 blocks
+==95477==    indirectly lost: 0 bytes in 0 blocks
+==95477==      possibly lost: 0 bytes in 0 blocks
+==95477==    still reachable: 208,165 bytes in 222 blocks
+==95477==         suppressed: 0 bytes in 0 blocks
+==95477== Rerun with --leak-check=full to see details of leaked memory
+==95477== 
+==95477== For lists of detected and suppressed errors, rerun with: -s
+==95477== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ va[K[K,.[K[K./miin[K[Knitest
+[?2004l[?2004h$> /bin/ls
+[?2004lMakefile  README  a.out  asdg  dasdad  debug  env  exe_test.c  includes  minitest  objs  rmMakefile  sh_env_file  srcs	stuffikeepjustincase.c	test.c	test_files  val
+exit:0
+[?2004h$> exit
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ valgrind ./minitest
+[?2004l==95625== Memcheck, a memory error detector
+==95625== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==95625== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==95625== Command: ./minitest
+==95625== 
+[?2004h$> /bin/ls
+[?2004lMakefile  README  a.out  asdg  dasdad  debug  env  exe_test.c  includes  minitest  objs  rmMakefile  sh_env_file  srcs	stuffikeepjustincase.c	test.c	test_files  val
+exit:0
+[?2004h$> exit
+[?2004l==95625== 
+==95625== HEAP SUMMARY:
+==95625==     in use at exit: 208,165 bytes in 222 blocks
+==95625==   total heap usage: 585 allocs, 363 frees, 240,347 bytes allocated
+==95625== 
+==95625== LEAK SUMMARY:
+==95625==    def

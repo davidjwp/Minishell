@@ -71,20 +71,23 @@ int	main(int ac, char **av, char **env)
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 		return (0);
 	sh_env = cr_env(env);
+	if (sh_env == NULL)
+		return (0);
 	cl = malloc(sizeof(t_cleanup));
+	if (cl == NULL)
+		return (err_msg("cl malloc fail"), 0);
 	while (42)
 	{
 		input = readline(PROMPT);
 		if (sh_init(input, sh_env, cl))
 		{
 			if (check_input(input))
-				return (clean_up(cl, CL_ALL), exit(EXIT_SUCCESS), 0);
+				return (clean_up(cl, CL_ALL), exit(EXIT_SUCCESS), 1);
 			shell_loop(cl->tree, sh_env, cl);
 		}
 		print_exit(cl->status);
 	}
-	(void)ac, (void)av;
-	return (1);
+	return ((void)ac, (void)av, 1);
 }
 
 // void	exe_builtin(t_astn *tree, int type)
@@ -218,13 +221,13 @@ int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		sh_pipe(tree, sh_env, cl);
 	else if (!(tree->type % 4))
 		sh_red(tree, sh_env, cl);
+	else if (is_herd(tree->token))
+		exe_herd(tree, sh_env, cl);
 	else
 		execute(tree, sh_env, cl);
 	if (tree == cl->tree)
 		clean_up(cl, CL_FDS | CL_TRE | CL_INP);
 	return (1);
 }
-	// else if (is_herd(tree->token))
-	// 	exe_herd(tree, sh_env, cl);
 	// else if (tree->token[0]->type % 11)
 	// 	exe_builtin(tree, tree->token[0]->type);

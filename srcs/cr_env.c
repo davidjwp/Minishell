@@ -49,11 +49,43 @@ t_env	*env_node(char *env)
 	char	**split;
 
 	split = split_env(env);
+	if (split == NULL)
+		return (NULL);
 	node = malloc(sizeof(t_env));
+	if (node == NULL)
+		return (free_split(split), NULL);
 	node->name = split[0];
 	node->value = split[1];
 	node->cl = split;
 	node->next = NULL;
+	return (node);
+}
+
+t_env	*cr_blank_env(void)
+{
+	t_env	*node;
+	char	*buf;
+	char	**split;
+	char	*pwd;
+
+	buf = getcwd(NULL, 0);
+	if (buf == NULL)
+		return (err_msg("getcwd fail"), NULL);
+	pwd = ft_calloc(ft_strlen(buf) + 5, sizeof(char));
+	if (pwd == NULL)
+		return (free(buf), err_msg("dest malloc fail"), NULL);
+	ft_strcat(pwd, "PWD=");
+	node = malloc(sizeof(t_env));
+	if (node == NULL)
+		return (free(buf), free(pwd), err_msg("crbe malloc fail"), NULL);
+	ft_strcat(pwd, buf);
+	split = ft_split(pwd, '=');
+	free(buf);
+	free(pwd);
+	node->cl = split;
+	node->name = split[0];
+	node->value = split[1];
+	node->next = node;
 	return (node);
 }
 
@@ -69,13 +101,17 @@ t_env	*cr_env(char **env)
 	int		i;
 
 	if (!*env)
-		return (NULL);
+		return (cr_blank_env());
 	i = 0;
 	sh_env = env_node(env[i]);
+	if (sh_env == NULL)
+		return (NULL);
 	tmp = sh_env;
 	while (env[++i] != NULL)
 	{
 		sh_env->next = env_node(env[i]);
+		if (sh_env->next == NULL)
+			return (sh_env->next = tmp, free_env(sh_env), NULL);
 		sh_env = sh_env->next;
 	}
 	sh_env->next = tmp;

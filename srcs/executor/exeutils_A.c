@@ -25,6 +25,8 @@ char	*cr_pathname(const char *cmd, t_env *sh_env)
 	char	*pathname;
 
 	i = 0;
+	if (!access(cmd, X_OK))
+		return (path_cmd(cmd));
 	if (sh_env == NULL)
 		paths = ft_split(ABS_PATHS, ':');
 	else
@@ -132,22 +134,4 @@ char	*strccat(const char *str1, char c, const char *str2)
 	while (str2[++y] && ++i < len)
 		pathname[i] = str2[y];
 	return (pathname);
-}
-
-//find the shell environment variable by name
-t_env	*find_env(const char *name, t_env *sh_env)
-{
-	t_env	*tmp;
-
-	tmp = sh_env;
-	if (sh_env == NULL)
-		return (NULL);
-	if (cmp(name, sh_env->name) == true)
-		return (sh_env);
-	sh_env = sh_env->next;
-	while (cmp(name, sh_env->name) != true && sh_env != tmp)
-		sh_env = sh_env->next;
-	if (sh_env == tmp)
-		return (NULL);
-	return (sh_env);
 }

@@ -109,11 +109,17 @@ char		*envcat(const char *name, const char *value);
 char		*strccat(const char *str1, char c, const char *str2);
 
 //exe_utils_B
-t_env		*find_env(const char *name, t_env *sh_env);
 int			sh_envlen(t_env *sh_env);
 void		close_pipe(int *pipe);
 void		close_fds(t_fds *fds);
 void		wait_pipe(t_pipe p);
+void		free_env(t_env *env);
+
+
+//exe_utils_C
+t_env		*find_env(const char *name, t_env *sh_env);
+char		*path_cmd(const char *cmd);
+
 
 void		clean_up(t_cleanup *cl, int flag);
 
@@ -145,11 +151,9 @@ size_t		ft_strlcat(char *dst, const char *src, size_t size);
 //utils_C.c
 int			gnl(char **line);
 
-
 t_env		*cr_env(char **env);
 t_astn		*parser(const char *input, t_cleanup *cl);
 t_astn		*ast_cmd(const char *input, size_t *index, t_cms c, int *error);
-t_env		*find_env(const char *name, t_env *sh_env);
 void		ctrl_c(int sig);
 
 void		free_env(t_env *env);
