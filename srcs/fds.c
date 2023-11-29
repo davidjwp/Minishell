@@ -21,9 +21,9 @@ int	fd_redirection(void *type, int redpipe, t_cleanup *cl)
 	int		error;
 
 	if (redpipe & RES_IN)
-		error = res_fd(STDIN_FILENO, cl);
+		error = res_fd(STDI, cl);
 	if (redpipe & RES_OUT)
-		error = res_fd(STDOUT_FILENO, cl);
+		error = res_fd(STDO, cl);
 	if (!error)
 		return (0);
 	if (redpipe & RED_RED)
@@ -34,13 +34,26 @@ int	fd_redirection(void *type, int redpipe, t_cleanup *cl)
 	else if (redpipe & RED_PIP)
 	{
 		_pip = (t_pipe *)type;
-		if (!_pip->l_pid)
-			dup2(_pip->pipe_fd[1], STDOUT_FILENO);
-		else if (!_pip->r_pid)
-			dup2(_pip->pipe_fd[0], STDIN_FILENO);
+		dup2(_pip->pipe_fd[1], STDOUT_FILENO);
 		close_pipe(_pip->pipe_fd);
 	}
 	return (1);
+}
+
+bool	res_fd(int type, t_cleanup *cl)
+{
+	t_fds	*head;
+
+	head = cl->fds;
+	while (cl->fds->next != head)
+	{
+		if (cl->fds->std == type)
+			break ;
+		cl->fds = cl->fds->next;
+	}
+	if (cl->fds->std == type)
+		return (true);
+	return (false);
 }
 
 /*
@@ -50,31 +63,31 @@ int	fd_redirection(void *type, int redpipe, t_cleanup *cl)
 *	from sh_pipe or sh_red whatever the correct fd is by simply using the
 *	 top of the fd list
 */
-int	res_fd(int fd, t_cleanup *cl)
-{
-	t_fds		*tmp;
-	struct stat	stat1;
-	struct stat	stat2;
+// int	res_fd(int fd, t_cleanup *cl)
+// {
+// 	t_fds		*tmp;
+// 	struct stat	stat1;
+// 	struct stat	stat2;
 
-	tmp = cl->fds;
-	if (fstat(fd, &stat1) < 0)
-		return (0);
-	if (fstat(cl->fds->fd, &stat2) < 0)
-		return (0);
-	while (cl->fds->next != tmp)
-	{
-		if ((stat2.st_dev == stat1.st_dev && stat2.st_ino == stat1.st_ino))
-			return (1);
-		cl->fds = cl->fds->next;
-		if (fstat(cl->fds->fd, &stat2) < 0)
-			return (0);
-	}
-	if ((stat2.st_dev == stat1.st_dev && stat2.st_ino == stat1.st_ino))
-		return (1);
-	while (cl->fds != tmp)
-		cl->fds = cl->fds->next;
-	return (0);
-}
+// 	tmp = cl->fds;
+// 	if (fstat(fd, &stat1) < 0)
+// 		return (0);
+// 	if (fstat(cl->fds->fd, &stat2) < 0)
+// 		return (0);
+// 	while (cl->fds->next != tmp)
+// 	{
+// 		if ((stat2.st_dev == stat1.st_dev && stat2.st_ino == stat1.st_ino))
+// 			return (1);
+// 		cl->fds = cl->fds->next;
+// 		if (fstat(cl->fds->fd, &stat2) < 0)
+// 			return (0);
+// 	}
+// 	if ((stat2.st_dev == stat1.st_dev && stat2.st_ino == stat1.st_ino))
+// 		return (1);
+// 	while (cl->fds != tmp)
+// 		cl->fds = cl->fds->next;
+// 	return (0);
+// }
 
 //remove fd from the list i might not even need this at all
 void	rem_fd(t_fds *fd_lst, int fd)

@@ -40,6 +40,7 @@ int	sh_init(char *input, t_env *sh_env, t_cleanup *cl)
 	cl->fds = init_fds();
 	cl->env = sh_env;
 	cl->input = input;
+	cl->pids = NULL;
 	if (!passes)
 		cl->status = 0;
 	cl->tree = parser(input, cl);
@@ -108,19 +109,122 @@ bool	is_herd(t_token **token)
 {
 	int	i;
 
-	i = -1;
-	while (token[i] != NULL)
-		if (token[++i]->type == HERD)
+	i = 0;
+	while (token[i]->type == HERD)
+	{
+		i++;
+		if (token[i] == NULL)
 			break ;
+	}
 	if (token[i]->type == HERD)
 		return (true);
 	return (false);
 }
 
-int	exe_herd(t_astn *node, t_cleanup *cl)
-{
+// char	*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
+// {
+// 	t_herd	*lines;
+// 	char	*line;
+// 	int		lmt_l;
 
+// 	line = NULL;
+// 	lines = lines_init(node, pos);
+// 	if (lines == NULL)
+// 		return (NULL);
+// 	if (node->token[pos + 1] == NULL)
+// 		return (syntax_error("newline", cl), *error += 1, NULL);
+// 	lmt_l = ft_strlen(node->token[pos + 1]->content);
+// 	while (gnl(&line))
+// 	{
+// 		if (ft_strncmp(line, node->token[pos + 1]->content, lmt_l) == 0)
+// 			break ;
+// 		if (!add_line(lines, line))
+// 			return (free_herd(lines), NULL);
+// 		free(line);
+// 	}
+// 	if (!comp_lines(lines, &line))
+// 		return (free(line), free_herd(lines), NULL);
+// 	return (free_herd(lines), line);
+// }
+
+int	exe_herd(t_astn *node, t_env *sh_env, t_cleanup *cl)
+{
+	// t_pipe	p;
+	(void)node;
+	(void)sh_env;
+	(void)cl;
+	return (0);
+	// if (pipe(p.pipe_fd) == -1)
+	// 	return (err_msg("exe_herd pipe fail"), 0);
+	// p.l_pid = fork();
+	// if (p.l_pid == -1)
+	// 	return (err_msg("exe_herd fork fail"), 0);
+	// if (!p.l_pid)
+	// {
+	// 	fd_redirection(&p, RES_IN | RED_PIP, cl);
+	// 	execute(node, sh_env, cl);
+	// 	exit(EXIT_SUCCESS);
+	// }
+	// return (wait(&cl->status), 0);
 }
+
+int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
+{
+	t_pipe	p;
+
+	// write (get_fd(STDO, cl->fds), "entered sh_pipe\n", ft_strlen("entered sh_pipe\n"));
+	// if (tree->parent != NULL)
+	// 	if (tree->parent->type == PIPE)
+	// 		dup2(get_fd(STDI, cl->fds), STDIN_FILENO);
+	if (pipe(p.pipe_fd) == -1)
+		return (err_msg("sh_pipe pipe error"), 0);
+	p.l_pid = fork();
+	if (p.l_pid == -1)
+		return (err_msg("sh_pipe fork error"), 0);
+	if (!p.l_pid)
+	{
+		if (!fd_redirection(&p, RED_PIP | RES_OUT, cl))
+			exit(EXIT_FAILURE);
+		execute(tree->left, sh_env, cl);
+		exit(EXIT_SUCCESS);
+	}
+	wait(&cl->status);
+	dup2(p.pipe_fd[0], STDIN_FILENO);
+	close_pipe(p.pipe_fd);
+	shell_loop(tree->right, sh_env, cl);
+	return (dup2(get_fd(STDI, cl->fds), STDIN_FILENO), 0);
+}
+// write (get_fd(STDO, cl->fds), "HERE\n", ft_strlen("HERE\n"));
+// creates a pipe by forking in the left then right side of the pipe
+// int	sing_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
+// {
+// 	t_pipe	p;
+
+// 	if (pipe(p.pipe_fd) == -1)
+// 		return (err_msg("sh_pipe pipe error"), 0);
+// 	p.l_pid = fork();
+// 	if (p.l_pid == -1)
+// 		return (err_msg("sh_pipe fork error"), 0);
+// 	if (!p.l_pid)
+// 	{
+// 		if (!fd_redirection(&p, RES_OUT | RED_PIP, cl))
+// 			exit(EXIT_FAILURE);
+// 		shell_loop(tree->left, sh_env, cl);
+// 		exit(EXIT_SUCCESS);
+// 	}
+// 	p.r_pid = fork();
+// 	if (p.r_pid == -1)
+// 		return (err_msg("sh_pipe pipe fork error"), 0);
+// 	if (!p.r_pid)
+// 	{
+// 		if (!fd_redirection(&p, RES_IN | RED_PIP, cl))
+// 			exit(EXIT_FAILURE);
+// 		shell_loop(tree->right, sh_env, cl);
+// 		exit(EXIT_SUCCESS);
+// 	}
+// 	return (wait_pipe(p), 0);
+// }
+
 
 /*
 * the main shell loop which redirects or pipes the output in order of the tree
@@ -131,11 +235,11 @@ int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 	if (tree == NULL)
 		return (input_enter(), clean_up(cl, CL_FDS | CL_INP), 0);
 	if (tree->type == PIPE)
-		sh_pipe(tree, sh_env, cl);//i have to add available pids to cl in order to exit when in a pipe or redirection
+		sh_pipe(tree, sh_env, cl);
 	else if (!(tree->type % 4))
 		sh_red(tree, sh_env, cl);
 	else if (is_herd(tree->token))
-		exe_herd(tree, cl);
+		exe_herd(tree, sh_env, cl);
 	else
 		execute(tree, sh_env, cl);
 	if (tree == cl->tree)
@@ -144,42 +248,3 @@ int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 }
 	// else if (tree->token[0]->type % 11)
 	// 	exe_builtin(tree, tree->token[0]->type);
-
-
-/*
-==83447== HEAP SUMMARY:
-==83447==     in use at exit: 205,069 bytes in 250 blocks
-==83447==   total heap usage: 621 allocs, 371 frees, 237,431 bytes allocated
-==83447==
-==83447== 48 (16 direct, 32 indirect) bytes in 1 blocks are definitely lost in loss record 26 of 80
-==83447==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83447==    by 0x10CC71: init_fds (fds.c:127)
-==83447==    by 0x10C177: sh_init (minishell.c:39)
-==83447==    by 0x10C275: main (minishell.c:64)
-==83447==
-==83447== 66 bytes in 1 blocks are definitely lost in loss record 27 of 80
-==83447==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83447==    by 0x489DBAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==83447==    by 0x487B694: readline_internal_teardown (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==83447==    by 0x4885D2A: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
-==83447==    by 0x10C25A: main (minishell.c:63)
-==83447==
-==83447== 806 (40 direct, 766 indirect) bytes in 1 blocks are definitely lost in loss record 43 of 80
-==83447==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==83447==    by 0x10AA86: create_ast (create_ast.c:109)
-==83447==    by 0x10C766: parser (parser.c:87)
-==83447==    by 0x10C1BE: sh_init (minishell.c:44)
-==83447==    by 0x10C275: main (minishell.c:64)
-==83447==
-==83447== LEAK SUMMARY:
-==83447==    definitely lost: 122 bytes in 3 blocks
-==83447==    indirectly lost: 798 bytes in 26 blocks
-==83447==      possibly lost: 0 bytes in 0 blocks
-==83447==    still reachable: 204,149 bytes in 221 blocks
-==83447==         suppressed: 0 bytes in 0 blocks
-==83447== Reachable blocks (those to which a pointer was found) are not shown.
-==83447== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==83447==
-==83447== For lists of detected and suppressed errors, rerun with: -s
-==83447== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
-*/

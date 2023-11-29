@@ -68,8 +68,6 @@ int	expander(t_astn *node, int *error, t_cleanup *cl)
 		return (expander(node->right, error, cl), 0);
 	while (node->token[i] != NULL)
 	{
-		if (node->token[i]->type == HERD)
-			here_doc(node, error, i, cl);
 		if (node->token[i]->type == EXST)
 			node->token[i]->content = expand_exst(node->token[i], cl->status);
 		i++;

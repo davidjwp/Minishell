@@ -149,10 +149,16 @@ typedef struct FileDescriptors{
 	struct FileDescriptors	*next;
 }	t_fds;
 
+typedef struct ProcessIDSstruct{
+	int						pid;
+	struct ProcessIDSstruct	*next;
+}	t_pids;
+
 typedef struct CleanUp{
 	t_fds	*fds;
-	t_astn	*tree;
 	t_env	*env;
+	t_pids	*pids;
+	t_astn	*tree;
 	char	*input;
 	int		status;
 }	t_cleanup;
@@ -167,4 +173,5 @@ typedef struct HereDocStruct{
 	struct HereDocStruct	*next;
 	char					*line;
 }	t_herd;
+
 #endif

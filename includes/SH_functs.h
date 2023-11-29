@@ -85,7 +85,8 @@ int			add_line(t_herd *lines, char *line);
 void		free_herd(t_herd *lines);
 int			comp_lines(t_herd *lines, char **line);
 t_herd		*lines_init(t_astn *node, int pos);
-int			here_doc(t_astn *node, int *error, int pos, t_cleanup *cl);
+char		*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl);
+
 
 //parser_C.c
 int			gnl(char **line);
@@ -136,7 +137,7 @@ void		print_sh_env(t_env *sh_env);
 
 //utils_B.c
 void		input_enter(void);
-int			get_fd(t_fds *fds);
+int			get_fd(int stdio, t_fds *fds);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t		ft_strlcat(char *dst, const char *src, size_t size);
@@ -156,7 +157,7 @@ void		printenvp(char **envp);
 
 //fds.c
 int			fd_redirection(void *type, int redpipe, t_cleanup *cl);
-int			res_fd(int fd, t_cleanup *cl);
+bool		res_fd(int type, t_cleanup *cl);
 void		rem_fd(t_fds *fd_lst, int fd);
 int			add_fd(t_fds *fd_lst, int fd);
 t_fds		*init_fds(void);

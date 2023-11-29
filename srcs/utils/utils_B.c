@@ -20,13 +20,17 @@ void	input_enter(void)
 	rl_redisplay();
 }
 
-int	get_fd(t_fds *fds)
+int	get_fd(int stdio, t_fds *fds)
 {
 	t_fds	*tmp;
 
 	tmp = fds;
-	while (tmp->std != STDI && tmp->next != fds)
+	while (tmp->next != NULL)
+	{
+		if (tmp->std == stdio)
+			break ;
 		tmp = tmp->next;
+	}
 	return (tmp->fd);
 }
 
