@@ -56,39 +56,6 @@ bool	res_fd(int type, t_cleanup *cl)
 	return (false);
 }
 
-/*
-*	restore the file descriptor, this function doesn't really restore the fd
-*	instead it will put the cleanup fd with the matching fd at the top of the 
-*	list using fstat to compare inode and placement and then i can restore 
-*	from sh_pipe or sh_red whatever the correct fd is by simply using the
-*	 top of the fd list
-*/
-// int	res_fd(int fd, t_cleanup *cl)
-// {
-// 	t_fds		*tmp;
-// 	struct stat	stat1;
-// 	struct stat	stat2;
-
-// 	tmp = cl->fds;
-// 	if (fstat(fd, &stat1) < 0)
-// 		return (0);
-// 	if (fstat(cl->fds->fd, &stat2) < 0)
-// 		return (0);
-// 	while (cl->fds->next != tmp)
-// 	{
-// 		if ((stat2.st_dev == stat1.st_dev && stat2.st_ino == stat1.st_ino))
-// 			return (1);
-// 		cl->fds = cl->fds->next;
-// 		if (fstat(cl->fds->fd, &stat2) < 0)
-// 			return (0);
-// 	}
-// 	if ((stat2.st_dev == stat1.st_dev && stat2.st_ino == stat1.st_ino))
-// 		return (1);
-// 	while (cl->fds != tmp)
-// 		cl->fds = cl->fds->next;
-// 	return (0);
-// }
-
 //remove fd from the list i might not even need this at all
 void	rem_fd(t_fds *fd_lst, int fd)
 {

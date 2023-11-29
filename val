@@ -2640,4 +2640,158 @@ gcc -g3 -Wall -Wextra -Werror includes/SH_functs.h includes/SH_structs.h objs/le
 [?2004l
 exit:0
 [?2004h$> exit
-[?2004l[?
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ ./minitest
+[?2004l[?2004h$> echo hello | cat | wc
+[?2004l      1       1       6
+exit:0
+[?2004h$> exit
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ valgfrinb[K[K[K[K[Krind .ll[K[K/minitest
+[?2004l==246646== Memcheck, a memory error detector
+==246646== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==246646== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==246646== Command: ./minitest
+==246646== 
+[?2004h$> echo hello  \[K[K| cat | wc
+[?2004l==246665== 
+==246665== HEAP SUMMARY:
+==246665==     in use at exit: 213,998 bytes in 374 blocks
+==246665==   total heap usage: 595 allocs, 221 frees, 240,711 bytes allocated
+==246665== 
+==246665== LEAK SUMMARY:
+==246665==    definitely lost: 0 bytes in 0 blocks
+==246665==    indirectly lost: 0 bytes in 0 blocks
+==246665==      possibly lost: 0 bytes in 0 blocks
+==246665==    still reachable: 213,998 bytes in 374 blocks
+==246665==         suppressed: 0 bytes in 0 blocks
+==246665== Rerun with --leak-check=full to see details of leaked memory
+==246665== 
+==246665== For lists of detected and suppressed errors, rerun with: -s
+==246665== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==246670== 
+==246670== HEAP SUMMARY:
+==246670==     in use at exit: 213,998 bytes in 374 blocks
+==246670==   total heap usage: 595 allocs, 221 frees, 240,711 bytes allocated
+==246670== 
+==246670== LEAK SUMMARY:
+==246670==    definitely lost: 0 bytes in 0 blocks
+==246670==    indirectly lost: 0 bytes in 0 blocks
+==246670==      possibly lost: 0 bytes in 0 blocks
+==246670==    still reachable: 213,998 bytes in 374 blocks
+==246670==         suppressed: 0 bytes in 0 blocks
+==246670== Rerun with --leak-check=full to see details of leaked memory
+==246670== 
+==246670== For lists of detected and suppressed errors, rerun with: -s
+==246670== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+      1       1       6
+exit:0
+[?2004h$> exit
+[?2004l==246646== 
+==246646== HEAP SUMMARY:
+==246646==     in use at exit: 208,165 bytes in 222 blocks
+==246646==   total heap usage: 610 allocs, 388 frees, 240,970 bytes allocated
+==246646== 
+==246646== LEAK SUMMARY:
+==246646==    definitely lost: 0 bytes in 0 blocks
+==246646==    indirectly lost: 0 bytes in 0 blocks
+==246646==      possibly lost: 0 bytes in 0 blocks
+==246646==    still reachable: 208,165 bytes in 222 blocks
+==246646==         suppressed: 0 bytes in 0 blocks
+==246646== Rerun with --leak-check=full to see details of leaked memory
+==246646== 
+==246646== For lists of detected and suppressed errors, rerun with: -s
+==246646== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ git add /.[K[K.
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ git commmit -m :[K""u"p"f"a"t"e"[1P"[1P"[1P"[1P"d"a"t"e"d" "t"h"e" "p"p"i"e"d"[1P"[1P"[1P"[1P"i"p"e" "m"e"c"h"a"n"i"c"
+[?2004lgit: 'commmit' is not a git command. See 'git --help'.
+
+The most similar command is
+	commit
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ git [K[K[K[Kgit commmit -m "updated the pipe mechanic"[C[C[C[C[1P
+[?2004l[main 38ad896] updated the pipe mechanic
+ 27 files changed, 2874 insertions(+), 1618 deletions(-)
+ rename das => asdg (100%)
+ create mode 100644 dasdad
+ rewrite objs/executor/exe.o (82%)
+ rewrite objs/fds.o (83%)
+ rewrite objs/minishell.o (81%)
+ rewrite objs/parser/msgs.o (75%)
+ rewrite objs/parser/parser.o (76%)
+ rewrite objs/parser/parser_A.o (73%)
+ rewrite objs/parser/parser_B.o (82%)
+ rewrite objs/utils/utils_B.o (62%)
+ rewrite val (74%)
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ git push
+[?2004lEnumerating objects: 130, done.
+Counting objects:   0% (1/130)Counting objects:   1% (2/130)Counting objects:   2% (3/130)Counting objects:   3% (4/130)Counting objects:   4% (6/130)Counting objects:   5% (7/130)Counting objects:   6% (8/130)Counting objects:   7% (10/130)Counting objects:   8% (11/130)Counting objects:   9% (12/130)Counting objects:  10% (13/130)Counting objects:  11% (15/130)Counting objects:  12% (16/130)Counting objects:  13% (17/130)Counting objects:  14% (19/130)Counting objects:  15% (20/130)Counting objects:  16% (21/130)Counting objects:  17% (23/130)Counting objects:  18% (24/130)Counting objects:  19% (25/130)Counting objects:  20% (26/130)Counting objects:  21% (28/130)Counting objects:  22% (29/130)Counting objects:  23% (30/130)Counting objects:  24% (32/130)Counting objects:  25% (33/130)Counting objects:  26% (34/130)Counting objects:  27% (36/130)Counting objects:  28% (37/130)Counting objects:  29% (38/130)Counting objects:  30% (39/130)Counting objects:  31% (41/130)Counting objects:  32% (42/130)Counting objects:  33% (43/130)Counting objects:  34% (45/130)Counting objects:  35% (46/130)Counting objects:  36% (47/130)Counting objects:  37% (49/130)Counting objects:  38% (50/130)Counting objects:  39% (51/130)Counting objects:  40% (52/130)Counting objects:  41% (54/130)Counting objects:  42% (55/130)Counting objects:  43% (56/130)Counting objects:  44% (58/130)Counting objects:  45% (59/130)Counting objects:  46% (60/130)Counting objects:  47% (62/130)Counting objects:  48% (63/130)Counting objects:  49% (64/130)Counting objects:  50% (65/130)Counting objects:  51% (67/130)Counting objects:  52% (68/130)Counting objects:  53% (69/130)Counting objects:  54% (71/130)Counting objects:  55% (72/130)Counting objects:  56% (73/130)Counting objects:  57% (75/130)Counting objects:  58% (76/130)Counting objects:  59% (77/130)Counting objects:  60% (78/130)Counting objects:  61% (80/130)Counting objects:  62% (81/130)Counting objects:  63% (82/130)Counting objects:  64% (84/130)Counting objects:  65% (85/130)Counting objects:  66% (86/130)Counting objects:  67% (88/130)Counting objects:  68% (89/130)Counting objects:  69% (90/130)Counting objects:  70% (91/130)Counting objects:  71% (93/130)Counting objects:  72% (94/130)Counting objects:  73% (95/130)Counting objects:  74% (97/130)Counting objects:  75% (98/130)Counting objects:  76% (99/130)Counting objects:  77% (101/130)Counting objects:  78% (102/130)Counting objects:  79% (103/130)Counting objects:  80% (104/130)Counting objects:  81% (106/130)Counting objects:  82% (107/130)Counting objects:  83% (108/130)Counting objects:  84% (110/130)Counting objects:  85% (111/130)Counting objects:  86% (112/130)Counting objects:  87% (114/130)Counting objects:  88% (115/130)Counting objects:  89% (116/130)Counting objects:  90% (117/130)Counting objects:  91% (119/130)Counting objects:  92% (120/130)Counting objects:  93% (121/130)Counting objects:  94% (123/130)Counting objects:  95% (124/130)Counting objects:  96% (125/130)Counting objects:  97% (127/130)Counting objects:  98% (128/130)Counting objects:  99% (129/130)Counting objects: 100% (130/130)Counting objects: 100% (130/130), done.
+Delta compression using up to 24 threads
+Compressing objects:   1% (1/86)Compressing objects:   2% (2/86)Compressing objects:   3% (3/86)Compressing objects:   4% (4/86)Compressing objects:   5% (5/86)Compressing objects:   6% (6/86)Compressing objects:   8% (7/86)Compressing objects:   9% (8/86)Compressing objects:  10% (9/86)Compressing objects:  11% (10/86)Compressing objects:  12% (11/86)Compressing objects:  13% (12/86)Compressing objects:  15% (13/86)Compressing objects:  16% (14/86)Compressing objects:  17% (15/86)Compressing objects:  18% (16/86)Compressing objects:  19% (17/86)Compressing objects:  20% (18/86)Compressing objects:  22% (19/86)Compressing objects:  23% (20/86)Compressing objects:  24% (21/86)Compressing objects:  25% (22/86)Compressing objects:  26% (23/86)Compressing objects:  27% (24/86)Compressing objects:  29% (25/86)Compressing objects:  30% (26/86)Compressing objects:  31% (27/86)Compressing objects:  32% (28/86)Compressing objects:  33% (29/86)Compressing objects:  34% (30/86)Compressing objects:  36% (31/86)Compressing objects:  37% (32/86)Compressing objects:  38% (33/86)Compressing objects:  39% (34/86)Compressing objects:  40% (35/86)Compressing objects:  41% (36/86)Compressing objects:  43% (37/86)Compressing objects:  44% (38/86)Compressing objects:  45% (39/86)Compressing objects:  46% (40/86)Compressing objects:  47% (41/86)Compressing objects:  48% (42/86)Compressing objects:  50% (43/86)Compressing objects:  51% (44/86)Compressing objects:  52% (45/86)Compressing objects:  53% (46/86)Compressing objects:  54% (47/86)Compressing objects:  55% (48/86)Compressing objects:  56% (49/86)Compressing objects:  58% (50/86)Compressing objects:  59% (51/86)Compressing objects:  60% (52/86)Compressing objects:  61% (53/86)Compressing objects:  62% (54/86)Compressing objects:  63% (55/86)Compressing objects:  65% (56/86)Compressing objects:  66% (57/86)Compressing objects:  67% (58/86)Compressing objects:  68% (59/86)Compressing objects:  69% (60/86)Compressing objects:  70% (61/86)Compressing objects:  72% (62/86)Compressing objects:  73% (63/86)Compressing objects:  74% (64/86)Compressing objects:  75% (65/86)Compressing objects:  76% (66/86)Compressing objects:  77% (67/86)Compressing objects:  79% (68/86)Compressing objects:  80% (69/86)Compressing objects:  81% (70/86)Compressing objects:  82% (71/86)Compressing objects:  83% (72/86)Compressing objects:  84% (73/86)Compressing objects:  86% (74/86)Compressing objects:  87% (75/86)Compressing objects:  88% (76/86)Compressing objects:  89% (77/86)Compressing objects:  90% (78/86)Compressing objects:  91% (79/86)Compressing objects:  93% (80/86)Compressing objects:  94% (81/86)Compressing objects:  95% (82/86)Compressing objects:  96% (83/86)Compressing objects:  97% (84/86)Compressing objects:  98% (85/86)Compressing objects: 100% (86/86)Compressing objects: 100% (86/86), done.
+Writing objects:   1% (1/88)Writing objects:   2% (2/88)Writing objects:   3% (3/88)Writing objects:   4% (4/88)Writing objects:   5% (5/88)Writing objects:   6% (6/88)Writing objects:   7% (7/88)Writing objects:   9% (8/88)Writing objects:  10% (9/88)Writing objects:  11% (10/88)Writing objects:  12% (11/88)Writing objects:  13% (12/88)Writing objects:  14% (13/88)Writing objects:  15% (14/88)Writing objects:  17% (15/88)Writing objects:  18% (16/88)Writing objects:  19% (17/88)Writing objects:  20% (18/88)Writing objects:  21% (19/88)Writing objects:  22% (20/88)Writing objects:  23% (21/88)Writing objects:  25% (22/88)Writing objects:  26% (23/88)Writing objects:  27% (24/88)Writing objects:  28% (25/88)Writing objects:  29% (26/88)Writing objects:  30% (27/88)Writing objects:  32% (29/88)Writing objects:  34% (30/88)Writing objects:  37% (33/88)Writing objects:  38% (34/88)Writing objects:  39% (35/88)Writing objects:  42% (37/88)Writing objects:  43% (38/88)Writing objects:  44% (39/88)Writing objects:  45% (40/88)Writing objects:  46% (41/88)Writing objects:  47% (42/88)Writing objects:  48% (43/88)Writing objects:  50% (44/88)Writing objects:  51% (45/88)Writing objects:  53% (47/88)Writing objects:  54% (48/88)Writing objects:  56% (50/88)Writing objects:  57% (51/88)Writing objects:  59% (52/88)Writing objects:  60% (53/88)Writing objects:  61% (54/88)Writing objects:  62% (55/88)Writing objects:  63% (56/88)Writing objects:  64% (57/88)Writing objects:  65% (58/88)Writing objects:  67% (59/88)Writing objects:  68% (60/88)Writing objects:  69% (61/88)Writing objects:  70% (62/88)Writing objects:  71% (63/88)Writing objects:  72% (64/88)Writing objects:  73% (65/88)Writing objects:  75% (66/88)Writing objects:  76% (67/88)Writing objects:  77% (68/88)Writing objects:  78% (69/88)Writing objects:  79% (70/88)Writing objects:  80% (71/88)Writing objects:  81% (72/88)Writing objects:  82% (73/88)Writing objects:  84% (74/88)Writing objects:  85% (75/88)Writing objects:  86% (76/88)Writing objects:  87% (77/88)Writing objects:  88% (78/88)Writing objects:  89% (79/88)Writing objects:  90% (80/88)Writing objects:  92% (81/88)Writing objects:  93% (82/88)Writing objects:  94% (83/88)Writing objects:  95% (84/88)Writing objects:  96% (85/88)Writing objects:  97% (86/88)Writing objects:  98% (87/88)Writing objects: 100% (88/88)Writing objects: 100% (88/88), 311.40 KiB | 3.71 MiB/s, done.
+Total 88 (delta 60), reused 0 (delta 0), pack-reused 0
+error: RPC failed; HTTP 408 curl 92 HTTP/2 stream 0 was not closed cleanly: CANCEL (err 8)
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+Everything up-to-date
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ ./minitest
+[?2004l[?2004h$> echo helo [K[Klo | cat
+[?2004lhello
+exit:0
+[?2004h$> echo hello | cat | wc
+[?2004l      1       1       6
+exit:0
+[?2004h$> echo hello | cat | wc \ w[K[K[K| wc
+[?2004l      1       3      24
+exit:0
+[?2004h$> exit
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ echo | [K[Khello | w[Kcat | wc | wc
+[?2004l      1       3      24
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ valferin[K[K[K[K[Kgrind ./minte[K[Kitest
+[?2004l==258222== Memcheck, a memory error detector
+==258222== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==258222== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==258222== Command: ./minitest
+==258222== 
+[?2004h$> ecgi [K[K[Kho
+[?2004l
+exit:0
+[?2004h$> echi [K[Ko hel;;;p
+[?2004lhel;;;p
+exit:0
+[?2004h$> 
+[?2004lexit:0
+[?2004h$> ^C[?2004l
+$> [?2004hdasdasf^C[?2004l
+$> [?2004hwzir[K[K[K[Kexit
+[?2004l==258222== 
+==258222== HEAP SUMMARY:
+==258222==     in use at exit: 208,165 bytes in 222 blocks
+==258222==   total heap usage: 635 allocs, 413 frees, 241,269 bytes allocated
+==258222== 
+==258222== LEAK SUMMARY:
+==258222==    definitely lost: 0 bytes in 0 blocks
+==258222==    indirectly lost: 0 bytes in 0 blocks
+==258222==      possibly lost: 0 bytes in 0 blocks
+==258222==    still reachable: 208,165 bytes in 222 blocks
+==258222==         suppressed: 0 bytes in 0 blocks
+==258222== Rerun with --leak-check=full to see details of leaked memory
+==258222== 
+==258222== For lists of detected and suppressed errors, rerun with: -s
+==258222== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ valfg[K[Kgrind ./minittest[K[K[K[Kest
+[?2004l==258646== Memcheck, a memory error detector
+==258646== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==258646== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==258646== Command: ./minitest
+==258646== 
+[?2004h$> echo [K[K[K[K[Kexit
+[?2004l==258646== 
+==258646== HEAP SUMMARY:
+==258646==     in use at exit: 208,165 bytes in 222 blocks
+==258646==   total heap usage: 585 allocs, 363 frees, 240,382 bytes allocated
+==258646== 
+==258646== LEAK SUMMARY:
+==258646==    definitely lost: 0 bytes in 0 blocks
+==258646==    indirectly lost: 0 bytes in 0 blocks
+==258646==      possibly lost: 0 bytes in 0 blocks
+==258646==    still reachable: 208,165 bytes in 222 blocks
+==258646==         suppressed: 0 bytes in 0 blocks
+==258646== Rerun with --leak-

@@ -103,31 +103,31 @@ t_herd	*lines_init(t_astn *node, int pos)
 	return (lines);
 }
 
-char	*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
-{
-	t_herd	*lines;
-	char	*line;
-	int		lmt_l;
+// char	*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
+// {
+// 	t_herd	*lines;
+// 	char	*line;
+// 	int		lmt_l;
 
-	line = NULL;
-	lines = lines_init(node, pos);
-	if (lines == NULL)
-		return (NULL);
-	if (node->token[pos + 1] == NULL)
-		return (syntax_error("newline", cl), *error += 1, NULL);
-	lmt_l = ft_strlen(node->token[pos + 1]->content);
-	while (gnl(&line))
-	{
-		if (ft_strncmp(line, node->token[pos + 1]->content, lmt_l) == 0)
-			break ;
-		if (!add_line(lines, line))
-			return (free_herd(lines), NULL);
-		free(line);
-	}
-	if (!comp_lines(lines, &line))
-		return (free(line), free_herd(lines), NULL);
-	return (free_herd(lines), line);
-}
+// 	line = NULL;
+// 	lines = lines_init(node, pos);
+// 	if (lines == NULL)
+// 		return (NULL);
+// 	if (node->token[pos + 1] == NULL)
+// 		return (syntax_error("newline", cl), *error += 1, NULL);
+// 	lmt_l = ft_strlen(node->token[pos + 1]->content);
+// 	while (gnl(&line))
+// 	{
+// 		if (ft_strncmp(line, node->token[pos + 1]->content, lmt_l) == 0)
+// 			break ;
+// 		if (!add_line(lines, line))
+// 			return (free_herd(lines), NULL);
+// 		free(line);
+// 	}
+// 	if (!comp_lines(lines, &line))
+// 		return (free(line), free_herd(lines), NULL);
+// 	return (free_herd(lines), line);
+// }
 
 // free(cmd->token[i]->content);
 // free((t_token *)cmd->token[i]);

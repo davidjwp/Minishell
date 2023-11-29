@@ -100,7 +100,7 @@ bool	ast_red(const char *in, size_t *g_ind, t_astn *red, t_astn *p)
 		return (false);
 	return (true);
 }
-// asjuidhasouidhg asoiufhew ouhfouiph sao  >> >> >>< <<  >> > <<< 
+
 //creates the abstract syntax tree via recursion
 t_astn	*create_ast(const char *input, size_t *g_ind, int *error, t_astn *par)
 {

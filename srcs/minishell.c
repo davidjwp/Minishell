@@ -121,61 +121,72 @@ bool	is_herd(t_token **token)
 	return (false);
 }
 
-// char	*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
-// {
-// 	t_herd	*lines;
-// 	char	*line;
-// 	int		lmt_l;
-
-// 	line = NULL;
-// 	lines = lines_init(node, pos);
-// 	if (lines == NULL)
-// 		return (NULL);
-// 	if (node->token[pos + 1] == NULL)
-// 		return (syntax_error("newline", cl), *error += 1, NULL);
-// 	lmt_l = ft_strlen(node->token[pos + 1]->content);
-// 	while (gnl(&line))
-// 	{
-// 		if (ft_strncmp(line, node->token[pos + 1]->content, lmt_l) == 0)
-// 			break ;
-// 		if (!add_line(lines, line))
-// 			return (free_herd(lines), NULL);
-// 		free(line);
-// 	}
-// 	if (!comp_lines(lines, &line))
-// 		return (free(line), free_herd(lines), NULL);
-// 	return (free_herd(lines), line);
-// }
-
-int	exe_herd(t_astn *node, t_env *sh_env, t_cleanup *cl)
+char	*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
 {
-	// t_pipe	p;
-	(void)node;
-	(void)sh_env;
-	(void)cl;
-	return (0);
-	// if (pipe(p.pipe_fd) == -1)
-	// 	return (err_msg("exe_herd pipe fail"), 0);
-	// p.l_pid = fork();
-	// if (p.l_pid == -1)
-	// 	return (err_msg("exe_herd fork fail"), 0);
-	// if (!p.l_pid)
-	// {
-	// 	fd_redirection(&p, RES_IN | RED_PIP, cl);
-	// 	execute(node, sh_env, cl);
-	// 	exit(EXIT_SUCCESS);
-	// }
-	// return (wait(&cl->status), 0);
+	t_herd	*lines;
+	char	*line;
+	int		lmt_l;
+
+	line = NULL;
+	lines = lines_init(node, pos);
+	if (lines == NULL)
+		return (NULL);
+	if (node->token[pos + 1] == NULL)
+		return (syntax_error("newline", cl), *error += 1, NULL);
+	lmt_l = ft_strlen(node->token[pos + 1]->content);
+	while (gnl(&line))
+	{
+		if (ft_strncmp(line, node->token[pos + 1]->content, lmt_l) == 0)
+			break ;
+		if (!add_line(lines, line))
+			return (free_herd(lines), NULL);
+		free(line);
+	}
+	if (!comp_lines(lines, &line))
+		return (free(line), free_herd(lines), NULL);
+	return (free_herd(lines), line);
+}
+
+int	get_herd_pos(t_astn *node)
+{
+	int	i;
+
+	i = 0;
+	while (node->token[i]->type != HERD)
+		i++;
+	return (i);
+}
+
+int	exe_herd(t_astn *node, t_env *sh_env, t_cleanup *cl)//unfinshed
+{
+	t_pipe	p;
+	int	error;
+
+	error = 0;
+	if (pipe(p.pipe_fd) == -1)
+		return (err_msg("exe_herd pipe fail"), 0);
+	if (!fd_redirection(&p, RES_OUT | RED_PIP, cl))
+		return (0);
+	here_doc(node, &error, get_herd_pos(node), cl);
+	if (error)
+		return (0);
+	p.l_pid = fork();
+	if (p.l_pid == -1)
+		return (err_msg("exe_herd fork fail"), 0);
+	if (!p.l_pid)
+	{
+		if (!fd_redirection(&p, RES_IN | RED_PIP, cl))
+			exit(EXIT_FAILURE);
+		execute(node, sh_env, cl);
+		exit(EXIT_SUCCESS);
+	}
+	return (wait(&cl->status), 0);
 }
 
 int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	t_pipe	p;
 
-	// write (get_fd(STDO, cl->fds), "entered sh_pipe\n", ft_strlen("entered sh_pipe\n"));
-	// if (tree->parent != NULL)
-	// 	if (tree->parent->type == PIPE)
-	// 		dup2(get_fd(STDI, cl->fds), STDIN_FILENO);
 	if (pipe(p.pipe_fd) == -1)
 		return (err_msg("sh_pipe pipe error"), 0);
 	p.l_pid = fork();
@@ -194,37 +205,6 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 	shell_loop(tree->right, sh_env, cl);
 	return (dup2(get_fd(STDI, cl->fds), STDIN_FILENO), 0);
 }
-// write (get_fd(STDO, cl->fds), "HERE\n", ft_strlen("HERE\n"));
-// creates a pipe by forking in the left then right side of the pipe
-// int	sing_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
-// {
-// 	t_pipe	p;
-
-// 	if (pipe(p.pipe_fd) == -1)
-// 		return (err_msg("sh_pipe pipe error"), 0);
-// 	p.l_pid = fork();
-// 	if (p.l_pid == -1)
-// 		return (err_msg("sh_pipe fork error"), 0);
-// 	if (!p.l_pid)
-// 	{
-// 		if (!fd_redirection(&p, RES_OUT | RED_PIP, cl))
-// 			exit(EXIT_FAILURE);
-// 		shell_loop(tree->left, sh_env, cl);
-// 		exit(EXIT_SUCCESS);
-// 	}
-// 	p.r_pid = fork();
-// 	if (p.r_pid == -1)
-// 		return (err_msg("sh_pipe pipe fork error"), 0);
-// 	if (!p.r_pid)
-// 	{
-// 		if (!fd_redirection(&p, RES_IN | RED_PIP, cl))
-// 			exit(EXIT_FAILURE);
-// 		shell_loop(tree->right, sh_env, cl);
-// 		exit(EXIT_SUCCESS);
-// 	}
-// 	return (wait_pipe(p), 0);
-// }
-
 
 /*
 * the main shell loop which redirects or pipes the output in order of the tree
@@ -238,13 +218,13 @@ int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		sh_pipe(tree, sh_env, cl);
 	else if (!(tree->type % 4))
 		sh_red(tree, sh_env, cl);
-	else if (is_herd(tree->token))
-		exe_herd(tree, sh_env, cl);
 	else
 		execute(tree, sh_env, cl);
 	if (tree == cl->tree)
 		clean_up(cl, CL_FDS | CL_TRE | CL_INP);
 	return (1);
 }
+	// else if (is_herd(tree->token))
+	// 	exe_herd(tree, sh_env, cl);
 	// else if (tree->token[0]->type % 11)
 	// 	exe_builtin(tree, tree->token[0]->type);
