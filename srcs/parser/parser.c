@@ -96,6 +96,7 @@ t_astn	*parser(const char *input, t_cleanup *cl)
 			return (cl->status = 0, NULL);
 	}
 	tree = create_ast(input, &g_ind, &error, NULL);
+	print_tree(tree);
 	if (error || tree == NULL)
 		return (cl->status = 0, NULL);
 	if (!parser_rules(tree, &error, cl))

@@ -93,7 +93,7 @@ char	**ft_split(char const *s, char c)
 //free the redirection node
 void	free_node(t_astn *red)
 {
-	free_cmd_node(red->left);
-	free_cmd_node(red->right);
+	free_cmd_node(red->left, true);
+	free_cmd_node(red->right, true);
 	free(red);
 }

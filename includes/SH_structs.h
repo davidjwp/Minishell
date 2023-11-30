@@ -129,6 +129,7 @@ typedef struct ShellEnvNode{
 	char				*name;
 	char				*value;
 	struct ShellEnvNode	*next;
+	bool				export;
 	char				**cl;
 }	t_env;
 
@@ -157,7 +158,7 @@ typedef struct ProcessIDSstruct{
 typedef struct CleanUp{
 	t_fds	*fds;
 	t_env	*env;
-	t_pids	*pids;
+	t_pids	*pids;//pids is probably useless since you don't exit from a pipe
 	t_astn	*tree;
 	char	*input;
 	int		status;

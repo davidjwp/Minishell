@@ -59,3 +59,88 @@ int	res_fd(int fd, t_cleanup *cl)
 		cl->fds = cl->fds->next;
 	return (0);
 }
+
+void	rem_pid(int pid, t_pids *pids)
+{
+	t_pids	*tmp;
+	t_pids	*link;
+
+	tmp = pids;
+	while (tmp->pid != pid && tmp->next != NULL)
+	{
+		link = tmp;
+		tmp = tmp->next;
+	}
+	if (tmp->pid == pid && tmp->next != NULL)
+	{
+		link->next = tmp->next;
+		free(tmp);
+		tmp = NULL;
+	}
+	else if (tmp->pid == pid && tmp->next == NULL)
+	{
+		free(tmp);
+		tmp = NULL;
+	}
+}
+
+int	get_pid(t_pids *pids)
+{
+	t_pids	*tmp;
+
+	tmp = pids;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	return (tmp->pid);
+}
+
+int	add_pid(int pid, t_pids *pids)
+{
+	t_pids	*tmp;
+	t_pids	*new;
+
+	if (pid == -1)
+		return (err_msg("fork error"), 0);
+	new = malloc(sizeof(t_pids));
+	if (new == NULL)
+		return (err_msg("add_pid malloc fail"), 0);
+	new->next = NULL;
+	new->pid = pid;
+	tmp = pids;
+	if (tmp == NULL)
+		return (pids = new, 1);
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (1);
+}
+
+// creates a pipe by forking in the left then right side of the pipe
+int	sing_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
+{
+	t_pipe	p;
+
+	if (pipe(p.pipe_fd) == -1)
+		return (err_msg("sh_pipe pipe error"), 0);
+	p.l_pid = fork();
+	if (p.l_pid == -1)
+		return (err_msg("sh_pipe fork error"), 0);
+	if (!p.l_pid)
+	{
+		if (!fd_redirection(&p, RES_OUT | RED_PIP, cl))
+			exit(EXIT_FAILURE);
+		shell_loop(tree->left, sh_env, cl);
+		exit(EXIT_SUCCESS);
+	}
+	p.r_pid = fork();
+	if (p.r_pid == -1)
+		return (err_msg("sh_pipe pipe fork error"), 0);
+	if (!p.r_pid)
+	{
+		if (!fd_redirection(&p, RES_IN | RED_PIP, cl))
+			exit(EXIT_FAILURE);
+		shell_loop(tree->right, sh_env, cl);
+		exit(EXIT_SUCCESS);
+	}
+	return (wait_pipe(p), 0);
+}

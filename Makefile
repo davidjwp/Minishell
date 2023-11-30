@@ -41,6 +41,7 @@ SRCS			= srcs/lexer/lexerutils_A.c \
 				srcs/utils/utils_B.c \
 				srcs/parser/parser_B.c \
 				srcs/parser/parser_C.c \
+				srcs/heredoc.c
 
 OBJS_DIR		= objs/
 OBJS			= $(SRCS:srcs/%.c=$(OBJS_DIR)%.o)

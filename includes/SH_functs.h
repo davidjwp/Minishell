@@ -24,8 +24,8 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
-# include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
 
 //LEXER++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -45,7 +45,7 @@ char		*get_content(const char *input, size_t *index, size_t *len);
 
 //lexerutils_C
 int			nbr_token(const char *input);
-void		free_cmd_node(t_astn *cmd);
+void    	free_cmd_node(t_astn *cmd, bool cmdbool);
 void		free_tok(t_token **tokens, int last);
 char		*get_quote(const char *input, size_t *l_ind, size_t *len);
 int			cut_len(const char *input, int flag);
@@ -87,7 +87,6 @@ int			comp_lines(t_herd *lines, char **line);
 t_herd		*lines_init(t_astn *node, int pos);
 char		*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl);
 
-
 //parser_C.c
 int			gnl(char **line);
 int			rem_herd(t_astn *node, int pos);
@@ -100,6 +99,8 @@ int			open_file(t_astn *tree, t_red *_red, int flag);
 int			sh_red(t_astn *tree, t_env *sh_env, t_cleanup *cl);
 int			sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl);
 int			execute(t_astn *tree, t_env *sh_env, t_cleanup *cl);
+bool		is_herd(t_token **token);
+
 
 //exe_utils_A
 char		*cr_pathname(const char *cmd, t_env *sh_env);
@@ -120,6 +121,13 @@ void		free_env(t_env *env);
 t_env		*find_env(const char *name, t_env *sh_env);
 char		*path_cmd(const char *cmd);
 
+
+//heredod
+int			get_herd_pos(t_astn *node);
+void		cpy_tok(t_token *cpy, t_token *tok);
+int			cpy_token(t_astn *node);
+int			exe_herd(t_astn *node, t_env *sh_env, t_cleanup *cl);
+char		*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl);
 
 void		clean_up(t_cleanup *cl, int flag);
 

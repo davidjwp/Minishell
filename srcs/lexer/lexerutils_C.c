@@ -63,7 +63,7 @@ void	free_tok(t_token **tokens, int last)
 }
 
 //frees the whole command node
-void	free_cmd_node(t_astn *cmd)
+void	free_cmd_node(t_astn *cmd, bool cmdbool)
 {
 	int	i;
 
@@ -77,7 +77,8 @@ void	free_cmd_node(t_astn *cmd)
 		i++;
 	}
 	free(cmd->token);
-	free(cmd);
+	if (cmdbool)
+		free(cmd);
 }
 
 char	*get_quote(const char *input, size_t *l_ind, size_t *len)

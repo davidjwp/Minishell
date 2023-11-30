@@ -94,7 +94,7 @@ void	free_tree(t_astn *node)
 	if (node->right != NULL)
 		free_tree(node->right);
 	if (node->type == COMD)
-		free_cmd_node(node);
+		free_cmd_node(node, true);
 	else
 		free(node);
 }

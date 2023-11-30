@@ -15,6 +15,8 @@
 
 volatile int g_signal;
 
+//TEST FUNCTIONS
+
 //this is just to exit the program easier
 int	check_input(char *input)
 {
@@ -28,13 +30,22 @@ int	check_input(char *input)
 	return (1);
 }
 
-//might not need the rl_redisplay function 
+void	print_exit(int status)
+{
+	printf("exit:%d\n", status);
+}
+
+
+/*
+* sh_init will initialize the global data structure for the shell
+* the fds in order to always keep the original stdios in case of pipes or redir
+* the tree is created and parsed here and the status set to 0 on the first pass
+* the data structure contains the input, envs, tree, status and fds 
+*/
 int	sh_init(char *input, t_env *sh_env, t_cleanup *cl)
 {
 	static int	passes;
 
-	// if (!*input)
-	// 	return (free(input), 0); 
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, &ctrl_c);
 	cl->fds = init_fds();
@@ -52,15 +63,11 @@ int	sh_init(char *input, t_env *sh_env, t_cleanup *cl)
 	return (1);
 }
 
-void	print_exit(int status)
-{
-	printf("exit:%d\n", status);
-}
-
 /*
 * the main function which checks for the availability of the stdio fds
 * then the shell env consisting of the env being passed to the main function
-* then the main loop 
+* then the main loop where the global data structure is created and the
+* shell_loop
 */
 int	main(int ac, char **av, char **env)
 {
@@ -90,101 +97,23 @@ int	main(int ac, char **av, char **env)
 	return ((void)ac, (void)av, 1);
 }
 
-// void	exe_builtin(t_astn *tree, int type)
-// {
-// 	if (type == ECHO)
-// 		return (built_in_cd());
-// 	else if (type == CD)
+//void	exe_builtin(t_astn *tree, int type)
+//{
+//	if (type == ECHO)
+//		return (built_in_cd());
+//	else if (type == CD)
+//		return (built_in_);
+//	else if (type == PWD)
 
-// 	else if (type == PWD)
+//	else if (type == EXPORT)
 
-// 	else if (type == EXPORT)
+//	else if (type == UNSET)
 
-// 	else if (type == UNSET)
+//	else if (type == ENV)
 
-// 	else if (type == ENV)
-
-// 	else if (type == EXIT)
-
-// }
-
-bool	is_herd(t_token **token)
-{
-	int	i;
-
-	i = 0;
-	while (token[i]->type == HERD)
-	{
-		i++;
-		if (token[i] == NULL)
-			break ;
-	}
-	if (token[i]->type == HERD)
-		return (true);
-	return (false);
-}
-
-char	*here_doc(t_astn *node, int *error, int pos, t_cleanup *cl)
-{
-	t_herd	*lines;
-	char	*line;
-	int		lmt_l;
-
-	line = NULL;
-	lines = lines_init(node, pos);
-	if (lines == NULL)
-		return (NULL);
-	if (node->token[pos + 1] == NULL)
-		return (syntax_error("newline", cl), *error += 1, NULL);
-	lmt_l = ft_strlen(node->token[pos + 1]->content);
-	while (gnl(&line))
-	{
-		if (ft_strncmp(line, node->token[pos + 1]->content, lmt_l) == 0)
-			break ;
-		if (!add_line(lines, line))
-			return (free_herd(lines), NULL);
-		free(line);
-	}
-	if (!comp_lines(lines, &line))
-		return (free(line), free_herd(lines), NULL);
-	return (free_herd(lines), line);
-}
-
-int	get_herd_pos(t_astn *node)
-{
-	int	i;
-
-	i = 0;
-	while (node->token[i]->type != HERD)
-		i++;
-	return (i);
-}
-
-int	exe_herd(t_astn *node, t_env *sh_env, t_cleanup *cl)//unfinshed
-{
-	t_pipe	p;
-	int	error;
-
-	error = 0;
-	if (pipe(p.pipe_fd) == -1)
-		return (err_msg("exe_herd pipe fail"), 0);
-	if (!fd_redirection(&p, RES_OUT | RED_PIP, cl))
-		return (0);
-	here_doc(node, &error, get_herd_pos(node), cl);
-	if (error)
-		return (0);
-	p.l_pid = fork();
-	if (p.l_pid == -1)
-		return (err_msg("exe_herd fork fail"), 0);
-	if (!p.l_pid)
-	{
-		if (!fd_redirection(&p, RES_IN | RED_PIP, cl))
-			exit(EXIT_FAILURE);
-		execute(node, sh_env, cl);
-		exit(EXIT_SUCCESS);
-	}
-	return (wait(&cl->status), 0);
-}
+//	else if (type == EXIT)
+//;
+//}
 
 int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
@@ -199,7 +128,10 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 	{
 		if (!fd_redirection(&p, RED_PIP | RES_OUT, cl))
 			exit(EXIT_FAILURE);
-		execute(tree->left, sh_env, cl);
+		//if (!(tree->left->token[0]->type % 11))
+		//	exe_builtin(tree, tree->token[0]->type);
+		//else
+			execute(tree->left, sh_env, cl);
 		exit(EXIT_SUCCESS);
 	}
 	wait(&cl->status);
@@ -229,5 +161,6 @@ int	shell_loop(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 		clean_up(cl, CL_FDS | CL_TRE | CL_INP);
 	return (1);
 }
-	// else if (tree->token[0]->type % 11)
-	// 	exe_builtin(tree, tree->token[0]->type);
+
+	//else if (!(tree->token[0]->type % 11))
+	//	exe_builtin(tree, tree->token[0]->type);
