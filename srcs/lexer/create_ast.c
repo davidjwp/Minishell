@@ -18,15 +18,15 @@
 *	ast_cmd(), ast_pipe(), ast_red(), create_ast()
 */
 //returns the token struct with allocated content and type + length
-t_token	*get_token(const char *input, size_t *l_ind, t_token *token)
+t_token	*get_token(const char *input, size_t *l_ind, t_token *token, int *err)
 {
 	token->len = 0;
 	if (!it_token(input, l_ind, IT_SEP))
 		return (NULL);
-	token->content = get_content(input, l_ind, &token->len);
-	if (token->content == NULL)
+	token->content = get_content(input, l_ind, &token->len, err);
+	if (*err || token->content == NULL)
 		return (NULL);
-	token->type = get_token_type(token->content);
+	token->type = get_token_type((char *)&input[*l_ind]);
 	it_token(input, l_ind, IT_SEP);
 	return (token);
 }
@@ -48,9 +48,9 @@ t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 		c.node->token[i] = (t_token *)malloc(sizeof(t_token));
 		if (c.node->token[i] == NULL)
 			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
-		c.node->token[i] = get_token(input, &l_ind, c.node->token[i]);
-		if (c.node->token[i] == NULL)
-			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
+		c.node->token[i] = get_token(input, &l_ind, c.node->token[i], err);
+		if (*err)
+			return (free_tok(c.node->token, i), free(c.node), NULL);
 		nbr -= 1;
 		i++;
 	}

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/SH_functs.h"
-#include "../includes/SH_structs.h"
+#include "../../includes/SH_functs.h"
+#include "../../includes/SH_structs.h"
 
 void	putnsplit(char *split, char *env, int n)
 {

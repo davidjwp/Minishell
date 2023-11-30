@@ -30,18 +30,18 @@ SRCS			= srcs/lexer/lexerutils_A.c \
 				srcs/executor/exeutils_A.c \
 				srcs/executor/exeutils_B.c \
 				srcs/executor/exeutils_C.c \
-				srcs/cr_env.c \
+				srcs/utils/cr_env.c \
 				srcs/minishell.c \
 				srcs/parser/parser.c \
 				srcs/signals/ctrl_signal.c \
 				srcs/parser/msgs.c \
-				srcs/fds.c \
+				srcs/utils/fds.c \
 				srcs/parser/parser_A.c \
 				srcs/utils/utils_A.c \
 				srcs/utils/utils_B.c \
 				srcs/parser/parser_B.c \
 				srcs/parser/parser_C.c \
-				srcs/heredoc.c
+				srcs/utils/heredoc.c
 
 OBJS_DIR		= objs/
 OBJS			= $(SRCS:srcs/%.c=$(OBJS_DIR)%.o)

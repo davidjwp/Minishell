@@ -24,7 +24,7 @@ int	check_input(char *input)
 
 	if (!*input)
 		return (0);
-	for (int i = 0; input[i] != 0; i++)
+	for (int i = 0; exit[i] != 0; i++)
 		if (input[i] != exit[i])
 			return (0);
 	return (1);
@@ -75,7 +75,7 @@ int	main(int ac, char **av, char **env)
 	t_env		*sh_env;
 	t_cleanup	*cl;
 
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))//don't think i really need that
 		return (0);
 	sh_env = cr_env(env);
 	if (sh_env == NULL)

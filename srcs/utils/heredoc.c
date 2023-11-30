@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/SH_functs.h"
-#include "../includes/SH_structs.h"
+#include "../../includes/SH_functs.h"
+#include "../../includes/SH_structs.h"
 
 
 int	get_herd_pos(t_astn *node)
@@ -82,7 +82,7 @@ int	cpy_token(t_astn *node)
 int	exe_herd(t_astn *node, t_env *sh_env, t_cleanup *cl)
 {
 	t_pipe	p;
-	int	error;
+	int		error;
 
 	error = 0; 
 	if (pipe(p.pipe_fd) == -1)

@@ -41,13 +41,13 @@ bool		check_quote(const char *input, size_t *i);
 int			built_in(const char *input);
 int			get_token_type(char	*token);
 bool		it_token(const char *input, size_t *i, int flag);
-char		*get_content(const char *input, size_t *index, size_t *len);
+char		*get_content(const char *input, size_t *index, size_t *len, int *e);
 
 //lexerutils_C
 int			nbr_token(const char *input);
-void    	free_cmd_node(t_astn *cmd, bool cmdbool);
+void		free_cmd_node(t_astn *cmd, bool cmdbool);
 void		free_tok(t_token **tokens, int last);
-char		*get_quote(const char *input, size_t *l_ind, size_t *len);
+char		*get_quote(const char *input, size_t *l_ind, size_t *len, int *err);
 int			cut_len(const char *input, int flag);
 
 //lexerutils_D
@@ -58,7 +58,7 @@ int			get_node_type(const char *input, size_t *g_ind);
 void		free_tree(t_astn *node);
 
 //create_ast
-t_token		*get_token(const char *input, size_t *l_ind, t_token *token);
+t_token		*get_token(const char *input, size_t *l_ind, t_token *tok, int *e);
 t_astn		*create_ast(const char *input, size_t *i, int *error, t_astn *p);
 
 //utils

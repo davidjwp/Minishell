@@ -1,22 +1,9 @@
-for now i'm just trying to create the AbstractSyntaxTree
-
-the only files that matter are in the parser folder
-these files are :
--	create_ast2.c
--	lexerutilsA.c
--	lexerutilsB.c
--	lexerutilsC.c
-
-the reason why i have so many other files is because i do tests or check things
-and usually keep old code even if i'm pretty sure it's depreciated 
-
-
 list of the special characters that are explicitily asked in the subject
 anything not asked is not required.
 
 (') single quotes which do no interpretation
 (") double quotes which only interpret $ for variables
-($) dollar sign for variables including env
+($) dollar sign for env only
 (>) output redirection
 (<) input redirection
 (<<) heredoc with delimiter and read until a line containing the delimiter
@@ -69,57 +56,10 @@ pipeline meaning what's left in the pipe if it has anything in it
     - `syntax error near unexpected token '('`: Occurs when you attempt to define a function in an incorrect manner.
 
 
-1. **readline**: The `readline` function is part of the GNU Readline library and is used for reading 
-lines of text with advanced line-editing capabilities. 
-It displays a user-defined prompt, reads input from the user, and provides features like history 
-navigation, command-line editing (e.g., arrow keys for navigation and editing), and tab completion. 
-It dynamically allocates memory to store the input line.
-
-2. **rl_clear_history**: This function is part of the GNU Readline library and is used to clear the
- command history managed by Readline. 
-It removes all previously entered commands from the history list.
-
-3. **rl_on_new_line**: `rl_on_new_line` is used in conjunction with Readline to inform the library 
-that you've moved to a 
-new line of input. It's typically used when constructing multiline prompts to manage the line-editing 
-and display behavior correctly.
-
-4. **rl_replace_line**: This function is used to replace the current line of input in Readline with a 
-specified text.
- It's often used when you want to programmatically modify the content of the input line.
-
-5. **rl_redisplay**: `rl_redisplay` is used to refresh the display to reflect any changes made to
- the current input line. 
-For example, after calling `rl_replace_line`, you can use `rl_redisplay` to update the screen.
-
-6. **add_history**: `add_history` is part of the GNU Readline library and is used to manually add a 
-line of text to the 
-command history. This allows you to add custom commands to the history list for the user to recall 
-later.
-
-7. **exit**: The `exit` function is used to terminate a program gracefully. It takes an exit 
-status as an argument, which is 
-typically 0 for success and a non-zero value for failure. When a program calls `exit`, it cleans 
-up resources and returns control to the operating system.
-
-8. **getcwd**: `getcwd` is used to retrieve the current working directory of the calling process.
- It returns the current directory as a string.
-
-9. **chdir**: The `chdir` function is used to change the current working directory of the process 
-to the specified directory path.
-
-10. **stat, lstat, fstat**: These functions are used for retrieving file and file system information. 
-`stat` retrieves 
-information about a file specified by its path. `lstat` is similar but does not follow symbolic links,
- while `fstat` retrieves information about an open file descriptor.
-
 11. **unlink**: The `unlink` function is used to delete (remove) a file from the file system.
  It removes the link to the 
 file, and if there are no other links to it, the file is deleted.
 
-12. **execve**: `execve` is used for executing a new program in the current process. It replaces
- the current process with a
- new one specified by the provided program file and arguments.
 
 13. **opendir, readdir, closedir**: These functions are used for directory manipulation. `opendir`
  opens a directory stream, 
@@ -144,9 +84,6 @@ returning a string with the terminal's name.
 various operations, 
 including terminal control and device-specific functionality.
 
-19. **getenv**: `getenv` retrieves the value of an environment variable specified by its name. It 
-returns a pointer to the value as a string.
-
 20. **tcsetattr, tcgetattr**: These functions are used to set and retrieve terminal attributes, 
 such as input and output modes, baud rates, and more.
 
@@ -156,43 +93,3 @@ used for terminal-related operations in terminal applications. They are used to 
 capabilities for 
 cursor movement, colors, and other terminal-specific features.
 
-++MAKEFILE+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-CC              = gcc
-NAME            = minitest
-INCLUDE         = includes/SH_functs.h includes/SH_structs.h
-CFLAGS          = -g3 -Wall -Wextra -Werror
-LINKER          = -L/usr/include -lreadline
-
-# Source files
-SRCS            = srcs/parser/lexerutils_A.c srcs/parser/lexerutils_B.c \
-                  srcs/parser/lexerutils_C.c srcs/parser/utils.c \
-                  srcs/parser/create_ast.c srcs/parser/lexerutils_D.c \
-                  srcs/executor/exe.c srcs/executor/exeutils_A.c \
-                  srcs/executor/exeutils_B.c srcs/cr_env.c srcs/g_utils.c \
-                  srcs/minishell.c srcs/parser/parser.c srcs/signals/ctrl_signal.c
-
-# Object files with objs/ prefix
-OBJS            = $(SRCS:srcs/%.c=objs/%.o)
-
-# Create object files in objs/ directory
-objs/%.o: srcs/%.c
-	@mkdir -p $(@D)
-	$(CC) -c $(CFLAGS) $< -o $@
-
-# Targets
-all: $(NAME)
-
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(LINKER) -o $(NAME)
-
-clean:
-	rm -f $(OBJS)
-
-fclean: clean
-	rm -f $(NAME)
-
-re: fclean all
-
-.PHONY: fclean clean all

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/SH_functs.h"
-#include "../includes/SH_structs.h"
+#include "../../includes/SH_functs.h"
+#include "../../includes/SH_structs.h"
 
 //fd redirection of pipe or red type
 int	fd_redirection(void *type, int redpipe, t_cleanup *cl)
