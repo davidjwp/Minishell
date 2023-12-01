@@ -47,10 +47,54 @@ bool	redl_rules(t_astn *node, int *error, t_cleanup *cl)
 	return (true);
 }
 
+bool	co_arr(t_token **token, int	*arr, int *len, int *error)
+{
+	int	i;
+
+	i = 0;
+	*len = 0;
+	while (token[*len] != NULL)
+		len += 1;
+	arr = ft_calloc(*len, sizeof(int));
+	if (arr == NULL)
+		return (*error, err_msg("cr_arr malloc fail"), false);
+	while (i < *len)
+	{
+		if (token[i]->co == 1)
+			arr[i] = 1;
+		else
+			arr[i] = 0;
+		i++;
+	}
+	return (true);
+}
+
+void	co_len(int *arr, t_token **token, int *i, int *error)
+{
+	int	len;
+
+	len = 0;
+	while (arr[*i])
+	{
+		len += ft_strlen(token[*i]->content);
+		*i += 1;
+	}
+}
+
 bool	co_tokens(t_token **token, int *error, t_cleanup *cl)
 {
-
 	
+	int		*arr;
+	int		len;
+	int		i;
+
+	if (!co_arr(token, arr, &len, error))
+		return (false);
+	while (token[i] != NULL)
+	{
+		ft_calloc(co_len(arr, token, &i, ));
+		i++;
+	}
 }
 
 bool	comd_rules(t_token **token, int *error, t_cleanup *cl, size_t y)
@@ -59,7 +103,7 @@ bool	comd_rules(t_token **token, int *error, t_cleanup *cl, size_t y)
 	int		i;
 
 	i = 0;
-	if (!co_tokens(token))
+	if (!co_tokens(token, error, cl))
 		return (false);
 	pathname = cr_pathname(token[0]->content, cl->env, &cl->status, 0);
 	if (pathname == NULL)

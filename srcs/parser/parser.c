@@ -34,27 +34,74 @@ bool	parser_rules(t_astn *node, int *error, t_cleanup *cl)
 	return (true);
 }
 
-char	*expand_exst(t_token *token, int status)
+char	*expand_exst(int status, int *len)
 {
-	int		len;
 	int		tmp;
-	char	*content;
+	char	*exst;
+	int		l_len;
 
-	len = 0;
+	*len = 0;
 	tmp = status;
-	while (tmp && ++len)
+	while (tmp && ++*len)
 		tmp /= 10;
-	free(token->content);
-	content = malloc(sizeof(char) * (len + 1));
+	l_len = *len;
+	exst = malloc(sizeof(char) * (l_len + 1));
+	if (exst == NULL)
+		return (NULL);
 	tmp = status;
-	content[len] = 0;
-	while (--len)
+	exst[l_len] = 0;
+	while (--l_len)
 	{
-		content[len] = (tmp % 10) + 48;
+		exst[l_len] = (tmp % 10) + 48;
 		tmp /= 10;
 	}
-	content[len] = (tmp % 10) + 48;
-	return (content);
+	exst[l_len] = (tmp % 10) + 48;
+	return (exst);
+}
+
+int	exst_token(char *content, int i, int *error, t_cleanup *cl)
+{
+	char	*exst;
+	char	*new;
+	int		len;
+	int		in;
+
+	in = -1;
+	if (cl->status > 255)
+		exst = expand_exst(WEXITSTATUS(cl->status), &len);
+	else
+		exst = expand_exst(cl->status, &len);
+	if (exst == NULL)
+		return (*error = 1, 0);
+	len = ft_strlen(content) + len - 2;
+	new = ft_calloc(len + 1, sizeof(char));
+	if (new == NULL)
+		return (free(exst), *error = 1, 0);
+	while (++in < i)
+		new[in] = content[in];
+	ft_strcat(new, exst);
+	ft_strcat(new, &content[i + 2]);
+	free(content);
+	return (new);
+}
+
+//VAR=$?$USER
+//1davidjwp
+int	expand_token(t_token *token, int *error, t_cleanup *cl)
+{
+	size_t	i;
+
+	i = 0;
+	while (token->content[i])
+	{
+		if (type(token->content, i) == EXST)
+			token->content = exst_token(token->content, i, error, cl);
+		else if (type(token->content, i) == VARE)
+			token->content = vare_token(token->content, i, error, cl);//maybe don't because she's already handling this except for vare in quotes
+		if (*error)
+			return (0);
+		i++;
+	}
 }
 
 int	expander(t_astn *node, int *error, t_cleanup *cl)
@@ -66,18 +113,14 @@ int	expander(t_astn *node, int *error, t_cleanup *cl)
 		return (expander(node->left, error, cl), 0);
 	if (node->right != NULL)
 		return (expander(node->right, error, cl), 0);
-	while (node->token[i] != NULL)
+	if (node->type == COMD)
 	{
-		if (node->token[i]->type == EXST)
+		while (node->token[i] != NULL)
 		{
-			if (cl->status > 255)
-				node->token[i]->content = expand_exst(node->token[i], \
-				WEXITSTATUS(cl->status));
-			else
-				node->token[i]->content = expand_exst(node->token[i], \
-				cl->status);
+			if (!expand_token(node->token[i], error, cl))
+				return (0);
+			i++;
 		}
-		i++;
 	}
 	return (0);
 }
@@ -109,7 +152,8 @@ t_astn	*parser(const char *input, t_cleanup *cl)
 		return (NULL);
 	if (!parser_rules(tree, &error, cl))
 		return (free_tree(tree), NULL);
-	expander(tree, &error, cl);
+	if (!expander(tree, &error, cl))
+		return (free_tree(tree), NULL);
 	return (tree);
 }
 
