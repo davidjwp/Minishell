@@ -42,13 +42,13 @@ int			built_in(const char *input);
 int			get_token_type(char	*token);
 bool		it_token(const char *input, size_t *i);
 bool		it_sep(const char *input, size_t *i);
-char		*get_content(const char *input, size_t *index, size_t *len, int *e);
+char		*get_content(const char *input, size_t *ind, t_token *tok, int *e);
 
 //lexerutils_C
 int			nbr_token(const char *input, size_t l_ind, int tokcnt);
 void		free_cmd_node(t_astn *cmd, bool cmdbool);
 void		free_tok(t_token **tokens, int last);
-char		*get_quote(const char *input, size_t *l_ind, size_t *len, int *err);
+char		*get_quote(const char *inp, size_t *l_ind, t_token *tok, int *err);
 int			cut_len(const char *input, int flag);
 
 //lexerutils_D
@@ -79,7 +79,7 @@ bool		pipe_rules(t_astn *node, int *error, t_cleanup *cl);
 bool		apr_rules(t_astn *node, int *error, t_cleanup *cl);
 bool		redl_rules(t_astn *node, int *error, t_cleanup *cl);
 bool		redr_rules(t_astn *node, int *error, t_cleanup *cl);
-bool		comd_rules(t_token **token, int *error, t_cleanup *cl);
+bool		comd_rules(t_token **tok, int *err, t_cleanup *cl, size_t y);
 
 //parser_B.c
 int			add_line(t_herd *lines, char *line);

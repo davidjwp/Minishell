@@ -31,11 +31,11 @@ t_token	*get_token(const char *input, size_t *l_ind, t_token *token, int *err)
 	token->len = 0;
 	if (!it_sep(input, l_ind))
 		return (NULL);
+	token->co = -1;
 	token->type = get_token_type((char *)&input[*l_ind]);
-	token->content = get_content(input, l_ind, &token->len, err);
+	token->content = get_content(input, l_ind, token, err);
 	if (*err || token->content == NULL)
 		return (NULL);
-	//it_token(input, l_ind);
 	return (token);
 }
 //""""""'''dughwi ugwieg riweg ioggroi weg'"

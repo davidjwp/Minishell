@@ -1,3 +1,4 @@
-break nbr_token
-break it_token
-break check_quote
+break ast_cmd
+break get_token
+break get_content
+break get_quote

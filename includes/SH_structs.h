@@ -110,6 +110,7 @@ typedef struct s_token{
 	int		type;
 	size_t	len;
 	char	*content;
+	int		co;
 }	t_token;
 
 typedef struct AbstractSyntaxTreeNode{

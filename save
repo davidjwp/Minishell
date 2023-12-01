@@ -159,3 +159,25 @@
 //		return (false);
 //	return (true);
 //}
+
+//char	*get_quote(const char *input, size_t *l_ind, size_t *len, int *err)
+//{
+//	char	*content;
+//	int		i;
+
+//	i = 0;
+//	*len -= 2;
+//	content = malloc(sizeof(char) * (*len + 1));
+//	if (input[*l_ind + 1] == input[*l_ind])
+//		return (*l_ind += 2, *content = 0, content);
+//	if (content == NULL)
+//		return (err_msg("get_quote malloc fail"), *err = 1, NULL);
+//	content[*len] = 0;
+//	while (i < (int)*len)
+//	{
+//		*l_ind += 1;
+//		content[i] = input[*l_ind];
+//		i++;
+//	}
+//	return (content);
+//}

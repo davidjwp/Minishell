@@ -77,27 +77,64 @@ void	free_cmd_node(t_astn *cmd, bool cmdbool)
 		free(cmd);
 }
 
-char	*get_quote(const char *input, size_t *l_ind, size_t *len, int *err)
+char	*get_quote(const char *input, size_t *l_ind, t_token *token, int *err)
 {
 	char	*content;
 	int		i;
 
 	i = 0;
-	*len -= 2;
-	content = malloc(sizeof(char) * (*len + 1));
-	if (input[*l_ind + 1] == input[*l_ind])
-		return (*l_ind += 2, *content = 0, content);
+	token->len -= 2;
+	content = malloc(sizeof(char) * (token->len + 1));
 	if (content == NULL)
 		return (err_msg("get_quote malloc fail"), *err = 1, NULL);
-	content[*len] = 0;
-	while (i < (int)*len)
+	if (input[*l_ind + 1] == input[*l_ind])
+		return (*l_ind += 2, *content = 0, content);
+	content[token->len] = 0;
+	while (i < (int)token->len)
 	{
 		*l_ind += 1;
 		content[i] = input[*l_ind];
 		i++;
 	}
+	*l_ind += 2;
+	token->co = 1;
 	return (content);
 }
+
+//char	*get_quote(const char *input, size_t *l_ind, t_token *token, int *err)
+//{
+//	char	*content;
+//	bool	open;
+//	int		i;
+
+//	i = 0;
+//	open = true;
+//	token->len -= 2;
+//	content = malloc(sizeof(char) * (token->len + 1));
+//	if (input[*l_ind + 1] == input[*l_ind])
+//		return (*l_ind += 2, *content = 0, content);
+//	if (content == NULL)
+//		return (err_msg("get_quote malloc fail"), *err = 1, NULL);
+//	content[token->len] = 0;
+//	while (type(input, *l_ind) != SEPR && input[*l_ind])
+//	{
+//		if (open && type(input, *l_ind) == token->type)
+//		{
+//			open = false;
+//			*l_ind += 1;
+//		}
+//		if (open && type(input, *l_ind) == )
+//		content[i] = input[*l_ind];
+//		i++;
+//	}
+//	while (i < (int)token->len)
+//	{
+//		*l_ind += 1;
+//		content[i] = input[*l_ind];
+//		i++;
+//	}
+//	return (content);
+//}
 
 int	cut_len(const char *input, int flag)
 {

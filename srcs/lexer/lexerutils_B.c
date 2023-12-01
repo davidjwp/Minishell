@@ -114,6 +114,8 @@ bool	it_token(const char *input, size_t *l_ind)
 		{
 			if (!check_quote(input, l_ind))
 				return (false);
+			else
+				return (true);
 		}
 		else
 			*l_ind += 1;
@@ -124,21 +126,21 @@ bool	it_token(const char *input, size_t *l_ind)
 }
 
 //returns an allocated string from input for token and gets length of token
-char	*get_content(const char *input, size_t *l_ind, size_t *len, int *err)
+char	*get_content(const char *input, size_t *l_ind, t_token *token, int *err)
 {
 	char	*content;
 	int		i;
 
 	i = 0;
-	if (!it_token(&input[*l_ind], len))
+	if (!it_token(&input[*l_ind], &token->len))
 		return (NULL);
 	if (type(input, *l_ind) && !(type(input, *l_ind) % 5))
-		return (get_quote(input, l_ind, len, err));
-	content = malloc(sizeof(char) * (*len + 1));
+		return (get_quote(input, l_ind, token, err));
+	content = malloc(sizeof(char) * (token->len + 1));
 	if (content == NULL)
 		return (err_msg("get_content malloc fail"), *err = 1, NULL);
-	content[*len] = 0;
-	while (i < (int)*len)
+	content[token->len] = 0;
+	while (i < (int)token->len)
 	{
 		content[i] = input[*l_ind];
 		*l_ind += 1;
