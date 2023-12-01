@@ -40,7 +40,7 @@ t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 
 	i = 0;
 	l_ind = 0;
-	nbr = nbr_token(input);
+	nbr = nbr_token(input, 0, 0);//nbr_token seems to work well
 	if (!nbr || !init_node(c.node, nbr, c.parent, err))
 		return (free(c.node), NULL);
 	while (nbr != 0)
@@ -48,7 +48,7 @@ t_astn	*ast_cmd(const char *input, size_t *g_ind, t_cms c, int *err)
 		c.node->token[i] = (t_token *)malloc(sizeof(t_token));
 		if (c.node->token[i] == NULL)
 			return (free_tok(c.node->token, i), free(c.node), *err = 1, NULL);
-		c.node->token[i] = get_token(input, &l_ind, c.node->token[i], err);
+		c.node->token[i] = get_token(input, &l_ind, c.node->token[i], err);//problem is in there
 		if (*err)
 			return (free_tok(c.node->token, i), free(c.node), NULL);
 		nbr -= 1;

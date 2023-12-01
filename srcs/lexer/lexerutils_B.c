@@ -23,6 +23,9 @@
 */
 bool	check_quote(const char *input, size_t *i)
 {
+	if (type(input, *i) != 0 && !(type(input, *i) % 5) && input[*i + 1] == \
+	input[*i])
+		return (*i += 2, true);
 	if ((type(input, *i) == DQUO))
 	{
 		*i += 1;

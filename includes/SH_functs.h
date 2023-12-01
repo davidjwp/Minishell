@@ -44,7 +44,7 @@ bool		it_token(const char *input, size_t *i, int flag);
 char		*get_content(const char *input, size_t *index, size_t *len, int *e);
 
 //lexerutils_C
-int			nbr_token(const char *input);
+int			nbr_token(const char *input, size_t l_ind, int tokcnt);
 void		free_cmd_node(t_astn *cmd, bool cmdbool);
 void		free_tok(t_token **tokens, int last);
 char		*get_quote(const char *input, size_t *l_ind, size_t *len, int *err);

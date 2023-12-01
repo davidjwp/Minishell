@@ -18,14 +18,10 @@
 *	get_token(), nbr_token(), free_tok(), free_cmd_node(), free_node()
 */
 //counts the number of tokens until a pipe or redirection is found
-int	nbr_token(const char *input)
+int	nbr_token(const char *input, size_t l_ind, int tokcnt)
 {
-	size_t	l_ind;
-	int		tokcnt;
 	int		t;
 
-	l_ind = 0;
-	tokcnt = 0;
 	if (!*input)
 		return (0);
 	t = type(input, l_ind);
@@ -33,12 +29,16 @@ int	nbr_token(const char *input)
 	{
 		it_token(input, &l_ind, IT_SEP);
 		t = type(input, l_ind);
-		if (t != 0 && !(t % 5) && input[l_ind + 1] == input[l_ind])
-			l_ind += 2;
-		else if (t != REDL && t != REDR && t != APRD && t != PIPE && \
-		input[l_ind])
+		if (!input[l_ind])
+			break ;
+		if ((t == SQUO || t == DQUO))
+		{
+			if (input[l_ind + 1] != input[l_ind])
+				tokcnt++;
+		}
+		else if (t != REDL && t != REDR && t != APRD && t != PIPE)
 			tokcnt += 1;
-		else
+		else if (t == REDL || t == REDR || t == APRD || t == PIPE)
 			break ;
 		if (!it_token(input, &l_ind, IT_TOK))
 			return (0);
@@ -63,7 +63,6 @@ int	nbr_token(const char *input)
 //	COMD,13
 //	PIPE,14
 //};	
-
 
 /*
 *	free the tokens up to last, only used while assigning allocated token

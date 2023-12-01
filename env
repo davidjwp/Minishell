@@ -747,4 +747,29 @@ exit:0
 ==95625==   total heap usage: 585 allocs, 363 frees, 240,347 bytes allocated
 ==95625== 
 ==95625== LEAK SUMMARY:
-==95625==    def
+==95625==    definitely lost: 0 bytes in 0 blocks
+==95625==    indirectly lost: 0 bytes in 0 blocks
+==95625==      possibly lost: 0 bytes in 0 blocks
+==95625==    still reachable: 208,165 bytes in 222 blocks
+==95625==         suppressed: 0 bytes in 0 blocks
+==95625== Rerun with --leak-check=full to see details of leaked memory
+==95625== 
+==95625== For lists of detected and suppressed errors, rerun with: -s
+==95625== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ git add .
+[?2004l[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ gity[K commit =m[K[K-m "" [1@u[1@p[1@d[1@a[1@t[1@e[1@ [1@f[1@i[1@x[1@e[1@d[1@ [1@e[1@x[1@e[1@c[1@u[1@t[1@e[1@ [1@a[1@n[1@d[1@ [1@h[1@e[1@r[1@e[1@d[1@o[1@c
+[?2004l[main 8890c51] update fixed execute and heredoc
+ 26 files changed, 899 insertions(+), 155 deletions(-)
+ create mode 100644 env
+ create mode 100644 exe_test.c
+ rewrite objs/cr_env.o (83%)
+ rewrite objs/executor/exeutils_A.o (82%)
+ create mode 100644 objs/executor/exeutils_C.o
+ create mode 100644 sh_env_file
+ delete mode 100644 srcs/exec/exe.c
+ create mode 100644 srcs/executor/exeutils_C.c
+[?2004h]0;davidjwp@DESKTOP-PGAG9KC: ~/Minishell[01;32mdavidjwp@DESKTOP-PGAG9KC[00m:[01;34m~/Minishell[00m$ git push
+[?2004lEnumerating objects: 64, done.
+Counting objects:   1% (1/64)Counting objects:   3% (2/64)Counting objects:   4% (3/64)Counting objects:   6% (4/64)Counting objects:   7% (5/64)Counting objects:   9% (6/64)Counting objects:  10% (7/64)Counting objects:  12% (8/64)Counting objects:  14% (9/64)Counting objects:  15% (10/64)Counting objects:  17% (11/64)Counting objects:  18% (12/64)Counting objects:  20% (13/64)Counting objects:  21% (14/64)Counting objects:  23% (15/64)Counting objects:  25% (16/64)Counting objects:  26% (17/64)Counting objects:  28% (18/64)Counting objects:  29% (19/64)Counting objects:  31% (20/64)Counting objects:  32% (21/64)Counting objects:  34% (22/64)Counting objects:  35% (23/64)Counting objects:  37% (24/64)Counting objects:  39% (25/64)Counting objects:  40% (26/64)Counting objects:  42% (27/64)Counting objects:  43% (28/64)Counting objects:  45% (29/64)Counting objects:  46% (30/64)Counting objects:  48% (31/64)Counting objects:  50% (32/64)Counting objects:  51% (33/64)Counting objects:  53% (34/64)Counting objects:  54% (35/64)Counting objects:  56% (36/64)Counting objects:  57% (37/64)Counting objects:  59% (38/64)Counting objects:  60% (39/64)Counting objects:  62% (40/64)Counting objects:  64% (41/64)Counting objects:  65% (42/64)Counting objects:  67% (43/64)Counting objects:  68% (44/64)Counting objects:  70% (45/64)Counting objects:  71% (46/64)Counting objects:  73% (47/64)Counting objects:  75% (48/64)Counting objects:  76% (49/64)Counting objects:  78% (50/64)Counting objects:  79% (51/64)Counting objects:  81% (52/64)Counting objects:  82% (53/64)Counting objects:  84% (54/64)Counting objects:  85% (55/64)Counting objects:  87% (56/64)Counting objects:  89% (57/64)Counting objects:  90% (58/64)Counting objects:  92% (59/64)Counting objects:  93% (60/64)Counting objects:  95% (61/64)Counting objects:  96% (62/64)Counting objects:  98% (63/64)Counting objects: 100% (64/64)Counting objects: 100% (64/64), done.
+Delta compression using up to 24 threads
+Compressing objects:   2% (1/35)Compressing objects:   5% (2/35)Compressing objects:   8% (3/35)Compressing objects:  11% (4/35)Compressing objects:  14% (5/35)Compressing objects:  17% (6/35)Compressing objects:  20% (7/35)Compressing objects:  22% (8/35)Compressing objects:  25% (9/35)Compressing objects:  28% (10/35)Compressing objects:  31% (11/35)Compressing objects:  34% (12/35)Compressing objects:  37% (13/35)Compressing objects:  40% (14/35)Compressing objects:  42% (15/35)Compressing objects:  45% (16/35)Compressin
