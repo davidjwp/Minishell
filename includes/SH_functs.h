@@ -40,7 +40,8 @@ bool		check_spec(const char *input, size_t *i);
 bool		check_quote(const char *input, size_t *i);
 int			built_in(const char *input);
 int			get_token_type(char	*token);
-bool		it_token(const char *input, size_t *i, int flag);
+bool		it_token(const char *input, size_t *i);
+bool		it_sep(const char *input, size_t *i);
 char		*get_content(const char *input, size_t *index, size_t *len, int *e);
 
 //lexerutils_C
@@ -103,7 +104,7 @@ bool		is_herd(t_token **token);
 
 
 //exe_utils_A
-char		*cr_pathname(const char *cmd, t_env *sh_env);
+char		*cr_pathname(const char *cmd, t_env *sh_env, int *status, int i);
 char		**cr_envp(t_env *sh_env);
 char		**cr_args(t_token **tokens, char *pathname);
 char		*envcat(const char *name, const char *value);
@@ -177,7 +178,7 @@ t_fds		*init_fds(void);
 //MESSAGES+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 void		syntax_error(const char *str, t_cleanup *cl);
-void		not_found(const char *cmd);
+void		not_found(char *cmd, int *status);
 void		err_msg(char *msg);
 
 #endif

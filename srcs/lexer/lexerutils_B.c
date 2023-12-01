@@ -84,25 +84,41 @@ int	get_token_type(char *token)
 	return (WORD);
 }
 
+bool	empty_quote(const char *input, int i, int *add)
+{
+	while (type(input, i) == SEPR && input[i])
+		i++;
+	if (type(input, i) != 0 && !(type(input, i) % 5))
+		return (*add = i, true);
+	return (false);
+}
+
+bool	it_sep(const char *input, size_t *l_ind)
+{
+	while (type(input, *l_ind) == SEPR && input[*l_ind])
+		*l_ind += 1;
+	return (true);
+}
+
 /*
-*   iterates the token while giving length of token, also 
+*	iterates the token while giving length of token, also 
 *	iterates over SEPARATORS and checks unclosed quotes 
 */
-bool	it_token(const char *input, size_t *l_ind, int flag)
+bool	it_token(const char *input, size_t *l_ind)
 {
-	if (flag == IT_SEP)
-		while (type(input, *l_ind) == SEPR && input[*l_ind])
-			*l_ind += 1;
-	if (!input[*l_ind])
-		return (false);
-	else if (flag == IT_TOK)
+	while (type(input, *l_ind) != SEPR && type(input, *l_ind) != PIPE \
+	&& type(input, *l_ind) != REDL && type(input, *l_ind) != REDR && \
+	type(input, *l_ind) != APRD)
 	{
 		if (type(input, *l_ind) != 0 && !(type(input, *l_ind) % 5))
-			return (check_quote(input, l_ind));
-		if (type(input, *l_ind) != WORD && input[*l_ind])
-			return (check_spec(input, l_ind));
-		while (type(input, *l_ind) == WORD && input[*l_ind])
+		{
+			if (!check_quote(input, l_ind))
+				return (false);
+		}
+		else
 			*l_ind += 1;
+		if (!input[*l_ind])
+			break ;
 	}
 	return (true);
 }
@@ -114,7 +130,7 @@ char	*get_content(const char *input, size_t *l_ind, size_t *len, int *err)
 	int		i;
 
 	i = 0;
-	if (!it_token(&input[*l_ind], len, IT_TOK))
+	if (!it_token(&input[*l_ind], len))
 		return (NULL);
 	if (type(input, *l_ind) && !(type(input, *l_ind) % 5))
 		return (get_quote(input, l_ind, len, err));

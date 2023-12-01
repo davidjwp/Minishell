@@ -12,7 +12,23 @@
 
 #include "../../includes/SH_functs.h"
 #include "../../includes/SH_structs.h"
-
+//enum e_type{
+//	WORD,
+//	SEPR,
+//	HERD,
+//	EXST,
+//	APRD,
+//	SQUO,
+//	ARGT,
+//	OPER,
+//	REDL,
+//	VARE,
+//	DQUO,
+//	BUIT,
+//	REDR,
+//	COMD,
+//	PIPE,
+//};	
 char	*print_type(int type)
 {
 	char	*types[14];
@@ -23,12 +39,13 @@ char	*print_type(int type)
 	if (type != 0 && !(type % 11))
 		return ((char *[7]){"ECHO", "CD", "PWD", "EXPORT", "UNSET", "ENV"\
 		, "EXIT"}[(type / 10) - 2]);
-	while (++i < 14)
+	while (++i < 15)
 	{
 		types[i] = (char *[15]){"WORD", "SEPR", "HERD", "EXST", "APRD", \
 		"SQUO", "ARGT", "OPER", "REDL", "VARE", "DQUO", "BUIT", "REDR", \
 		"COMD", "PIPE"}[i];
-		num[i] = (int [14]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}[i];
+		num[i] = (int [15]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, \
+		14}[i];
 	}
 	i = 0;
 	while (type != num[i])

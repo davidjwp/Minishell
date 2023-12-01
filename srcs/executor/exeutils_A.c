@@ -18,13 +18,13 @@
 *	type(), _pipe(), _red(), cmp(), check_spec()
 */
 //creates the pathname for execve while also checking for viability
-char	*cr_pathname(const char *cmd, t_env *sh_env)
+char	*cr_pathname(const char *cmd, t_env *sh_env, int *status, int i)
 {
-	int		i;
 	char	**paths;
 	char	*pathname;
 
-	i = 0;
+	if (built_in(cmd))
+		return ("ok");
 	if (!access(cmd, X_OK))
 		return (path_cmd(cmd));
 	if (sh_env == NULL)
@@ -42,10 +42,11 @@ char	*cr_pathname(const char *cmd, t_env *sh_env)
 		i++;
 	}
 	if (paths[i] == NULL)
-		return (free_split(paths), not_found(cmd), NULL);
+		return (free_split(paths), not_found((char *)cmd, status), NULL);
 	return (free_split(paths), pathname);
 }
 
+//test function
 void	printenvp(char **envp)
 {
 	int	i;
@@ -58,6 +59,7 @@ void	printenvp(char **envp)
 	}
 	printf("NULL\n");
 }
+
 
 //convert the shell environment variables to an array of strings
 char	**cr_envp(t_env *sh_env)

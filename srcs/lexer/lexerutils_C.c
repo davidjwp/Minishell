@@ -27,42 +27,17 @@ int	nbr_token(const char *input, size_t l_ind, int tokcnt)
 	t = type(input, l_ind);
 	while (t != REDL && t != REDR && t != APRD && t != PIPE && input[l_ind])
 	{
-		it_token(input, &l_ind, IT_SEP);
+		it_sep(input, &l_ind);
 		t = type(input, l_ind);
 		if (!input[l_ind])
 			break ;
-		if ((t == SQUO || t == DQUO))
-		{
-			if (input[l_ind + 1] != input[l_ind])
-				tokcnt++;
-		}
 		else if (t != REDL && t != REDR && t != APRD && t != PIPE)
 			tokcnt += 1;
-		else if (t == REDL || t == REDR || t == APRD || t == PIPE)
-			break ;
-		if (!it_token(input, &l_ind, IT_TOK))
-			return (0);
+		if (!it_token(input, &l_ind))
+			return (tokcnt = 0, 0);
 	}
 	return (tokcnt);
 }
-
-//enum e_type{
-//	WORD,0
-//	SEPR,1
-//	HERD,2
-//	EXST,3
-//	APRD,4
-//	SQUO,5
-//	ARGT,6
-//	OPER,7
-//	REDL,8
-//	VARE,9
-//	DQUO,10
-//	BUIT,11
-//	REDR,12
-//	COMD,13
-//	PIPE,14
-//};	
 
 /*
 *	free the tokens up to last, only used while assigning allocated token
@@ -109,9 +84,9 @@ char	*get_quote(const char *input, size_t *l_ind, size_t *len, int *err)
 
 	i = 0;
 	*len -= 2;
-	if (input[*l_ind + 1] == input[*l_ind])
-		return (*l_ind += 2, NULL);
 	content = malloc(sizeof(char) * (*len + 1));
+	if (input[*l_ind + 1] == input[*l_ind])
+		return (*l_ind += 2, *content = 0, content);
 	if (content == NULL)
 		return (err_msg("get_quote malloc fail"), *err = 1, NULL);
 	content[*len] = 0;

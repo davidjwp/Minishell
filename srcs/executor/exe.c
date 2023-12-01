@@ -108,15 +108,18 @@ int	execute(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 {
 	pid_t	pid;
 	t_exe	exe;
+	int		status;
 
+	status = 0;
 	pid = fork();
 	if (pid == -1)
 		return (err_msg("execute fork fail"), 0);
 	if (pid)
 		return (wait(&cl->status), 1);
-	exe._path = cr_pathname(tree->token[0]->content, find_env("PATH", sh_env));
+	exe._path = cr_pathname(tree->token[0]->content, find_env("PATH", sh_env), \
+	&status, 0);
 	if (!exe._path)
-		return (clean_up(cl, CL_ALL), exit(EXIT_FAILURE), 0);
+		return (clean_up(cl, CL_ALL), exit(status), 0);
 	exe._envp = cr_envp(sh_env);
 	if (!exe._envp)
 		return (free(exe._path), clean_up(cl, CL_ALL), exit(EXIT_FAILURE), 0);

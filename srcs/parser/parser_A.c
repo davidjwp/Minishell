@@ -49,11 +49,17 @@ bool	redl_rules(t_astn *node, int *error, t_cleanup *cl)
 
 bool	comd_rules(t_token **token, int *error, t_cleanup *cl)
 {
+	char	*pathname;
 	size_t	y;
 	int		i;
 
 	i = 0;
 	y = 0;
+	pathname = cr_pathname(token[0]->content, cl->env, &cl->status, 0);
+	if (pathname == NULL)
+		return (*error += 1, false);
+	else if (ft_strncmp(pathname, "ok", ft_strlen("ok")))
+		free(pathname);
 	while (token[i] != NULL)
 	{
 		while (token[i]->content[y])

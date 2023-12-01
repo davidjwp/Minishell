@@ -1,0 +1,161 @@
+//bool	it_token(const char *input, size_t *l_ind, int flag)
+//{
+//	if (flag == IT_SEP)
+//		while (type(input, *l_ind) == SEPR && input[*l_ind])
+//			*l_ind += 1;
+//	if (!input[*l_ind])
+//		return (false);
+//	else if (flag == IT_TOK)
+//	{
+//		if (type(input, *l_ind) != 0 && !(type(input, *l_ind) % 5))
+//			return (check_quote(input, l_ind));
+//		if (type(input, *l_ind) != WORD && input[*l_ind])
+//			return (check_spec(input, l_ind));
+//		while (type(input, *l_ind) == WORD && input[*l_ind])
+//			*l_ind += 1;
+//	}
+//	return (true);
+//}
+
+
+//bool	it_token(const char *input, size_t *l_ind, int flag)
+//{
+//	if (flag == IT_SEP)
+//		while ((type(input, *l_ind) == SEPR && input[*l_ind]))
+//				*l_ind += 1;
+//	if (!input[*l_ind])
+//		return (false);
+//	else if (flag == IT_TOK)
+//	{
+//		if (type(input, *l_ind) != 0 && !(type(input, *l_ind) % 5))
+//			return (check_quote(input, l_ind));
+//		while (type(input, *l_ind) != SEPR)
+//		{
+//			if (!input[*l_ind])
+//				break ;
+//			*l_ind += 1;
+//		}
+//	}
+//	return (true);
+//}
+
+//t_token	*get_token(const char *input, size_t *l_ind, t_token *token, int *err)
+//{
+//	token->len = 0;
+//	if (!it_token(input, l_ind, IT_SEP))
+//		return (NULL);
+//	token->type = get_token_type((char *)&input[*l_ind]);
+//	token->content = get_content(input, l_ind, &token->len, err);
+//	if (*err || token->content == NULL)
+//		return (NULL);
+//	it_token(input, l_ind, IT_SEP);
+//	return (token);
+//}
+
+//char	*get_content(const char *input, size_t *l_ind, size_t *len, int *err)
+//{
+//	char	*content;
+//	int		i;
+
+//	i = 0;
+//	if (!it_token(&input[*l_ind], len, IT_TOK))
+//		return (NULL);
+//	if (type(input, *l_ind) && !(type(input, *l_ind) % 5))
+//		return (get_quote(input, l_ind, len, err));
+//	content = malloc(sizeof(char) * (*len + 1));
+//	if (content == NULL)
+//		return (err_msg("get_content malloc fail"), *err = 1, NULL);
+//	content[*len] = 0;
+//	while (i < (int)*len)
+//	{
+//		content[i] = input[*l_ind];
+//		*l_ind += 1;
+//		i++;
+//	}
+//	return (content);
+//}
+
+//int	nbr_token(const char *input, size_t l_ind, int tokcnt)
+//{
+//	int		t;
+
+//	if (!*input)
+//		return (0);
+//	t = type(input, l_ind);
+//	while (t != REDL && t != REDR && t != APRD && t != PIPE && input[l_ind])
+//	{
+//		it_token(input, &l_ind, IT_SEP);
+//		t = type(input, l_ind);
+//		if (!input[l_ind])
+//			break ;
+//		if ((t == SQUO || t == DQUO))
+//		{
+//			if (input[l_ind + 1] != input[l_ind])
+//				tokcnt++;
+//		}
+//		else if (t != REDL && t != REDR && t != APRD && t != PIPE)
+//			tokcnt += 1;
+//		else if (t == REDL || t == REDR || t == APRD || t == PIPE)
+//			break ;
+//		if (!it_token(input, &l_ind, IT_TOK))
+//			return (0);
+//	}
+//	return (tokcnt);
+//}
+
+//int	nbr_token(const char *input, size_t l_ind, int tokcnt)
+//{
+//	int		t;
+
+//	if (!*input)
+//		return (0);
+//	t = type(input, l_ind);
+//	while (t != REDL && t != REDR && t != APRD && t != PIPE && input[l_ind])
+//	{
+//		it_sep(input, &l_ind);
+//		t = type(input, l_ind);
+//		if (!input[l_ind])
+//			break ;
+//		if ((t == SQUO || t == DQUO))
+//		{
+//			if (input[l_ind + 1] != input[l_ind])
+//				tokcnt++;
+//		}
+//		else if (t != REDL && t != REDR && t != APRD && t != PIPE)
+//			tokcnt += 1;
+//		else if (t == REDL || t == REDR || t == APRD || t == PIPE)
+//			break ;
+//		if (!it_token(input, &l_ind))
+//			return (0);
+//	}
+//	return (tokcnt);
+//}
+
+//bool	it_sep(const char *input, size_t *l_ind)
+//{
+//	int	i;
+
+//	while ((type(input, *l_ind) == SEPR && input[*l_ind]) || 
+//	(type(input, *l_ind) != 0 && !(type(input, *l_ind) % 5) && 
+//	(input[*l_ind + 1] == input[*l_ind] || type(input, *l_ind + 1))))
+//	{
+//		if (!input[*l_ind])
+//			return (false);
+//		if ((type(input, *l_ind) != 0 && !(type(input, *l_ind) % 5) && 
+//		input[*l_ind + 1] == input[*l_ind]))
+//			*l_ind += 2;
+//		else if ((type(input, *l_ind) != 0 && !(type(input, *l_ind) % 5) && 
+//		type(input, *l_ind + 1) == SEPR))
+//		{
+//			if (empty_quote(input, *l_ind + 1, &i))
+//				*l_ind += i;
+//			else
+//				return (false);
+//		}
+//		else
+//			*l_ind += 1;
+//	}
+//	if (!input[*l_ind])
+//		return (false);
+//	return (true);
+//}

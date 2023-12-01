@@ -26,10 +26,10 @@ int	init_node(t_astn *node, int nbr, t_astn *p, int *error)
 	node->token = (t_token **)malloc(sizeof(t_token) * (nbr + 1));
 	if (node->token == NULL)
 		return (free(node), *error = 1, err_msg("init alloc fail"), 0);
-	node->token[nbr] = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	node->parent = p;
+	node->token[nbr] = NULL;
 	return (1);
 }
 

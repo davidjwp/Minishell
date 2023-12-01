@@ -34,7 +34,7 @@ bool	parser_rules(t_astn *node, int *error, t_cleanup *cl)
 	return (true);
 }
 
-char	*expand_exst(t_token *token, int status)//check on that
+char	*expand_exst(t_token *token, int status)
 {
 	int		len;
 	int		tmp;
@@ -42,7 +42,7 @@ char	*expand_exst(t_token *token, int status)//check on that
 
 	len = 0;
 	tmp = status;
-	while (tmp || !++len)
+	while (tmp && ++len)
 		tmp /= 10;
 	free(token->content);
 	content = malloc(sizeof(char) * (len + 1));
@@ -69,7 +69,14 @@ int	expander(t_astn *node, int *error, t_cleanup *cl)
 	while (node->token[i] != NULL)
 	{
 		if (node->token[i]->type == EXST)
-			node->token[i]->content = expand_exst(node->token[i], cl->status);
+		{
+			if (cl->status > 255)
+				node->token[i]->content = expand_exst(node->token[i], \
+				WEXITSTATUS(cl->status));
+			else
+				node->token[i]->content = expand_exst(node->token[i], \
+				cl->status);
+		}
 		i++;
 	}
 	return (0);
@@ -97,9 +104,9 @@ t_astn	*parser(const char *input, t_cleanup *cl)
 	}
 	tree = create_ast(input, &g_ind, &error, NULL);
 	if (tree != NULL)
-		print_tree(tree);
+		return (print_tree(tree), tree); 
 	if (error || tree == NULL)
-		return (cl->status = 0, NULL);
+		return (NULL);
 	if (!parser_rules(tree, &error, cl))
 		return (free_tree(tree), NULL);
 	expander(tree, &error, cl);

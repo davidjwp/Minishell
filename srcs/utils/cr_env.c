@@ -61,34 +61,47 @@ t_env	*env_node(char *env)
 	return (node);
 }
 
-t_env	*cr_blank_env(void)
-{
-	t_env	*node;
-	char	*buf;
-	char	**split;
-	char	*pwd;
+//t_env	*cr_blank_env(void)
+//{
+//	t_env	*node;
+//	char	*buf;
+//	char	**split;
+//	char	*pwd;
 
-	buf = getcwd(NULL, 0);
-	if (buf == NULL)
-		return (err_msg("getcwd fail"), NULL);
-	pwd = ft_calloc(ft_strlen(buf) + 5, sizeof(char));
-	if (pwd == NULL)
-		return (free(buf), err_msg("dest malloc fail"), NULL);
-	ft_strcat(pwd, "PWD=");
-	node = malloc(sizeof(t_env));
-	if (node == NULL)
-		return (free(buf), free(pwd), err_msg("crbe malloc fail"), NULL);
-	ft_strcat(pwd, buf);
-	split = ft_split(pwd, '=');
-	free(buf);
-	free(pwd);
-	node->cl = split;
-	node->name = split[0];
-	node->value = split[1];
-	node->next = node;
-	return (node);
-}
+//	buf = getcwd(NULL, 0);
+//	if (buf == NULL)
+//		return (err_msg("getcwd fail"), NULL);
+//	pwd = ft_calloc(ft_strlen(buf) + 5, sizeof(char));
+//	if (pwd == NULL)
+//		return (free(buf), err_msg("dest malloc fail"), NULL);
+//	ft_strcat(pwd, "PWD=");
+//	node = malloc(sizeof(t_env));
+//	if (node == NULL)
+//		return (free(buf), free(pwd), err_msg("crbe malloc fail"), NULL);
+//	ft_strcat(pwd, buf);
+//	split = ft_split(pwd, '=');
+//	free(buf);
+//	free(pwd);
+//	node->cl = split;
+//	node->name = split[0];
+//	node->value = split[1];
+//	node->next = node;
+//	return (node);
+//}
 
+/*
+PWD=/mnt/nfs/homes/djacobs/intra_djacobs/5_GitClone/Minishell
+SHLVL=1
+_=/usr/bin/env
+*/
+
+//t_env	cr_blank_env(void)
+//{
+//	t_env	*pwd;
+//	t_env	*shlvl;
+
+
+//}
 /*
 *	creates the env list to be used in the shell
 *	each list will have to be reconstructed into an array of string
@@ -101,7 +114,7 @@ t_env	*cr_env(char **env)
 	int		i;
 
 	if (!*env)
-		return (cr_blank_env());
+		return (0);
 	i = 0;
 	sh_env = env_node(env[i]);
 	if (sh_env == NULL)

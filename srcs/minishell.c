@@ -16,6 +16,8 @@
 volatile int g_signal;
 
 //TEST FUNCTIONS
+//valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ./minitest
+
 
 //this is just to exit the program easier
 int	check_input(char *input)
@@ -81,6 +83,8 @@ int	main(int ac, char **av, char **env)
 	if (sh_env == NULL)
 		return (0);
 	cl = malloc(sizeof(t_cleanup));
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &ctrl_c);
 	if (cl == NULL)
 		return (err_msg("cl malloc fail"), 0);
 	while (42)
@@ -92,7 +96,7 @@ int	main(int ac, char **av, char **env)
 				return (clean_up(cl, CL_ALL), exit(EXIT_SUCCESS), 1);
 			shell_loop(cl->tree, sh_env, cl);
 		}
-		print_exit(cl->status);
+		print_exit(cl->status > 255 ? WEXITSTATUS(cl->status) : cl->status);
 	}
 	return ((void)ac, (void)av, 1);
 }
@@ -134,7 +138,7 @@ int	sh_pipe(t_astn *tree, t_env *sh_env, t_cleanup *cl)
 			execute(tree->left, sh_env, cl);
 		exit(EXIT_SUCCESS);
 	}
-	wait(&cl->status);
+	wait(&cl->status);//maybe remove that
 	dup2(p.pipe_fd[0], STDIN_FILENO);
 	close_pipe(p.pipe_fd);
 	shell_loop(tree->right, sh_env, cl);
